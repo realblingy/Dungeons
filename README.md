@@ -382,11 +382,13 @@ Marks will be deducted for poor git and GitLab usage. For example, meaningless c
 
 ### Week-05
 
-Fill in here.
+Made a Google Doc for Milestone 1 (James)
+Wrote user stories for four epic stories, as well as their acceptance criterias and priorities (James)
 
 ### Week-06
 
-Fill in here.
+Added an extra user story (James)
+Allocated points for each user story (James)
 
 ### Week-07
 
