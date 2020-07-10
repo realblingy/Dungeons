@@ -389,6 +389,7 @@ Wrote user stories for four epic stories, as well as their acceptance criterias 
 
 Added an extra user story (James)
 Allocated points for each user story (James)
+Transferred user stories onto taskboard (James)
 
 ### Week-07
 
