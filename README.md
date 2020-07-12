@@ -384,12 +384,15 @@ Marks will be deducted for poor git and GitLab usage. For example, meaningless c
 
 Made a Google Doc for Milestone 1 (James)
 Wrote user stories for four epic stories, as well as their acceptance criterias and priorities (James)
+Wrote user stories for epic stories, acceptance criteria and make a doc file and push it onto the branch user_story (Khaing)
 
 ### Week-06
 
 Added an extra user story (James)
 Allocated points for each user story (James)
 Transferred user stories onto taskboard (James)
+Modified and add extra user story onto the issue board (Khaing)
+Pushing modified user story file onto the branch user_story (Khaing)
 
 ### Week-07
 
