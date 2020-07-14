@@ -1031,6 +1031,11 @@
       "x": 19,
       "y": 17,
       "type": "wall"
+    },
+    {
+      "x": 18,
+      "y" : 16,
+      "type" : "exit"
     }
   ],
   "goal-condition": {

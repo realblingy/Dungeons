@@ -14,14 +14,18 @@ public class Entity {
     // externally observed.
     private IntegerProperty x, y;
 
+    // Specifies if entity can be collided with
+    private boolean collidable;
+
     /**
      * Create an entity positioned in square (x,y)
      * @param x
      * @param y
      */
-    public Entity(int x, int y) {
+    public Entity(int x, int y, boolean collidable) {
         this.x = new SimpleIntegerProperty(x);
         this.y = new SimpleIntegerProperty(y);
+        this.collidable = collidable;
     }
 
     public IntegerProperty x() {
@@ -38,5 +42,9 @@ public class Entity {
 
     public int getX() {
         return x().get();
+    }
+
+    public boolean isCollidable() {
+        return collidable;
     }
 }

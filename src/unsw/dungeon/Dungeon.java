@@ -47,4 +47,22 @@ public class Dungeon {
     public void addEntity(Entity entity) {
         entities.add(entity);
     }
+
+    public boolean willCollide(int x, int y) {
+        for (Entity entity : entities) {
+            if (entity.getClass() == Exit.class) {
+                Exit mazeExit = (Exit) entity;
+                if (mazeExit.playerExits(x, y)) {
+                    entities.remove(player);
+                    System.out.println("Maze is completed!");
+                }
+            }
+            else if (entity != null) {
+                if (entity.getX() == x && entity.getY() == y && !entity.isCollidable()) return true;
+            }
+
+        }
+        return false;
+    }
+
 }
