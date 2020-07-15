@@ -1,7 +1,5 @@
 package unsw.dungeon;
 
-import java.util.List;
-
 public class Boulder extends Entity {
     
     /**
@@ -13,10 +11,11 @@ public class Boulder extends Entity {
         super(x, y, false);
     }
 
-    public void update(Entity entity, List<Entity> entities) {
+    @Override
+    public void update(Entity entity) {
         if (entity instanceof Player) {
             Player player = (Player) entity;
-            pushBoulder(getX(), getY(), player.getRecentMovement());
+            pushBoulder(getX(), getY(), player);
         }
     }
 
@@ -25,28 +24,23 @@ public class Boulder extends Entity {
         y().set(y);
     }
 
-    public void pushBoulder(int x, int y, String move) {
-        // if (isBoulder(x, y) != -1) {
-        //     int index = isBoulder(x, y);
-            // if (index != -1) {
-                // Boulder b = (Boulder) entities.get(index);
-        if (move == "left" && !willCollide(x - 1, y)) {
+    public void pushBoulder(int x, int y, Player player) {
+        String move = player.getRecentMovement();
+        if (move == "left" && !player.willCollide(x - 1, y)) {
             resetPosition(x - 1, y);
-            // player.x().set(x);
+            player.x().set(x);
         }
-        if (move == "right" && !willCollide(x + 1, y)) {
+        if (move == "right" && !player.willCollide(x + 1, y)) {
             resetPosition(x + 1, y);
-            // player.x().set(x);
+            player.x().set(x);
         }
-        if (move == "up" && !willCollide(x, y - 1)) {
+        if (move == "up" && !player.willCollide(x, y - 1)) {
             resetPosition(x, y - 1);
-            // player.y().set(y);
+            player.y().set(y);
         }
-        if (move == "down" && !willCollide(x, y + 1)) {
+        if (move == "down" && !player.willCollide(x, y + 1)) {
             resetPosition(x, y + 1);
-            // player.y().set(y);
+            player.y().set(y);
         }
     }
-        // }
-    // }
 }

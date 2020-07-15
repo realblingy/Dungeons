@@ -50,4 +50,7 @@ public class Entity {
         return collidable;
     }
     
+    public void update(Entity entity) {
+        return;
+    }
 }

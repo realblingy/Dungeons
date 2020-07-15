@@ -41,19 +41,24 @@ public class Dungeon implements DungeonObserver{
 
     public void update(Player player) {
         for (Entity obj : entities) {
+            // For walls and boulders
             if (player.willCollide(obj) && !player.equals(obj)) {
-               player.update(obj);
+                obj.update(player);
+            }
+            // For potions, items, etc..
+            else if (!player.willCollide(obj) && !player.equals(obj)) {
+                player.update(obj);
             }
         }
     }
 
-    public void update(Boulder boulder) {
-        for (Entity obj : entities) {
-            if (boulder.willCollide(obj) && !boulder.equals(obj)) {
-                boulder.update(obj);
-            }
-        }
-    }
+    // public void update(Boulder boulder) {
+    //     for (Entity obj : entities) {
+    //         if (boulder.willCollide(obj) && !boulder.equals(obj)) {
+    //             boulder.update(obj);
+    //         }
+    //     }
+    // }
 
     public int getWidth() {
         return width;
@@ -76,12 +81,6 @@ public class Dungeon implements DungeonObserver{
     }
 
     public boolean willCollide(int x, int y) {
-        /*for (Entity entity : entities) {
-            if (entity != null) {
-                if (entity.getX() == x && entity.getY() == y && !entity.isCollidable()) return true;
-            }
-
-        }*/
 
         List<Entity> entitiesInOneSquare = new ArrayList<>();
         for (Entity entity : entities) {
@@ -109,44 +108,6 @@ public class Dungeon implements DungeonObserver{
 
         return false;
     }
-
-    
-    public int isBoulder(int x, int y) {
-        List<Integer> index = entityIndex(x, y);
-        for (Integer i : index) {
-            Entity entity = entities.get(i);
-            if (entity.getClass() == Boulder.class) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public void pushBoulder(int x, int y, String move) {
-        if (isBoulder(x, y) != -1) {
-            int index = isBoulder(x, y);
-            if (index != -1) {
-                Boulder b = (Boulder) entities.get(index);
-                if (move == "left" && !willCollide(x - 1, y)) {
-                    b.resetPosition(x - 1, y);
-                    player.x().set(x);
-                }
-                if (move == "right" && !willCollide(x + 1, y)) {
-                    b.resetPosition(x + 1, y);
-                    player.x().set(x);
-                }
-                if (move == "up" && !willCollide(x, y - 1)) {
-                    b.resetPosition(x, y - 1);
-                    player.y().set(y);
-                }
-                if (move == "down" && !willCollide(x, y + 1)) {
-                    b.resetPosition(x, y + 1);
-                    player.y().set(y);
-                }
-            }
-        }
-    }
-
 
     public List<Integer> entityIndex(int x, int y) {
         List<Integer> entitiesInOneSquare = new ArrayList<>();
