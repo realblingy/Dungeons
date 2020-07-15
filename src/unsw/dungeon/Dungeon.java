@@ -64,18 +64,14 @@ public class Dungeon {
         }
 
         if (entitiesInOneSquare.size() > 1) {
-            System.out.println("I am more than one");
             for (Entity entity : entitiesInOneSquare) {
                 if (entity.getClass() == Boulder.class) {
-                    System.out.println("you will collide!");
                     return true;
                 }
             }
         }
         else if (entitiesInOneSquare.size() == 1) {
-            System.out.println("i am only one");
             if (!entitiesInOneSquare.get(0).isCollidable()) {
-                System.out.println("you will collide!");
                 return true;
             }
         }
@@ -113,7 +109,6 @@ public class Dungeon {
                     player.y().set(y);
                 }
                 if (move == "down" && !willCollide(x, y + 1)) {
-                    System.out.println("i am here!!");
                     b.resetPosition(x, y + 1);
                     player.y().set(y);
                 }
