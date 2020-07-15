@@ -20,26 +20,50 @@ public class Player extends Entity {
     }
 
     public void moveUp() {
-        if (getY() > 0 && !willCollide(getX(), getY()-1))
-            y().set(getY() - 1);
+        if (getY() > 0) {
+            if (!willCollide(getX(), getY()-1)) {
+                y().set(getY() - 1);
+            }
+            else {
+                dungeon.pushBoulder(getX(), getY()-1, "up");
+            }
+        }   
     }
 
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1 && !willCollide(getX(), getY()+1))
-            y().set(getY() + 1);
+        if (getY() < dungeon.getHeight() - 1) {
+            if (!willCollide(getX(), getY()+1)) {
+                y().set(getY() + 1);
+            } 
+            else {
+                dungeon.pushBoulder(getX(), getY()+1, "down");
+            }
+        }   
     }
 
     public void moveLeft() {
-        if (getX() > 0 && !willCollide(getX() - 1, getY()))
-            x().set(getX() - 1);
+        if (getX() > 0) {
+            if (!willCollide(getX() - 1, getY())) {
+                x().set(getX() - 1);
+            }
+            else {
+                dungeon.pushBoulder(getX() - 1, getY(), "left");
+            }
+        }                
     }
-
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1 && !willCollide(getX() + 1, getY()))
-            x().set(getX() + 1);
+        if (getX() < dungeon.getWidth() - 1) {
+            if (!willCollide(getX() + 1, getY())) {
+                x().set(getX() + 1);
+            }
+            else {
+                dungeon.pushBoulder(getX() + 1, getY(), "right");
+            }
+        }
     }
 
     public boolean willCollide(int x, int y) {
         return dungeon.willCollide(x, y);
     }
+
 }
