@@ -8,6 +8,7 @@ package unsw.dungeon;
 public class Player extends Entity {
 
     private Dungeon dungeon;
+    private String recentMovement;
 
     /**
      * Create a player positioned in square (x,y)
@@ -16,17 +17,27 @@ public class Player extends Entity {
      */
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y, false);
+        recentMovement = "";
         this.dungeon = dungeon;
+    }
+
+    public void notifyDungeon() {
+        dungeon.update(this);
     }
 
     public void moveUp() {
         if (getY() > 0) {
+            // if (!willCollide(getX(), getY()-1)) {
+            //     y().set(getY() - 1);
+            // }
+            // else {
+            //     dungeon.pushBoulder(getX(), getY()-1, "up");
+            // }
+            recentMovement = "up";
             if (!willCollide(getX(), getY()-1)) {
                 y().set(getY() - 1);
             }
-            else {
-                dungeon.pushBoulder(getX(), getY()-1, "up");
-            }
+            notifyDungeon();
         }   
     }
 
@@ -60,6 +71,10 @@ public class Player extends Entity {
                 dungeon.pushBoulder(getX() + 1, getY(), "right");
             }
         }
+    }
+
+    public String getRecentMovement() {
+        return recentMovement;
     }
 
     public boolean willCollide(int x, int y) {

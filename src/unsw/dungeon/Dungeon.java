@@ -15,7 +15,7 @@ import java.util.List;
  * @author Robert Clifton-Everest
  *
  */
-public class Dungeon {
+public class Dungeon implements DungeonObserver{
 
     private int width, height;
     private List<Entity> entities;
@@ -26,6 +26,33 @@ public class Dungeon {
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
+    }
+    
+    @Override
+    public void update(Entity entity) {
+        if (entity instanceof Player) {
+            update( (Player) entity);
+        }
+
+        if (entity instanceof Boulder) {
+            update ( (Boulder) entity);
+        }
+    }
+
+    public void update(Player player) {
+        for (Entity obj : entities) {
+            if (player.willCollide(obj) && !player.equals(obj)) {
+               player.update(obj);
+            }
+        }
+    }
+
+    public void update(Boulder boulder) {
+        for (Entity obj : entities) {
+            if (boulder.willCollide(obj) && !boulder.equals(obj)) {
+                boulder.update(obj);
+            }
+        }
     }
 
     public int getWidth() {
@@ -58,6 +85,7 @@ public class Dungeon {
 
         List<Entity> entitiesInOneSquare = new ArrayList<>();
         for (Entity entity : entities) {
+            // Checks if player's coordinates are the same as entities
             if (entity.getX() == x && entity.getY() == y) {
                 entitiesInOneSquare.add(entity);
             }
@@ -65,12 +93,15 @@ public class Dungeon {
 
         if (entitiesInOneSquare.size() > 1) {
             for (Entity entity : entitiesInOneSquare) {
+                // If any of the entities are boulders return true
                 if (entity.getClass() == Boulder.class) {
                     return true;
                 }
             }
         }
+        // If there is only one entitiy
         else if (entitiesInOneSquare.size() == 1) {
+            // If it is not collidable?
             if (!entitiesInOneSquare.get(0).isCollidable()) {
                 return true;
             }
