@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * An entity in the dungeon.
+ * 
  * @author Robert Clifton-Everest
  *
  */
@@ -19,6 +20,7 @@ public class Entity {
 
     /**
      * Create an entity positioned in square (x,y)
+     * 
      * @param x
      * @param y
      */
@@ -47,4 +49,5 @@ public class Entity {
     public boolean isCollidable() {
         return collidable;
     }
+    
 }

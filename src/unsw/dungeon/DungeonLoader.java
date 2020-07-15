@@ -65,6 +65,16 @@ public abstract class DungeonLoader {
             onLoad(exit);
             entity = exit;
             break;
+        case "boulder":
+            Boulder boulder = new Boulder(x, y);
+            onLoad(boulder);
+            entity = boulder;
+            break;
+        case "switch":
+            Switch switchPlate = new Switch(x, y);
+            onLoad(switchPlate);
+            entity = switchPlate;
+            break; 
         // TODO Handle other possible entities
         }
         dungeon.addEntity(entity);
@@ -75,6 +85,10 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Wall wall);
 
     public abstract void onLoad(Exit exit);
+
+    public abstract void onLoad(Boulder boulder);
+
+    public abstract void onLoad(Switch switchPlate);
 
     // TODO Create additional abstract methods for the other entities
 
