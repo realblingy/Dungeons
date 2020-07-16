@@ -15,9 +15,42 @@ public class Switch extends Entity {
         this.trigger = 0;   
     }
 
-    public void triggerSwitch () {
-        this.trigger = 1;
+    public int getTrigger() {
+        return trigger;
+    }
+
+    @Override
+    public void update(Entity entity) {
+        if (entity instanceof Boulder) {
+            Boulder boulder = (Boulder) entity;
+            setTrigger();
+        }
+        if (entity instanceof Player) {
+            Player player = (Player) entity;
+            shutOffTrigger();
+        }
+    }
+
+    /**
+     * method for triggering switch after pushBoulder 
+     * if the switch is already trigger then do nothing
+     * if the switch is off then trigger the switch
+     */
+    public void setTrigger() {
+        if (trigger == 0) {
+            this.trigger = 1;
+            System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is trigger");
+        }
         
     }
 
+    /**
+     * method for shut off the switch after pushBoulder
+     * therefore now the player is now at the old boulder position 
+     * meaing the boulder is pushed off the switch 
+     */
+    public void shutOffTrigger() {
+        this.trigger = 0;
+        System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is shut off");
+    }
 }
