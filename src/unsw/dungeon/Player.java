@@ -31,7 +31,9 @@ public class Player extends Entity {
             if (!willCollide(getX(), getY()-1)) {
                 y().set(getY() - 1);
             }
-            notifyDungeon();
+            else {
+                notifyDungeon();
+            }  
         }   
     }
 
@@ -41,7 +43,9 @@ public class Player extends Entity {
             if (!willCollide(getX(), getY()+1)) {
                 y().set(getY() + 1);
             } 
-            notifyDungeon();
+            else {
+                notifyDungeon();
+            }          
         }   
     }
 
@@ -51,9 +55,10 @@ public class Player extends Entity {
             if (!willCollide(getX() - 1, getY())) {
                 x().set(getX() - 1);
             }
-            notifyDungeon(); 
-        }       
-                
+            else {
+                notifyDungeon();
+            }          
+        }            
     }
     public void moveRight() {
         if (getX() < dungeon.getWidth() - 1) {
@@ -61,7 +66,10 @@ public class Player extends Entity {
             if (!willCollide(getX() + 1, getY())) {
                 x().set(getX() + 1);
             }
-            notifyDungeon(); 
+            //notifyDungeon(); 
+            else {
+                notifyDungeon();
+            }   
         }
     }
 
@@ -100,9 +108,5 @@ public class Player extends Entity {
 
             return false;
         }
-
-        // public void update(Entity entity) {
-        //     if (entity instanceof Boulder)
-        // }
     }
 
