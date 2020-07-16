@@ -37,13 +37,24 @@ public class Dungeon implements DungeonObserver{
         if (entity instanceof Boulder) {
             update ( (Boulder) entity);
         }
+    
     }
 
     public void update(Player player) {
         for (Entity obj : entities) {
             // For walls and boulders
             if (player.willCollide(obj) && !player.equals(obj)) {
-                obj.update(player);
+                int oldX = obj.getX();
+                int oldY = obj.getY();
+                // push if obj is a boulder 
+                if (obj.getClass() == Boulder.class) {
+                    obj.update(player);
+                    // if the boulder is pushed
+                    if (donePush(player, oldX, oldY)) {
+                        // trigger the new Switch(use obj coordinates) and shut off the old one(use player coordinates)
+                        triggerAfterPush(obj, player);
+                    }
+                }
             }
             // For potions, items, etc..
             else if (!player.willCollide(obj) && !player.equals(obj)) {
@@ -78,8 +89,67 @@ public class Dungeon implements DungeonObserver{
 
     public void addEntity(Entity entity) {
         entities.add(entity);
+        TriggerAtBeginning(entity);
     }
 
+    /**
+     * method for triggering switch at the start of the game when the boulder entity is added on the top of the switch
+     * @param entity
+     */
+    public void TriggerAtBeginning (Entity entity) {
+        if (entity.getClass() == Boulder.class) {
+            int index = onSwitch(entity.getX(), entity.getY());
+            if (index != -1) { 
+                Switch s = (Switch) entities.get(index);
+                s.update(entity);
+            }
+        }
+    }
+
+    /**
+     * method for updateing switch trigger or shut off once the boulder is pushed
+     * @param obj
+     * @param player
+     */
+    public void triggerAfterPush (Entity obj, Player player) {
+        int Old = onSwitch(player.getX(), player.getY());
+        int New = onSwitch(obj.getX(), obj.getY());
+        // shut off the switch at the old position of Boulder
+        if (Old != -1) {
+            Switch oldSwitch = (Switch) entities.get(Old);
+            oldSwitch.update(player);
+        }
+        // trigger the switch at the postion of the Boulder after push
+        if (New != -1) {
+            Switch newSwitch = (Switch) entities.get(New);
+            newSwitch.update(obj);
+            if (allTrigger()) {
+                System.out.println("All the Floor Switches are triggered");
+            }
+        }
+    }
+
+    /**
+     * method for checking if the Boulder is pushed
+     * @param player    player entity (player is now at the old position of the Boulder after pushing it)
+     * @param x         x coordinate of Boulder before push
+     * @param y         y coordinate of Boulder before push
+     * @return true if the Boulder is pushed else return false
+     */
+    public boolean donePush(Player player, int x, int y) {
+        if (player.getX() == x && player.getY() == y) {
+            System.out.println("Done Push !!!");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * method for checking if square(x,y) contains collidable item
+     * @param x
+     * @param y
+     * @return true if player cannot move into that square else return false
+     */
     public boolean willCollide(int x, int y) {
 
         List<Entity> entitiesInOneSquare = new ArrayList<>();
@@ -109,6 +179,41 @@ public class Dungeon implements DungeonObserver{
         return false;
     }
 
+    /**
+     * method for checking if the square with coordinates(x,y) contains switch
+     * @param x
+     * @param y
+     * @return entity index if the square contains switch else return -1
+     */
+    public int onSwitch(int x, int y) {
+        List<Integer> index = entityIndex(x, y);
+        for (Integer i : index) {
+            Entity entity = entities.get(i);
+            if (entity.getClass() == Switch.class) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean allTrigger() {
+        for (Entity e : entities) {
+            if (e.getClass() == Switch.class) {
+                Switch s = (Switch) e;
+                if (s.getTrigger() == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * method for collecting entities in one square(x,y)
+     * @param x
+     * @param y
+     * @return list of entities' indexes in one square
+     */
     public List<Integer> entityIndex(int x, int y) {
         List<Integer> entitiesInOneSquare = new ArrayList<>();
 
