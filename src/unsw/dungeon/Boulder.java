@@ -15,7 +15,7 @@ public class Boulder extends Entity {
     public void update(Entity entity) {
         if (entity instanceof Player) {
             Player player = (Player) entity;
-            pushBoulder(getX(), getY(), player);
+            pushBoulder(getX(), getY(), player);            
         }
     }
 
