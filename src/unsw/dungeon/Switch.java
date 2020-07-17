@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.util.List;
+
 public class Switch extends Entity {
     private Dungeon dungeon;
     private int trigger;
@@ -33,15 +35,34 @@ public class Switch extends Entity {
     }
 
     /**
+     * method to check if all the switches are triggered
+     * @return true if all triggered, else false
+     */
+    public boolean allTrigger() {
+        List<Entity> entities = dungeon.getEntities();
+        for (Entity e : entities) {
+            if (e.getClass() == getClass()) {
+                Switch s = (Switch) e;
+                if (s.getTrigger() == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * method for triggering switch after pushBoulder 
-     * if the switch is already trigger then do nothing
-     * if the switch is off then trigger the switch
+     * shut off the switch if the boulder is pushed off 
+     * trigger the switch if the boulder is pushed onto it
      */
     public void setTrigger(Boulder boulder) {
         if (trigger == 0 && getX() == boulder.getX() && getY() == boulder.getY()) {
             this.trigger = 1;
             System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is trigger");
-            notifyDungeon();
+            if (allTrigger()) {
+                notifyDungeon();
+            }
         }
 
         if (trigger == 1) {

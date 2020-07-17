@@ -44,31 +44,13 @@ public class Dungeon implements DungeonObserver{
     }
 
     public void update(Player player) {
-        /*
-        for (Entity obj : entities) {
-            // For walls and boulders
-            if (player.willCollide(obj) && !player.equals(obj)) {
-                //int oldX = obj.getX();
-                //int oldY = obj.getY();
-                // push if obj is a boulder 
-                //if (obj.getClass() == Boulder.class) {
-                obj.update(player);
-                    /* if the boulder is pushed
-                    //if (donePush(player, oldX, oldY)) {
-                    if (BoulderIsMoved(obj, oldX, oldY)) {
-                        // update the player postion 
-                        player.updatePosition(oldX, oldY);
-                        // trigger the new Switch(use obj coordinates) and shut off the old one(use player coordinates)
-                        triggerAfterPush(obj, player);
-                    }
-                }
-            }*/
-        Entity obj = player.getAdjacentObj();
+
+        Entity obj = getAdjacentObj(player);
         if (obj == null) {
             player.updatePosition();
         }
         else {
-            if (player.willCollide(obj.getX(), obj.getY()) && !player.equals(obj)) {
+            if (willCollide(obj.getX(), obj.getY()) && !player.equals(obj)) {
                 obj.update(player);
             }
 
@@ -77,14 +59,12 @@ public class Dungeon implements DungeonObserver{
 
     public void update(Boulder boulder) {
         player.update(boulder);
-        triggerAfterPush(boulder, player);
+        UpdateOldAndNewSwitch(boulder, player);
 
     }
 
     public void update(Switch switchPlate) {
-        if (allTrigger()) {
-            System.out.println("All the Floor Switches are triggered");
-        }
+        System.out.println("All the Floor Switches are triggered");
     }
 
     public int getWidth() {
@@ -108,13 +88,17 @@ public class Dungeon implements DungeonObserver{
         TriggerAtBeginning(entity);
     }
 
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
     /**
      * method for triggering switch at the start of the game when the boulder entity is added on the top of the switch
      * @param entity
      */
     public void TriggerAtBeginning (Entity entity) {
         if (entity.getClass() == Boulder.class) {
-            int index = onSwitch(entity.getX(), entity.getY());
+            int index = findEntityIndexByClass(entity.getX(), entity.getY(), Switch.class);
             if (index != -1) { 
                 Switch s = (Switch) entities.get(index);
                 s.update(entity);
@@ -127,9 +111,10 @@ public class Dungeon implements DungeonObserver{
      * @param obj
      * @param player
      */
-    public void triggerAfterPush (Entity obj, Entity player) {
-        int Old = onSwitch(player.getX(), player.getY());
-        int New = onSwitch(obj.getX(), obj.getY());
+    public void UpdateOldAndNewSwitch (Boulder obj, Player player) {
+        int Old = findEntityIndexByClass(player.getX(), player.getY(), Switch.class);
+        int New = findEntityIndexByClass(obj.getX(), obj.getY(), Switch.class);
+
         // shut off the switch at the old position of Boulder
         if (Old != -1) {
             Switch oldSwitch = (Switch) entities.get(Old);
@@ -141,15 +126,6 @@ public class Dungeon implements DungeonObserver{
             newSwitch.update(obj);
         }
     }
-
-    /*
-    public boolean BoulderIsMoved(Entity obj, int oldX, int oldY) {
-        // if the position of obj is the same as the old position (then the obj is not moved)
-        if (obj.getX() == oldX && obj.getY() == oldY) {
-            return false;
-        }
-        return true;
-    }*/
 
     /**
      * method for checking if square(x,y) contains collidable item
@@ -190,36 +166,21 @@ public class Dungeon implements DungeonObserver{
     }
 
     /**
-     * method for checking if the square with coordinates(x,y) contains switch
+     * method to find the index of entity (of the Class given) exists in Square(x, y)
      * @param x
      * @param y
-     * @return entity index if the square contains switch else return -1
+     * @param c
+     * @return index of entity of Class c in Square(x, y), return -1 if not found
      */
-    public int onSwitch(int x, int y) {
+    public int findEntityIndexByClass(int x, int y, Class c) {
         List<Integer> index = entityIndex(x, y);
         for (Integer i : index) {
             Entity entity = entities.get(i);
-            if (entity.getClass() == Switch.class) {
+            if (entity.getClass() == c) {
                 return i;
             }
         }
         return -1;
-    }
-
-    /**
-     * method to check if all the switches are triggered
-     * @return true if all triggered, else false
-     */
-    public boolean allTrigger() {
-        for (Entity e : entities) {
-            if (e.getClass() == Switch.class) {
-                Switch s = (Switch) e;
-                if (s.getTrigger() == 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     /**
@@ -233,15 +194,19 @@ public class Dungeon implements DungeonObserver{
 
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
-            //if (entity != null) {
             if (entity.getX() == x && entity.getY() == y) {
                 entitiesInOneSquare.add(i);
             }
-            //}
         }
         return entitiesInOneSquare;
     }
 
+    /**
+     * method to find uncollidable adjacentObj from list of entities 
+     * @param x
+     * @param y
+     * @return entity if found else return null
+     */
     public Entity adjacentObj(int x, int y) {
         for (Entity e : entities) {
             if (e.getX() == x && e.getY() == y && !e.isCollidable()) {
@@ -251,4 +216,34 @@ public class Dungeon implements DungeonObserver{
         return null;
     }
 
+    /**
+     * method to find adjacent entity of the entity(player or enemy) given (based on the movement)
+     * @param entity
+     * @return return adjacent entity if found else return null
+     */
+    public Entity getAdjacentObj(Entity entity) {
+        String recentMovement = "";
+        int x = -1;
+        int y = -1;
+        if (entity instanceof Player) {
+            Player player = (Player) entity;
+            recentMovement = player.getRecentMovement();
+            x = player.getX();
+            y = player.getY();
+        }        
+
+        if  (recentMovement == "up") { 
+            return adjacentObj(x, y - 1);
+        }
+        else if (recentMovement == "down") { 
+            return adjacentObj(x, y + 1);
+        }
+        else if  (recentMovement == "right") { 
+            return adjacentObj(x + 1, y);          
+        }
+        else if (recentMovement == "left") { 
+            return adjacentObj(x - 1, y);
+        }
+        return null;
+    }
 }

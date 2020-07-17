@@ -16,7 +16,7 @@ public class Boulder extends Entity {
     public void notifyDungeon() {
         dungeon.update(this);
     }
-    
+
     @Override
     public void update(Entity entity) {
         if (entity instanceof Player) {
@@ -25,26 +25,37 @@ public class Boulder extends Entity {
         }
     }
 
+    /**
+     * method to set x and y coordinates of the Boulder
+     * @param x
+     * @param y
+     */
     public void resetPosition(int x, int y) {
         x().set(x);
         y().set(y);
     }
 
+    /**
+     * method to push boulder if the boulder will not collide with entity in adjacent square
+     * @param x     old x coordinate of the Boulder
+     * @param y     old y coordinate of the Boulder
+     * @param player
+     */
     public void pushBoulder(int x, int y, Player player) {
         String move = player.getRecentMovement();
-        if (move == "left" && !player.willCollide(x - 1, y)) {
+        if (move == "left" && !dungeon.willCollide(x - 1, y)) {
             resetPosition(x - 1, y);
             notifyDungeon();
         }
-        if (move == "right" && !player.willCollide(x + 1, y)) {
+        if (move == "right" && !dungeon.willCollide(x + 1, y)) {
             resetPosition(x + 1, y);
             notifyDungeon();
         }
-        if (move == "up" && !player.willCollide(x, y - 1)) {
+        if (move == "up" && !dungeon.willCollide(x, y - 1)) {
             resetPosition(x, y - 1);
             notifyDungeon();
         }
-        if (move == "down" && !player.willCollide(x, y + 1)) {
+        if (move == "down" && !dungeon.willCollide(x, y + 1)) {
             resetPosition(x, y + 1);
             notifyDungeon();
         }
