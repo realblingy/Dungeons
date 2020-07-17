@@ -33,10 +33,6 @@ public class Dungeon implements DungeonObserver{
         if (entity instanceof Player) {
             update( (Player) entity);
         }
-
-        if (entity instanceof Boulder) {
-            update ( (Boulder) entity);
-        }
     
     }
 
@@ -62,14 +58,6 @@ public class Dungeon implements DungeonObserver{
             }
         }
     }
-
-    // public void update(Boulder boulder) {
-    //     for (Entity obj : entities) {
-    //         if (boulder.willCollide(obj) && !boulder.equals(obj)) {
-    //             boulder.update(obj);
-    //         }
-    //     }
-    // }
 
     public int getWidth() {
         return width;
