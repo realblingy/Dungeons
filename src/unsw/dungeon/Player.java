@@ -55,10 +55,11 @@ public class Player extends Entity {
             if (!willCollide(getX() - 1, getY())) {
                 x().set(getX() - 1);
             }
+            
             else {
                 notifyDungeon();
-            }          
-        }            
+            }  
+        }          
     }
     public void moveRight() {
         if (getX() < dungeon.getWidth() - 1) {
@@ -82,31 +83,36 @@ public class Player extends Entity {
     }
 
     public boolean willCollide(Entity entity) {
-            int entityX = entity.getX();
-            int entityY = entity.getY();
-
-            if  (recentMovement == "up") { 
-                if (entityX == getX() && entityY == getY() - 1) {
-                     return dungeon.willCollide(entityX, entityY);
-                }
+        int entityX = entity.getX();
+        int entityY = entity.getY();
+        
+        if  (recentMovement == "up") { 
+            if (entityX == getX() && entityY == getY() - 1) {
+                return dungeon.willCollide(entityX, entityY);
+                    
             }
-            else if (recentMovement == "down") { 
-                if (entityX == getX() && entity.getY() == getY() + 1) {
-                    return dungeon.willCollide(entityX, entityY);
-                }
-            }
-            else if  (recentMovement == "right") { 
-                if (entityX == getX() + 1 && entityY == getY()) {
-                     return dungeon.willCollide(entityX, entityY);
-                }
-            }
-            else if (recentMovement == "left") { 
-                if (entityX == getX() - 1 && entity.getY() == getY()) {
-                    return dungeon.willCollide(entityX, entityY);
-                }
-            }
-
-            return false;
         }
+        else if (recentMovement == "down") { 
+            if (entityX == getX() && entity.getY() == getY() + 1) {
+                return dungeon.willCollide(entityX, entityY);
+            }
+        }
+        else if  (recentMovement == "right") { 
+            if (entityX == getX() + 1 && entityY == getY()) {
+                    return dungeon.willCollide(entityX, entityY);
+            }
+        }
+        else if (recentMovement == "left") { 
+            if (entityX == getX() - 1 && entity.getY() == getY()) {
+                return dungeon.willCollide(entityX, entityY);
+            }
+        }
+        return false;
     }
+
+    public void updatePosition(int x, int y) {
+        x().set(x);
+        y().set(y);
+    }
+}
 

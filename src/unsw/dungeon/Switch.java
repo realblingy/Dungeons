@@ -23,11 +23,7 @@ public class Switch extends Entity {
     public void update(Entity entity) {
         if (entity instanceof Boulder) {
             Boulder boulder = (Boulder) entity;
-            setTrigger();
-        }
-        if (entity instanceof Player) {
-            Player player = (Player) entity;
-            shutOffTrigger();
+            setTrigger(boulder);
         }
     }
 
@@ -36,12 +32,18 @@ public class Switch extends Entity {
      * if the switch is already trigger then do nothing
      * if the switch is off then trigger the switch
      */
-    public void setTrigger() {
-        if (trigger == 0) {
+    public void setTrigger(Boulder boulder) {
+        if (trigger == 0 && getX() == boulder.getX() && getY() == boulder.getY()) {
             this.trigger = 1;
             System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is trigger");
         }
-        
+
+        if (trigger == 1) {
+            if (boulder.getX() != getX() || boulder.getY() != getY()) {
+                this.trigger = 0;
+                System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is shut off");
+            }
+        }
     }
 
     /**
