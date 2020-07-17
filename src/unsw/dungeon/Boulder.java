@@ -28,19 +28,15 @@ public class Boulder extends Entity {
         String move = player.getRecentMovement();
         if (move == "left" && !player.willCollide(x - 1, y)) {
             resetPosition(x - 1, y);
-            player.x().set(x);
         }
         if (move == "right" && !player.willCollide(x + 1, y)) {
             resetPosition(x + 1, y);
-            player.x().set(x);
         }
         if (move == "up" && !player.willCollide(x, y - 1)) {
             resetPosition(x, y - 1);
-            player.y().set(y);
         }
         if (move == "down" && !player.willCollide(x, y + 1)) {
             resetPosition(x, y + 1);
-            player.y().set(y);
         }
     }
 }
