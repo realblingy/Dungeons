@@ -66,12 +66,12 @@ public abstract class DungeonLoader {
             entity = exit;
             break;
         case "boulder":
-            Boulder boulder = new Boulder(x, y);
+            Boulder boulder = new Boulder(dungeon, x, y);
             onLoad(boulder);
             entity = boulder;
             break;
         case "switch":
-            Switch switchPlate = new Switch(x, y);
+            Switch switchPlate = new Switch(dungeon, x, y);
             onLoad(switchPlate);
             entity = switchPlate;
             break; 

@@ -33,20 +33,27 @@ public class Dungeon implements DungeonObserver{
         if (entity instanceof Player) {
             update( (Player) entity);
         }
-    
+        
+        if (entity instanceof Boulder) {
+            update( (Boulder) entity);
+        }
+
+        if (entity instanceof Switch) {
+            update( (Switch) entity);
+        }
     }
 
     public void update(Player player) {
-        
+        /*
         for (Entity obj : entities) {
             // For walls and boulders
             if (player.willCollide(obj) && !player.equals(obj)) {
-                int oldX = obj.getX();
-                int oldY = obj.getY();
+                //int oldX = obj.getX();
+                //int oldY = obj.getY();
                 // push if obj is a boulder 
-                if (obj.getClass() == Boulder.class) {
-                    obj.update(player);
-                    // if the boulder is pushed
+                //if (obj.getClass() == Boulder.class) {
+                obj.update(player);
+                    /* if the boulder is pushed
                     //if (donePush(player, oldX, oldY)) {
                     if (BoulderIsMoved(obj, oldX, oldY)) {
                         // update the player postion 
@@ -55,7 +62,28 @@ public class Dungeon implements DungeonObserver{
                         triggerAfterPush(obj, player);
                     }
                 }
+            }*/
+        Entity obj = player.getAdjacentObj();
+        if (obj == null) {
+            player.updatePosition();
+        }
+        else {
+            if (player.willCollide(obj.getX(), obj.getY()) && !player.equals(obj)) {
+                obj.update(player);
             }
+
+        }  
+    }
+
+    public void update(Boulder boulder) {
+        player.update(boulder);
+        triggerAfterPush(boulder, player);
+
+    }
+
+    public void update(Switch switchPlate) {
+        if (allTrigger()) {
+            System.out.println("All the Floor Switches are triggered");
         }
     }
 
@@ -111,26 +139,17 @@ public class Dungeon implements DungeonObserver{
         if (New != -1) {
             Switch newSwitch = (Switch) entities.get(New);
             newSwitch.update(obj);
-            if (allTrigger()) {
-                System.out.println("All the Floor Switches are triggered");
-            }
         }
     }
 
-    /**
-     * method for checking if the obj is pushed
-     * @param obj   obj with the new position(x, y)
-     * @param oldX  old x coordinate of obj
-     * @param oldY  old y coordinate of obj
-     * @return
-     */
+    /*
     public boolean BoulderIsMoved(Entity obj, int oldX, int oldY) {
         // if the position of obj is the same as the old position (then the obj is not moved)
         if (obj.getX() == oldX && obj.getY() == oldY) {
             return false;
         }
         return true;
-    }
+    }*/
 
     /**
      * method for checking if square(x,y) contains collidable item
@@ -221,6 +240,15 @@ public class Dungeon implements DungeonObserver{
             //}
         }
         return entitiesInOneSquare;
+    }
+
+    public Entity adjacentObj(int x, int y) {
+        for (Entity e : entities) {
+            if (e.getX() == x && e.getY() == y && !e.isCollidable()) {
+                return e;
+            }
+        }
+        return null;
     }
 
 }

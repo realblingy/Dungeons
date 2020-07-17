@@ -1,7 +1,7 @@
 package unsw.dungeon;
 
 public class Switch extends Entity {
-    
+    private Dungeon dungeon;
     private int trigger;
 
     /**
@@ -9,10 +9,15 @@ public class Switch extends Entity {
      * @param x
      * @param y
      */
-    public Switch (int x, int y) {
+    public Switch (Dungeon dungeon, int x, int y) {
         super(x, y, true);
         // first shut off the switch
         this.trigger = 0;   
+        this.dungeon = dungeon;
+    }
+
+    public void notifyDungeon() {
+        dungeon.update(this);
     }
 
     public int getTrigger() {
@@ -36,6 +41,7 @@ public class Switch extends Entity {
         if (trigger == 0 && getX() == boulder.getX() && getY() == boulder.getY()) {
             this.trigger = 1;
             System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is trigger");
+            notifyDungeon();
         }
 
         if (trigger == 1) {
@@ -44,15 +50,5 @@ public class Switch extends Entity {
                 System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is shut off");
             }
         }
-    }
-
-    /**
-     * method for shut off the switch after pushBoulder
-     * therefore now the player is now at the old boulder position 
-     * meaing the boulder is pushed off the switch 
-     */
-    public void shutOffTrigger() {
-        this.trigger = 0;
-        System.out.println("switch ("+getX()+" , "+getY()+" ) "+" is shut off");
     }
 }
