@@ -1,5 +1,8 @@
 package unsw.dungeon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The player entity
  * @author Robert Clifton-Everest
@@ -9,6 +12,7 @@ public class Player extends Entity {
 
     private Dungeon dungeon;
     private String recentMovement;
+    private List<Item> inventory;
 
     /**
      * Create a player positioned in square (x,y)
@@ -19,6 +23,7 @@ public class Player extends Entity {
         super(x, y, false);
         recentMovement = "";
         this.dungeon = dungeon;
+        this.inventory = new ArrayList<>();
     }
 
     public void notifyDungeon() {
@@ -76,6 +81,55 @@ public class Player extends Entity {
         if (recentMovement == "right") {
             x().set(getX() + 1);
         }
+    }
+
+    public void addItem(Item item) {
+        inventory.add(item);
+    }
+
+    public void removeItem(Item item) {
+        inventory.remove(item);
+    }
+
+    /**
+     * method to find the key of a specific door with id
+     * @param id
+     * @return  key if found else return null
+     */
+    public Item findKey(int id) {
+        // there will be only one key in inventory at all time
+        for (Item item : inventory) {
+            if (item instanceof DungeonKey) {
+                DungeonKey key = (DungeonKey) item;
+                if (key.getID() == id) {
+                    return key;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * method to determine if the player can pick up the item or not
+     * @param requiredPickUp    item that is required to be picked up
+     * @return  true if the item can be picked up else false
+     */
+    public boolean canPickUp(Item requiredPickUp) {
+        int n_key = 0;
+        int n_sword = 0;
+        for (Item item : inventory) {
+            if (item instanceof DungeonKey) {
+                n_key++;
+            }
+            if (item instanceof Sword) {
+                n_sword++;
+            }
+        }
+        if ((n_key != 0 && (requiredPickUp instanceof DungeonKey)) ||
+            (n_sword != 0 && (requiredPickUp instanceof Sword))) {
+            return false;
+        }
+        return true;
     }
 }
 

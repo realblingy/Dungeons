@@ -29,6 +29,10 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image exitImage;
     private Image boulderImage;
     private Image switchImage;
+    private Image closedDoorImage;
+    private Image openDoorImage;
+    private Image keyImage;
+    private Image swordImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -39,7 +43,10 @@ public class DungeonControllerLoader extends DungeonLoader {
         exitImage = new Image((new File("images/exit.png")).toURI().toString());
         boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
         switchImage = new Image((new File("images/pressure_plate.png")).toURI().toString());
-
+        closedDoorImage = new Image((new File("images/closed_door.png")).toURI().toString());
+        keyImage = new Image((new File("images/key.png")).toURI().toString());
+        openDoorImage = new Image((new File("images/open_door.png")).toURI().toString());
+        swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
     }
 
     @Override
@@ -67,10 +74,28 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
 
     @Override
+    public void onLoad(Door closedDoor) {
+        ImageView view = new ImageView(closedDoorImage);
+        addEntity(closedDoor, view);
+    }
+
+    @Override
+    public void onLoad(DungeonKey key) {
+        ImageView view = new ImageView(keyImage);
+        addEntity(key, view);
+    }
+
+    @Override
     public void onLoad(Switch switchPlate) {
         ImageView view = new ImageView(switchImage);
         addEntity(switchPlate, view);
     }
+
+    @Override
+    public void onLoad(Sword sword) {
+        ImageView view = new ImageView(swordImage);
+        addEntity(sword, view);
+    }    
 
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);

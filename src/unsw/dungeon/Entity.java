@@ -53,4 +53,8 @@ public class Entity {
     public void update(Entity entity) {
         return;
     }
+
+    public void resetCollidable(boolean permission) {
+        this.collidable = permission;
+    }
 }

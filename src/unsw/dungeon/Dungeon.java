@@ -41,6 +41,15 @@ public class Dungeon implements DungeonObserver{
         if (entity instanceof Switch) {
             update( (Switch) entity);
         }
+
+        // this will be for potion only
+        if (entity instanceof Item) {
+            update ( (Item) entity);
+        }
+
+        if (entity instanceof Door) {
+            update ( (Door) entity);
+        }
     }
 
     public void update(Player player) {
@@ -50,10 +59,7 @@ public class Dungeon implements DungeonObserver{
             player.updatePosition();
         }
         else {
-            if (willCollide(obj.getX(), obj.getY()) && !player.equals(obj)) {
-                obj.update(player);
-            }
-
+            obj.update(player);
         }  
     }
 
@@ -65,6 +71,15 @@ public class Dungeon implements DungeonObserver{
 
     public void update(Switch switchPlate) {
         System.out.println("All the Floor Switches are triggered");
+    }
+
+    public void update(Item item) {
+        // TODO: for when the item is potion class
+        return;
+    }
+
+    public void update(Door door) {
+        player.updatePosition();
     }
 
     public int getWidth() {
@@ -88,6 +103,10 @@ public class Dungeon implements DungeonObserver{
         TriggerAtBeginning(entity);
     }
 
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
+    }
+
     public List<Entity> getEntities() {
         return entities;
     }
@@ -98,7 +117,8 @@ public class Dungeon implements DungeonObserver{
      */
     public void TriggerAtBeginning (Entity entity) {
         if (entity.getClass() == Boulder.class) {
-            int index = findEntityIndexByClass(entity.getX(), entity.getY(), Switch.class);
+            int index = findSwitch(entity.getX(), entity.getY());
+
             if (index != -1) { 
                 Switch s = (Switch) entities.get(index);
                 s.update(entity);
@@ -112,9 +132,8 @@ public class Dungeon implements DungeonObserver{
      * @param player
      */
     public void UpdateOldAndNewSwitch (Boulder obj, Player player) {
-        int Old = findEntityIndexByClass(player.getX(), player.getY(), Switch.class);
-        int New = findEntityIndexByClass(obj.getX(), obj.getY(), Switch.class);
-
+        int Old = findSwitch(player.getX(), player.getY());
+        int New = findSwitch(obj.getX(), obj.getY());
         // shut off the switch at the old position of Boulder
         if (Old != -1) {
             Switch oldSwitch = (Switch) entities.get(Old);
@@ -155,7 +174,7 @@ public class Dungeon implements DungeonObserver{
         else if (entitiesInOneSquare.size() > 1) {
             for (Entity entity : entitiesInOneSquare) {
                 // If any of the entities are boulders return true
-                if (entity.getClass() == Boulder.class) {
+                if (entity instanceof Boulder) {
                     return true;
                 }
             }
@@ -166,17 +185,16 @@ public class Dungeon implements DungeonObserver{
     }
 
     /**
-     * method to find the index of entity (of the Class given) exists in Square(x, y)
+     * method to find the index of Switch if exist in Square(x, y)
      * @param x
      * @param y
-     * @param c
-     * @return index of entity of Class c in Square(x, y), return -1 if not found
+     * @return index of switch else return null
      */
-    public int findEntityIndexByClass(int x, int y, Class c) {
+    public int findSwitch(int x, int y) {
         List<Integer> index = entityIndex(x, y);
         for (Integer i : index) {
             Entity entity = entities.get(i);
-            if (entity.getClass() == c) {
+            if (entity instanceof Switch) {
                 return i;
             }
         }
@@ -209,7 +227,8 @@ public class Dungeon implements DungeonObserver{
      */
     public Entity adjacentObj(int x, int y) {
         for (Entity e : entities) {
-            if (e.getX() == x && e.getY() == y && !e.isCollidable()) {
+            //if (e.getX() == x && e.getY() == y && !e.isCollidable()) {
+            if (e.getX() == x && e.getY() == y && !(e instanceof Switch)) {
                 return e;
             }
         }
@@ -246,4 +265,5 @@ public class Dungeon implements DungeonObserver{
         }
         return null;
     }
+
 }

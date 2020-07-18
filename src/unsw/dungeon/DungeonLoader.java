@@ -75,6 +75,21 @@ public abstract class DungeonLoader {
             onLoad(switchPlate);
             entity = switchPlate;
             break; 
+        case "closedDoor":
+            Door closedDoor = new Door(dungeon, x, y, json.getInt("id"));
+            onLoad(closedDoor);
+            entity = closedDoor;
+            break;
+        case "key":
+            DungeonKey key = new DungeonKey(dungeon, x, y, json.getInt("id"));
+            onLoad(key);
+            entity = key;
+            break;
+        case "sword":
+            Sword sword = new Sword(dungeon, x, y);
+            onLoad(sword);
+            entity = sword;
+            break;
         // TODO Handle other possible entities
         }
         dungeon.addEntity(entity);
@@ -89,6 +104,12 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Boulder boulder);
 
     public abstract void onLoad(Switch switchPlate);
+
+    public abstract void onLoad(Door closedDoor);
+
+    public abstract void onLoad(DungeonKey key);
+
+    public abstract void onLoad(Sword sword);
 
     // TODO Create additional abstract methods for the other entities
 
