@@ -183,6 +183,11 @@
       "type": "wall"
     },
     {
+      "x": 6,
+      "y": 3,
+      "type": "potion"
+    },
+    {
       "x": 15,
       "y": 3,
       "type": "wall"
@@ -219,6 +224,11 @@
     },
     {
       "x": 8,
+      "y": 5,
+      "type": "wall"
+    },
+    {
+      "x": 9,
       "y": 5,
       "type": "wall"
     },
@@ -376,16 +386,6 @@
       "x": 6,
       "y": 10,
       "type": "wall"
-    },
-    {
-      "x": 7,
-      "y": 10,
-      "type": "treasure"
-    },
-    {
-      "x": 11,
-      "y": 10,
-      "type": "invincibility"
     },
     {
       "x": 17,

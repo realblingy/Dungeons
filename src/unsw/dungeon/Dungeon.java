@@ -20,12 +20,19 @@ public class Dungeon implements DungeonObserver{
     private int width, height;
     private List<Entity> entities;
     private Player player;
+    private DungeonLoader dungeonLoader;
 
-    public Dungeon(int width, int height) {
+    public Dungeon(DungeonLoader dungeonLoader, int width, int height) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
+        this.dungeonLoader = dungeonLoader;
+    }
+
+    public void removeEntity(Entity entity) {
+        dungeonLoader.removeEntity(entity);
+        entities.remove(entity);
     }
     
     @Override
@@ -74,7 +81,7 @@ public class Dungeon implements DungeonObserver{
     }
 
     public void update(Item item) {
-        // TODO: for when the item is potion class
+        removeEntity(item);
         return;
     }
 
@@ -100,21 +107,21 @@ public class Dungeon implements DungeonObserver{
 
     public void addEntity(Entity entity) {
         entities.add(entity);
-        TriggerAtBeginning(entity);
+        // TriggerAtBeginning(entity);
     }
 
-    public void removeEntity(Entity entity) {
-        entities.remove(entity);
-    }
+    // public void removeEntity(Entity entity) {
+    //     entities.remove(entity);
+    // }
 
     public List<Entity> getEntities() {
         return entities;
     }
 
     /**
-     * method for triggering switch at the start of the game when the boulder entity is added on the top of the switch
-     * @param entity
-     */
+    //  * method for triggering switch at the start of the game when the boulder entity is added on the top of the switch
+    //  * @param entity
+    //  */
     public void TriggerAtBeginning (Entity entity) {
         if (entity.getClass() == Boulder.class) {
             int index = findSwitch(entity.getX(), entity.getY());
@@ -227,9 +234,11 @@ public class Dungeon implements DungeonObserver{
      */
     public Entity adjacentObj(int x, int y) {
         for (Entity e : entities) {
-            //if (e.getX() == x && e.getY() == y && !e.isCollidable()) {
-            if (e.getX() == x && e.getY() == y && !(e instanceof Switch)) {
-                return e;
+            if (e != null) {
+                //if (e.getX() == x && e.getY() == y && !e.isCollidable()) {
+                if (e.getX() == x && e.getY() == y && !(e instanceof Switch)) {
+                    return e;
+                }
             }
         }
         return null;

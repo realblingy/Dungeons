@@ -5,7 +5,7 @@ public class Item extends Entity {
     private Dungeon dungeon;
 
     public Item (Dungeon dungeon, int x, int y) {
-        super(x, y, true);
+        super(x, y, false);
         this.dungeon = dungeon;
     }
 
@@ -25,9 +25,10 @@ public class Item extends Entity {
             
             if (player.canPickUp(this)) {
                 // for potion
-                //if (getClass() == Potion.class) {
-                //    notifyDungeon();
-                //}
+                if (getClass() == Potion.class) {
+                    Potion potion = ( Potion ) this;
+                   potion.updatePlayer(player);
+                }
 
                 // for key, sword and treasure
                 addToInventory(player);

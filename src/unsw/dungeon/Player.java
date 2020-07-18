@@ -2,6 +2,8 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The player entity
@@ -13,6 +15,7 @@ public class Player extends Entity {
     private Dungeon dungeon;
     private String recentMovement;
     private List<Item> inventory;
+    private boolean invincible;
 
     /**
      * Create a player positioned in square (x,y)
@@ -109,6 +112,25 @@ public class Player extends Entity {
         return null;
     }
 
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void activateInvincibility() {
+        invincible = true;
+        Thread newThread = new Thread(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(10);
+                invincible = false;
+                System.out.println(invincible);
+            }
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        newThread.start();
+    }
+
     /**
      * method to determine if the player can pick up the item or not
      * @param requiredPickUp    item that is required to be picked up
@@ -117,6 +139,9 @@ public class Player extends Entity {
     public boolean canPickUp(Item requiredPickUp) {
         int n_key = 0;
         int n_sword = 0;
+        if (requiredPickUp instanceof Potion) {
+            return true;
+        }
         for (Item item : inventory) {
             if (item instanceof DungeonKey) {
                 n_key++;

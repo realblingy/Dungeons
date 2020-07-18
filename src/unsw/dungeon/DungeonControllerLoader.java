@@ -33,6 +33,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image openDoorImage;
     private Image keyImage;
     private Image swordImage;
+    private Image potionImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -47,6 +48,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         keyImage = new Image((new File("images/key.png")).toURI().toString());
         openDoorImage = new Image((new File("images/open_door.png")).toURI().toString());
         swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
+        potionImage = new Image((new File("images/brilliant_blue_new.png")).toURI().toString());
     }
 
     @Override
@@ -97,9 +99,23 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(sword, view);
     }    
 
+    @Override
+    public void onLoad(Potion potion) {
+        ImageView view = new ImageView(potionImage);
+        addEntity(potion, view);
+    }    
+
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entities.add(view);
+    }
+
+    public void removeEntity(Entity entity) {
+        ImageView image = null;
+        if (entity instanceof Potion) {
+            image = new ImageView(potionImage);
+        }
+        image.setVisible(false);
     }
 
     /**

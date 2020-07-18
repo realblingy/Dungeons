@@ -32,7 +32,7 @@ public abstract class DungeonLoader {
         int width = json.getInt("width");
         int height = json.getInt("height");
 
-        Dungeon dungeon = new Dungeon(width, height);
+        Dungeon dungeon = new Dungeon(this, width, height);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 
@@ -90,6 +90,11 @@ public abstract class DungeonLoader {
             onLoad(sword);
             entity = sword;
             break;
+        case "potion":
+            Potion potion = new Potion(dungeon, x, y);
+            onLoad(potion);
+            entity = potion;
+            break;
         // TODO Handle other possible entities
         }
         dungeon.addEntity(entity);
@@ -111,6 +116,9 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Sword sword);
 
+    public abstract void onLoad(Potion potion);
+
+    public abstract void removeEntity(Entity entity);
     // TODO Create additional abstract methods for the other entities
 
 }
