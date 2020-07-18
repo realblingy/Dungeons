@@ -94,6 +94,11 @@ public class Player extends Entity {
         inventory.remove(item);
     }
 
+    public void move(int x, int y) {
+        x().set(x);
+        y().set(y);
+    }
+
     /**
      * method to find the key of a specific door with id
      * @param id

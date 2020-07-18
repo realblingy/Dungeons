@@ -275,4 +275,36 @@ public class Dungeon implements DungeonObserver{
         return null;
     }
 
+    public boolean entityAtLocation(int x, int y) {
+        for (Entity entity : entities) {
+            return (entity.getX() == x && entity.getY() == entity.getY());
+        }
+        return false;
+    }
+
+    public void movePlayer(int x, int y) {
+        if (!entityAtLocation(x, y)) {
+            player.move(x, y);
+        }
+        if (!entityAtLocation(x, y + 1)) {
+            player.move(x, y + 1);
+        }
+        if (!entityAtLocation(x, y - 1)) {
+            player.move(x, y - 1);
+        }
+    }
+
+    public Portal matchingPortal(Portal portal) {
+        for (Entity entity : entities) {
+            if (entity instanceof Portal) {
+                Portal potentialMatch = (Portal) entity;
+                if (portal.matchPortal(potentialMatch)) {
+                    return potentialMatch;
+                } 
+            }
+        }
+        return null;
+    } 
+
+
 }
