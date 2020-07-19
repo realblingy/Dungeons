@@ -107,6 +107,12 @@ public abstract class DungeonLoader {
             onLoad(treasure);
             entity = treasure;
             break;
+        case "enemy":
+            Enemy enemy = new Enemy(dungeon, x, y);
+            dungeon.setEnemy(enemy);
+            onLoad(enemy);
+            entity = enemy;
+            break;
 
         // TODO Handle other possible entities
         }
@@ -136,6 +142,8 @@ public abstract class DungeonLoader {
     public abstract void removeEntity(Entity entity);
 
     public abstract void onLoad(Treasure treasure);
+
+    public abstract void onLoad(Enemy enemy);
     
     // TODO Create additional abstract methods for the other entities
 

@@ -13,7 +13,7 @@ public class Enemy extends Entity {
     public void notifyDungeon() {
         dungeon.update(this);
     }
-
+    
     // this update will be called only when enemy is on the square that the  player wants to move
     @Override
     public void update(Entity entity) {
@@ -21,12 +21,17 @@ public class Enemy extends Entity {
             Player player = (Player) entity;
             if (player.isInvincible()) {
                 // enemy dies (player invincible)
-                return;
+                System.out.println("Player is invincible");
+                notifyDungeon();
             }
             else {
                 if (player.reduceSwordhits()) {
                     // player is holding sword (enemy dies)
-                    return;
+                    System.out.println("Player holds sword");
+                    notifyDungeon();
+                }
+                else {
+                    System.out.println("        Player death");
                 }
             }
         }
@@ -34,17 +39,21 @@ public class Enemy extends Entity {
 
     // this function will be called only after player has made a move
     public void updatePosition(Player player) {
-
         if (player.isInvincible()) {
             MoveAwayFromPlayer(player);
         }
         else {
             MoveTowardPlayer(player);
-            resetPosition();
         }
     }
 
     public void MoveTowardPlayer(Player player) {
+        if (collideWithPlayer(player)) {
+            move = "";
+            //notifyDungeon();
+            update(player);
+            return;
+        }
         // player on top
         if (player.getY() < getY()) {
             // move enemy up
@@ -54,6 +63,8 @@ public class Enemy extends Entity {
             else {
                 checkLeftRight(player);
             }
+            resetMove();
+            return;
         }
         if (player.getY() > getY()) {
             // move enemy down
@@ -63,6 +74,8 @@ public class Enemy extends Entity {
             else {
                 checkLeftRight(player);
             }
+            resetMove();
+            return;
         }
         if (player.getX() < getX()) {
             // move enemy left
@@ -72,6 +85,8 @@ public class Enemy extends Entity {
             else {
                 checkUpDown(player);
             }
+            resetMove();
+            return;
         }
         if (player.getX() > getX()) {
             // move enemy right
@@ -81,9 +96,16 @@ public class Enemy extends Entity {
             else {
                 checkUpDown(player);
             }
+            resetMove();
+            return;
         }
-    
+    }
 
+    public void resetMove() {
+        if (move != "") {
+            resetPosition();
+            move = "";
+        }
     }
 
     public void MoveAwayFromPlayer(Player player) {
@@ -114,7 +136,7 @@ public class Enemy extends Entity {
                     move = "Down";
                 }
                 else {
-                    checkLeftRight(player);
+                    decideLeftRight(player);
                 }
             }
             if (player.getY() > getY()) {
@@ -122,18 +144,38 @@ public class Enemy extends Entity {
                     move = "up";
                 }
                 else {
-                    checkLeftRight(player);
+                    decideLeftRight(player);
                 }
             }
         }
+        resetMove();
     }
 
-    public void checkLeftRight(Player player) {
+    public void decideLeftRight(Player player) {
         if (!dungeon.willCollide(getX() + 1, getY())) {
             move = "right";
         }
         else {
             move = "left";
+        }
+    }
+
+    public void checkLeftRight(Player player) {
+        if (player.getX() < getX()) {
+            if (!dungeon.willCollide(getX() - 1, getY())) {
+                move = "left";
+            }
+            else {
+                move = "right";
+            }
+        }
+        else {
+            if (!dungeon.willCollide(getX() + 1, getY())) {
+                move = "right";
+            }
+            else {
+                move = "left";
+            }
         }
     }
 
@@ -160,10 +202,6 @@ public class Enemy extends Entity {
         }
     }
 
-    public boolean collideWithPlayer(Player player, int x, int y) {
-        return player.getX() == x && player.getY() == y;
-    }
-
     public void resetPosition() {
         if (move == "up") {
             y().set(getY() - 1);
@@ -177,5 +215,25 @@ public class Enemy extends Entity {
         if (move == "right") {
             x().set(getX() + 1);
         }
+    }
+
+    public boolean collideWithPlayer(Player player) {
+        if (getX() == player.getX()) {
+            if (getY() - 1 == player.getY()) {
+                return true;
+            }
+            if (getY() + 1 == player.getY()) {
+                return true;
+            }
+        }
+        if (getY() == player.getY()) {
+            if (getX() - 1 == player.getX()) {
+                return true;
+            }
+            if (getX() + 1 == player.getX()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

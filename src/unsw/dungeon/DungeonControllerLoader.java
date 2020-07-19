@@ -36,6 +36,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image potionImage;
     private Image portalImage;
     private Image treasureImage;
+    private Image enemyImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -53,6 +54,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         potionImage = new Image((new File("images/brilliant_blue_new.png")).toURI().toString());
         portalImage = new Image((new File("images/portal.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
+        enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
     }
 
     @Override
@@ -121,6 +123,12 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(treasure, view);
     }
 
+    @Override
+    public void onLoad(Enemy enemy) {
+        ImageView view = new ImageView(enemyImage);
+        addEntity(enemy, view);
+    }
+
 
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
@@ -137,6 +145,15 @@ public class DungeonControllerLoader extends DungeonLoader {
         else if (entity instanceof Sword) {
             return swordImage;
         }
+        else if (entity instanceof DungeonKey) {
+            return keyImage;
+        }
+        else if (entity instanceof Door) {
+            return closedDoorImage;
+        }
+        else if (entity instanceof Enemy) {
+            return enemyImage;
+        }
         return null;
     }
 
@@ -147,6 +164,12 @@ public class DungeonControllerLoader extends DungeonLoader {
             try {
                 if (image.getImage().equals(entityImageView)) {
                     image.setImage(null);
+
+                    if (entity instanceof Door) {
+                        //ImageView view = new ImageView(openDoorImage);
+                        //addEntity(entity, view);
+                        image.setImage(openDoorImage);
+                    }
                 }
             } catch (NullPointerException e) {}
         }

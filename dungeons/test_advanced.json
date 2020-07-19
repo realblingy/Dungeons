@@ -24,6 +24,18 @@
       "type": "wall"
     },
     {
+      "x": 3,
+      "y": 1,
+      "type": "key",
+      "id": 0
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "type": "closedDoor",
+      "id": 0
+    },
+    {
       "x": 4,
       "y": 0,
       "type": "wall"
