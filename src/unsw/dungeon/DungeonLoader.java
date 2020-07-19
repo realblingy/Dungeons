@@ -31,8 +31,9 @@ public abstract class DungeonLoader {
     public Dungeon load() {
         int width = json.getInt("width");
         int height = json.getInt("height");
+        JSONObject goal = json.getJSONObject("goal-condition");
 
-        Dungeon dungeon = new Dungeon(this, width, height);
+        Dungeon dungeon = new Dungeon(this, width, height, goal);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 
@@ -61,7 +62,7 @@ public abstract class DungeonLoader {
             entity = wall;
             break;
         case "exit":
-            Exit exit = new Exit(x, y);
+            Exit exit = new Exit(dungeon,x, y);
             onLoad(exit);
             entity = exit;
             break;

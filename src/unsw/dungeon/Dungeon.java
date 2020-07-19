@@ -6,6 +6,9 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * A dungeon in the interactive dungeon player.
  *
@@ -21,18 +24,32 @@ public class Dungeon implements DungeonObserver{
     private List<Entity> entities;
     private Player player;
     private DungeonLoader dungeonLoader;
+    private MainGoal goal;
 
-    public Dungeon(DungeonLoader dungeonLoader, int width, int height) {
+    public Dungeon(DungeonLoader dungeonLoader, int width, int height, JSONObject goal) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
         this.dungeonLoader = dungeonLoader;
+        this.goal = createMainGoal(goal);
+        System.out.println(this.goal);
     }
 
     public void removeEntity(Entity entity) {
         dungeonLoader.removeEntity(entity);
         entities.remove(entity);
+    }
+
+    public MainGoal createMainGoal(JSONObject goal) {
+        MainGoal mainGoal = new MainGoal(goal.getString("goal"));
+        try {
+            JSONArray subGoals = goal.getJSONArray("subgoals");
+            System.out.println(subGoals);
+        } catch (Exception e) {
+            return mainGoal;
+        }
+        return mainGoal;
     }
     
     @Override
@@ -49,6 +66,10 @@ public class Dungeon implements DungeonObserver{
             update( (Switch) entity);
         }
 
+        if (entity instanceof Exit) {
+            update( (Exit) entity);
+        }
+
         // this will be for potion only
         if (entity instanceof Item) {
             update ( (Item) entity);
@@ -57,6 +78,11 @@ public class Dungeon implements DungeonObserver{
         if (entity instanceof Door) {
             update ( (Door) entity);
         }
+    }
+
+    public void setGoalComplete() {
+        goal.complete();
+        System.out.println("GOAL: " + goal.isComplete());
     }
 
     public void update(Player player) {
@@ -74,6 +100,12 @@ public class Dungeon implements DungeonObserver{
         player.update(boulder);
         UpdateOldAndNewSwitch(boulder, player);
 
+    }
+
+    public void update(Exit exit) {
+        player.move(exit.getX(), exit.getY());
+        player.setMove(false);
+        setGoalComplete();
     }
 
     public void update(Switch switchPlate) {
@@ -108,6 +140,10 @@ public class Dungeon implements DungeonObserver{
     public void addEntity(Entity entity) {
         entities.add(entity);
         // TriggerAtBeginning(entity);
+    }
+
+    public void setGoal(JSONObject goal) {
+        System.out.println(goal);
     }
 
     // public void removeEntity(Entity entity) {
