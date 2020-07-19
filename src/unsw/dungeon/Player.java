@@ -16,6 +16,7 @@ public class Player extends Entity {
     private String recentMovement;
     private List<Item> inventory;
     private boolean invincible;
+    private boolean canMove;
 
     /**
      * Create a player positioned in square (x,y)
@@ -27,6 +28,7 @@ public class Player extends Entity {
         recentMovement = "";
         this.dungeon = dungeon;
         this.inventory = new ArrayList<>();
+        canMove = true;
     }
 
     public void notifyDungeon() {
@@ -41,27 +43,27 @@ public class Player extends Entity {
     }
 
     public void moveUp() {
-        if (getY() > 0) {
+        if (getY() > 0 && canMove) {
             recentMovement = "up";
             notifyDungeon();
         }   
     }
 
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1) {
+        if (getY() < dungeon.getHeight() - 1 && canMove) {
             recentMovement = "down";
             notifyDungeon();
         }   
     }
 
     public void moveLeft() {
-        if (getX() > 0) {
+        if (getX() > 0 && canMove) {
             recentMovement = "left";
             notifyDungeon();
         }          
     }
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1) {
+        if (getX() < dungeon.getWidth() - 1 && canMove) {
             recentMovement = "right";
             notifyDungeon();
         }
@@ -97,6 +99,10 @@ public class Player extends Entity {
     public void move(int x, int y) {
         x().set(x);
         y().set(y);
+    }
+
+    public void setMove(boolean canMove) {
+        this.canMove = canMove;
     }
 
     /**

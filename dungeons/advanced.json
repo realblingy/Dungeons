@@ -560,6 +560,11 @@
       "type": "wall"
     },
     {
+      "x" : 10,
+      "y": 10,
+      "type" : "treasure"
+    },
+    {
       "x": 10,
       "y": 15,
       "type": "wall"
