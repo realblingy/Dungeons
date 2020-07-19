@@ -29,10 +29,11 @@ public class Item extends Entity {
                     Potion potion = ( Potion ) this;
                    potion.updatePlayer(player);
                 }
-
                 // for key, sword and treasure
                 addToInventory(player);
+                dungeon.removeEntity(entity);
             }
+            
         }
     }
 

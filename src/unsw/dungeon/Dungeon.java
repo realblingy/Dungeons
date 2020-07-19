@@ -38,7 +38,7 @@ public class Dungeon implements DungeonObserver{
 
     public void removeEntity(Entity entity) {
         dungeonLoader.removeEntity(entity);
-        entities.remove(entity);
+        // entities.remove(entity);
     }
 
     public MainGoal createMainGoal(JSONObject goal) {

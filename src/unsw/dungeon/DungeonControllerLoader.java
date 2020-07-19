@@ -35,6 +35,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image swordImage;
     private Image potionImage;
     private Image portalImage;
+    private Image treasureImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -51,6 +52,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
         potionImage = new Image((new File("images/brilliant_blue_new.png")).toURI().toString());
         portalImage = new Image((new File("images/portal.png")).toURI().toString());
+        treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
     }
 
     @Override
@@ -113,17 +115,41 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(portal, view);
     }    
 
+    @Override
+    public void onLoad(Treasure treasure) {
+        ImageView view = new ImageView(treasureImage);
+        addEntity(treasure, view);
+    }
+
+
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entities.add(view);
     }
 
-    public void removeEntity(Entity entity) {
-        ImageView image = null;
+    public Image getImage(Entity entity) {
         if (entity instanceof Potion) {
-            image = new ImageView(potionImage);
+            return potionImage;
         }
-        image.setVisible(false);
+        else if (entity instanceof Treasure) {
+            return treasureImage;
+        }
+        else if (entity instanceof Sword) {
+            return swordImage;
+        }
+        return null;
+    }
+
+    public void removeEntity(Entity entity) {
+        Image entityImageView = getImage(entity);
+        if (entityImageView == null) { return; }
+        for (ImageView image : entities) {
+            try {
+                if (image.getImage().equals(entityImageView)) {
+                    image.setImage(null);
+                }
+            } catch (NullPointerException e) {}
+        }
     }
 
     /**
