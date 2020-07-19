@@ -94,19 +94,17 @@ public class Dungeon implements DungeonObserver{
 
         Entity obj = getAdjacentObj(player);
         if (obj == null) {
-            System.out.println("i am null");
             player.updatePosition();
             if (enemy != null) {
                 enemy.updatePosition(player);
             }
         }
         else {
-            if (!(obj instanceof Enemy)) {
+            if (!(obj instanceof Enemy) && enemy != null) {
                 obj.update(player);
                 enemy.updatePosition(player);  
             }
             else {
-                System.out.println("i am enemy");
                 obj.update(player);
             }
         }  
