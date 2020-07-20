@@ -41,7 +41,7 @@ public class unitTest {
     public void testPlayerMovement() {
         Dungeon d = make.makeDungeon("exit", "maze.json", 20, 20);
         Player player = new Player(d, 0, 0);
-        d.assignPlayer(player);
+        d.setPlayer(player);
         // Moving down
         for (int x = 0; x < 5; x++) {
             player.moveDown();
@@ -73,10 +73,9 @@ public class unitTest {
     public void testExit(){
         Dungeon d = make.makeDungeon("exit", "maze.json", 20, 20);
         Player player = new Player(d, 0, 0);
-        d.assignPlayer(player);
+        d.setPlayer(player);
         d.addEntity(player);
         d.addEntity(new Exit(d, 4, 4));
-
         // Moving player to exit
         for (int x = 0; x < 5; x++) {
             player.moveDown();
@@ -90,7 +89,7 @@ public class unitTest {
     public void testPotion() throws InterruptedException{
         Dungeon d = make.makeDungeon("exit", "advanced.json", 20, 20);
         Player player = new Player(d, 0, 0);
-        d.assignPlayer(player);
+        d.setPlayer(player);
         d.addEntity(player);
         Potion p = new Potion(d, 1, 0);
         d.addEntity(p);
@@ -100,14 +99,14 @@ public class unitTest {
         // Potion should be gone and player is invincible
         assertEquals(d.hasEntity(p), false);
         assertEquals(player.isInvincible(), true);
-
         Enemy enemy = new Enemy(d, 2, 0);
         d.addEntity(enemy);
+        // Player walks to enemy with invincibility
         player.moveRight();
         // Player should still move and enemy should be dead
         assertEquals(player.canMove(), true);
         assertEquals(d.hasEntity(enemy), false);
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.SECONDS.sleep(11);
         assertEquals(player.isInvincible(), false);
         
     }
@@ -120,7 +119,7 @@ public class unitTest {
         d.addEntity(player);
         d.addEntity(new Portal(d, 0, 1, 0));
         d.addEntity(new Portal(d, 17, 17, 0));
-
+        // Player should teleport to corresponding portal coordinates
         player.moveDown();
         assertEquals(player.getX(), 17);
         assertEquals(player.getY(), 17);
@@ -131,14 +130,14 @@ public class unitTest {
         for (int x = 0; x < 3; x++) {
             player.moveLeft();
         }
-
+        // Player should teleport to corresponding portal coordinates
         assertEquals(player.getX(), 0);
         assertEquals(player.getY(), 3);
 
         d.addEntity(new Portal(d, 0, 2, 2));
 
         player.moveUp();
-
+        // Player should not be able to enter portal with no corresponding portal
         assertEquals(player.getX(), 0);
         assertEquals(player.getY(), 3);
     }
@@ -153,22 +152,21 @@ public class unitTest {
         Treasure t2 = new Treasure(d, 17, 17);
         d.addEntity(t1);
         d.addEntity(t2);
-
+        // Dungeon should have treasures 
         assertEquals(d.hasEntity(t1), true);
         assertEquals(d.hasEntity(t2), true);
 
         player.moveDown();
+        // Player should collect first treasure
         assertEquals(player.getX(), 0);
         assertEquals(player.getY(), 1);
         assertEquals(d.hasEntity(t1), false);
-        
-
         for (int x = 0; x < 17; x++) {
             player.moveRight();
             player.moveDown();
         }
-
         player.moveUp();
+        // Player should collect second treasure
         assertEquals(player.getY(), 17);
         assertEquals(player.getX(), 17);
         assertEquals(d.hasEntity(t2), false);
@@ -181,16 +179,17 @@ public class unitTest {
         Enemy enemy = new Enemy(d, 5, 0);
         Sword sword =new Sword(d, 1, 0);
         d.setPlayer(player);
+        d.addEntity(player);
         d.addEntity(enemy);
         d.addEntity(sword);
 
         player.moveRight();
+        // Sword should be on player
         assertEquals(d.hasEntity(sword), false);
-
         for (int x = 0; x < 5; x++) {
             player.moveRight();
         }
-
+        // Player should kill enemy and still be able to move
         assertEquals(player.canMove(), true);
         assertEquals(d.hasEntity(enemy), false);
     }

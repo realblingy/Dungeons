@@ -9,11 +9,11 @@ public class MainGoal implements Goal {
     private List&lt;Goal&gt; subGoals;
     private boolean complete;
 
-<span class="fc" id="L12">    public MainGoal(String mainGoal) {</span>
-<span class="fc" id="L13">        this.mainGoal = mainGoal;</span>
-<span class="fc" id="L14">        subGoals = new ArrayList&lt;Goal&gt;();</span>
-<span class="fc" id="L15">        complete = false;</span>
-<span class="fc" id="L16">    }</span>
+<span class="nc" id="L12">    public MainGoal(String mainGoal) {</span>
+<span class="nc" id="L13">        this.mainGoal = mainGoal;</span>
+<span class="nc" id="L14">        subGoals = new ArrayList&lt;Goal&gt;();</span>
+<span class="nc" id="L15">        complete = false;</span>
+<span class="nc" id="L16">    }</span>
 
     public void add(Goal goal) {
 <span class="nc" id="L19">        subGoals.add(goal);</span>
@@ -24,16 +24,16 @@ public class MainGoal implements Goal {
     }
 
     public boolean isComplete() {
-<span class="fc" id="L27">        return complete;</span>
+<span class="nc" id="L27">        return complete;</span>
     }
 
     public void complete() {
-<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        for (Goal goal : subGoals) {</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for (Goal goal : subGoals) {</span>
 <span class="nc bnc" id="L32" title="All 2 branches missed.">            if (!goal.isComplete()) {</span>
 <span class="nc" id="L33">                return;</span>
             }
 <span class="nc" id="L35">        }</span>
-<span class="fc" id="L36">        complete = true;</span>
-<span class="fc" id="L37">    }</span>
+<span class="nc" id="L36">        complete = true;</span>
+<span class="nc" id="L37">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

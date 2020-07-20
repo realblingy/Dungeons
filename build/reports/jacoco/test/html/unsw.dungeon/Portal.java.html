@@ -28,7 +28,7 @@ public class Portal extends Entity{
 
     public void teleport(Player player) {
 <span class="fc" id="L30">        Portal matchPortal = findMatchingPortal();</span>
-<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (matchPortal == null) return;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (matchPortal == null) return;</span>
 <span class="fc" id="L32">        dungeon.movePlayer(matchPortal.getX(), matchPortal.getY());</span>
 <span class="fc" id="L33">    }</span>
     

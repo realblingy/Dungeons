@@ -25,7 +25,6 @@ public class Dungeon implements DungeonObserver{
     private Player player;
     private Enemy enemy;
     private DungeonLoader dungeonLoader;
-    private MainGoal goal;
 
     public Dungeon(DungeonLoader dungeonLoader, int width, int height, JSONObject goal) {
         this.width = width;
@@ -34,7 +33,6 @@ public class Dungeon implements DungeonObserver{
         this.player = null;
         this.enemy = null;
         this.dungeonLoader = dungeonLoader;
-        this.goal = createMainGoal(goal);
     }
 
     public void removeEntity(Entity entity) {
@@ -43,17 +41,6 @@ public class Dungeon implements DungeonObserver{
         } catch (NullPointerException e) {
 
         }
-    }
-
-    public MainGoal createMainGoal(JSONObject goal) {
-        MainGoal mainGoal = new MainGoal(goal.getString("goal"));
-        try {
-            JSONArray subGoals = goal.getJSONArray("subgoals");
-            System.out.println(subGoals);
-        } catch (Exception e) {
-            return mainGoal;
-        }
-        return mainGoal;
     }
     
     @Override
@@ -87,11 +74,6 @@ public class Dungeon implements DungeonObserver{
         }
     }
 
-    public void setGoalComplete() {
-        goal.complete();
-        System.out.println("GOAL: " + goal.isComplete());
-    }
-
     public void update(Player player) {
 
         Entity obj = getAdjacentObj(player);
@@ -121,12 +103,10 @@ public class Dungeon implements DungeonObserver{
     public void update(Exit exit) {
         player.move(exit.getX(), exit.getY());
         player.setMove(false);
-        setGoalComplete();
     }
 
     public void update(Switch switchPlate) {
         player.setMove(false);
-        setGoalComplete();
     }
 
     public void update(Item item) {
@@ -169,11 +149,7 @@ public class Dungeon implements DungeonObserver{
         entities.add(entity);
         TriggerAtBeginning(entity);
     }
-
-    public void setGoal(JSONObject goal) {
-        System.out.println(goal);
-    }
-
+    
     public void removeDungeonEntity(Entity entity) {
          entities.remove(entity);
     }
