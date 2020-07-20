@@ -305,6 +305,11 @@ public class unitTest {
         player.moveRight();
         assertEquals(b.getX(), 3);
         assertEquals(b.getY(), 1);
+        player.moveUp();
+        player.moveRight();
+        player.moveDown();
+        assertEquals(s3.getTrigger(), 1);
+        assertEquals(s3.allTrigger(), false);
     }
 
 }

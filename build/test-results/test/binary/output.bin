@@ -8,6 +8,7 @@
 switch (2 , 2 )  is trigger
 switch (2 , 1 )  is trigger
 switch (2 , 1 )  is shut off
+switch (3 , 2 )  is trigger
 File not found!
 	File not found!
 	Player is invincible
