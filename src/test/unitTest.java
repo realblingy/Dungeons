@@ -66,8 +66,42 @@ public class unitTest {
 
     @Test
     public void testWall() {
-        Dungeon d = make.makeDungeon("exit", "maze.json", 20, 20);
+        Dungeon d = make.makeDungeon("wall", "maze.json", 4, 4);
+        Player player = new Player(d, 1, 1);
+        d.setPlayer(player);
+        d.addEntity(player);
+        d.addEntity(new Wall(0, 0));
+        d.addEntity(new Wall(1, 0));
+        d.addEntity(new Wall(2, 0));
+        d.addEntity(new Wall(3, 0));
+        d.addEntity(new Wall(0, 1));
+        d.addEntity(new Wall(0, 2));
+        d.addEntity(new Wall(0, 3));
+        d.addEntity(new Wall(3, 1));
+        d.addEntity(new Wall(3, 2));
+        d.addEntity(new Wall(3, 3));
+        d.addEntity(new Wall(1, 3));
+        d.addEntity(new Wall(2, 3));
+        player.moveLeft();
+        assertEquals(player.getX(), 1);
+        assertEquals(player.getY(), 1);
+        player.moveUp();
+        assertEquals(player.getX(), 1);
+        assertEquals(player.getY(), 1);   
+        player.moveRight();
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 1); 
+        player.moveRight();
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 1);    
+        player.moveDown();
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 2);
+        player.moveDown();
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 2);
     }
+    
     
     @Test
     public void testExit(){
