@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.unitTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-07-20T14:20:55" hostname="vx8" time="11.119">
+<testsuite name="test.unitTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-07-20T15:43:49" hostname="vx3" time="11.123">
   <properties/>
-  <testcase name="testSword()" classname="test.unitTest" time="0.092"/>
-  <testcase name="testExit()" classname="test.unitTest" time="0.003"/>
-  <testcase name="testWall()" classname="test.unitTest" time="0.002"/>
-  <testcase name="testPlayerMovement()" classname="test.unitTest" time="0.003"/>
-  <testcase name="testPortal()" classname="test.unitTest" time="0.002"/>
-  <testcase name="testPotion()" classname="test.unitTest" time="11.007"/>
+  <testcase name="testKeyDoor()" classname="test.unitTest" time="0.093"/>
+  <testcase name="testSword()" classname="test.unitTest" time="0.002"/>
+  <testcase name="testExit()" classname="test.unitTest" time="0.001"/>
+  <testcase name="testWall()" classname="test.unitTest" time="0.001"/>
+  <testcase name="testPlayerMovement()" classname="test.unitTest" time="0.001"/>
+  <testcase name="testBoulderSwitch()" classname="test.unitTest" time="0.013"/>
+  <testcase name="testPortal()" classname="test.unitTest" time="0.001"/>
+  <testcase name="testPotion()" classname="test.unitTest" time="11.002"/>
   <testcase name="testTreasure()" classname="test.unitTest" time="0.002"/>
   <system-out><![CDATA[File not found!
+File not found!
 Player holds sword
 File not found!
 File not found!
 File not found!
+File not found!
+switch (2 , 2 )  is trigger
+switch (2 , 1 )  is trigger
+switch (2 , 1 )  is shut off
 File not found!
 File not found!
 Player is invincible

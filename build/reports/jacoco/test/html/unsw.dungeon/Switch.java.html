@@ -12,42 +12,42 @@ public class Switch extends Entity {
      * @param y
      */
     public Switch (Dungeon dungeon, int x, int y) {
-<span class="nc" id="L15">        super(x, y, true);</span>
+<span class="fc" id="L15">        super(x, y, true);</span>
         // first shut off the switch
-<span class="nc" id="L17">        this.trigger = 0;   </span>
-<span class="nc" id="L18">        this.dungeon = dungeon;</span>
-<span class="nc" id="L19">    }</span>
+<span class="fc" id="L17">        this.trigger = 0;   </span>
+<span class="fc" id="L18">        this.dungeon = dungeon;</span>
+<span class="fc" id="L19">    }</span>
 
     public void notifyDungeon() {
 <span class="nc" id="L22">        dungeon.update(this);</span>
 <span class="nc" id="L23">    }</span>
 
     public int getTrigger() {
-<span class="nc" id="L26">        return trigger;</span>
+<span class="fc" id="L26">        return trigger;</span>
     }
 
     @Override
     public void update(Entity entity) {
-<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (entity instanceof Boulder) {</span>
-<span class="nc" id="L32">            Boulder boulder = (Boulder) entity;</span>
-<span class="nc" id="L33">            setTrigger(boulder);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (entity instanceof Boulder) {</span>
+<span class="fc" id="L32">            Boulder boulder = (Boulder) entity;</span>
+<span class="fc" id="L33">            setTrigger(boulder);</span>
         }
-<span class="nc" id="L35">    }</span>
+<span class="fc" id="L35">    }</span>
 
     /**
      * method to check if all the switches are triggered
      * @return true if all triggered, else false
      */
     public boolean allTrigger() {
-<span class="nc" id="L42">        List&lt;Entity&gt; entities = dungeon.getEntities();</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">        for (Entity e : entities) {</span>
-<span class="nc bnc" id="L44" title="All 2 branches missed.">            if (e.getClass() == getClass()) {</span>
-<span class="nc" id="L45">                Switch s = (Switch) e;</span>
-<span class="nc bnc" id="L46" title="All 2 branches missed.">                if (s.getTrigger() == 0) {</span>
-<span class="nc" id="L47">                    return false;</span>
+<span class="fc" id="L42">        List&lt;Entity&gt; entities = dungeon.getEntities();</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        for (Entity e : entities) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            if (e.getClass() == getClass()) {</span>
+<span class="fc" id="L45">                Switch s = (Switch) e;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">                if (s.getTrigger() == 0) {</span>
+<span class="fc" id="L47">                    return false;</span>
                 }
             }
-<span class="nc" id="L50">        }</span>
+<span class="fc" id="L50">        }</span>
 <span class="nc" id="L51">        return true;</span>
     }
 
@@ -57,20 +57,20 @@ public class Switch extends Entity {
      * trigger the switch if the boulder is pushed onto it
      */
     public void setTrigger(Boulder boulder) {
-<span class="nc bnc" id="L60" title="All 6 branches missed.">        if (trigger == 0 &amp;&amp; getX() == boulder.getX() &amp;&amp; getY() == boulder.getY()) {</span>
-<span class="nc" id="L61">            this.trigger = 1;</span>
-<span class="nc" id="L62">            System.out.println(&quot;switch (&quot;+getX()+&quot; , &quot;+getY()+&quot; ) &quot;+&quot; is trigger&quot;);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">            if (allTrigger()) {</span>
+<span class="pc bpc" id="L60" title="2 of 6 branches missed.">        if (trigger == 0 &amp;&amp; getX() == boulder.getX() &amp;&amp; getY() == boulder.getY()) {</span>
+<span class="fc" id="L61">            this.trigger = 1;</span>
+<span class="fc" id="L62">            System.out.println(&quot;switch (&quot;+getX()+&quot; , &quot;+getY()+&quot; ) &quot;+&quot; is trigger&quot;);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">            if (allTrigger()) {</span>
 <span class="nc" id="L64">                notifyDungeon();</span>
             }
         }
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (trigger == 1) {</span>
-<span class="nc bnc" id="L69" title="All 4 branches missed.">            if (boulder.getX() != getX() || boulder.getY() != getY()) {</span>
-<span class="nc" id="L70">                this.trigger = 0;</span>
-<span class="nc" id="L71">                System.out.println(&quot;switch (&quot;+getX()+&quot; , &quot;+getY()+&quot; ) &quot;+&quot; is shut off&quot;);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (trigger == 1) {</span>
+<span class="pc bpc" id="L69" title="1 of 4 branches missed.">            if (boulder.getX() != getX() || boulder.getY() != getY()) {</span>
+<span class="fc" id="L70">                this.trigger = 0;</span>
+<span class="fc" id="L71">                System.out.println(&quot;switch (&quot;+getX()+&quot; , &quot;+getY()+&quot; ) &quot;+&quot; is shut off&quot;);</span>
             }
         }
-<span class="nc" id="L74">    }</span>
+<span class="fc" id="L74">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

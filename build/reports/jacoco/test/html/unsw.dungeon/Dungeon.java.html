@@ -95,10 +95,10 @@ public class Dungeon implements DungeonObserver{
 <span class="fc" id="L95">    }</span>
 
     public void update(Boulder boulder) {
-<span class="nc" id="L98">        player.update(boulder);</span>
-<span class="nc" id="L99">        UpdateOldAndNewSwitch(boulder, player);</span>
+<span class="fc" id="L98">        player.update(boulder);</span>
+<span class="fc" id="L99">        UpdateOldAndNewSwitch(boulder, player);</span>
 
-<span class="nc" id="L101">    }</span>
+<span class="fc" id="L101">    }</span>
 
     public void update(Exit exit) {
 <span class="fc" id="L104">        player.move(exit.getX(), exit.getY());</span>
@@ -115,9 +115,9 @@ public class Dungeon implements DungeonObserver{
 <span class="fc" id="L115">    }</span>
 
     public void update(Door door) {
-<span class="nc" id="L118">        removeEntity(door);</span>
-<span class="nc" id="L119">        player.updatePosition();</span>
-<span class="nc" id="L120">    }</span>
+<span class="fc" id="L118">        removeEntity(door);</span>
+<span class="fc" id="L119">        player.updatePosition();</span>
+<span class="fc" id="L120">    }</span>
 
     public void update(Enemy enemy) {
 <span class="fc" id="L123">        removeEntity(enemy);</span>
@@ -159,12 +159,12 @@ public class Dungeon implements DungeonObserver{
     //  * @param entity
     //  */
     public void TriggerAtBeginning (Entity entity) {
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (entity.getClass() == Boulder.class) {</span>
-<span class="nc" id="L163">            int index = findSwitch(entity.getX(), entity.getY());</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (entity.getClass() == Boulder.class) {</span>
+<span class="fc" id="L163">            int index = findSwitch(entity.getX(), entity.getY());</span>
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">            if (index != -1) { </span>
-<span class="nc" id="L166">                Switch s = (Switch) entities.get(index);</span>
-<span class="nc" id="L167">                s.update(entity);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">            if (index != -1) { </span>
+<span class="fc" id="L166">                Switch s = (Switch) entities.get(index);</span>
+<span class="fc" id="L167">                s.update(entity);</span>
             }
         }
 <span class="fc" id="L170">    }</span>
@@ -175,19 +175,19 @@ public class Dungeon implements DungeonObserver{
      * @param player
      */
     public void UpdateOldAndNewSwitch (Boulder obj, Player player) {
-<span class="nc" id="L178">        int Old = findSwitch(player.getX(), player.getY());</span>
-<span class="nc" id="L179">        int New = findSwitch(obj.getX(), obj.getY());</span>
+<span class="fc" id="L178">        int Old = findSwitch(player.getX(), player.getY());</span>
+<span class="fc" id="L179">        int New = findSwitch(obj.getX(), obj.getY());</span>
         // shut off the switch at the old position of Boulder
-<span class="nc bnc" id="L181" title="All 2 branches missed.">        if (Old != -1) {</span>
-<span class="nc" id="L182">            Switch oldSwitch = (Switch) entities.get(Old);</span>
-<span class="nc" id="L183">            oldSwitch.update(obj);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (Old != -1) {</span>
+<span class="fc" id="L182">            Switch oldSwitch = (Switch) entities.get(Old);</span>
+<span class="fc" id="L183">            oldSwitch.update(obj);</span>
         }
         // trigger the switch at the postion of the Boulder after push
-<span class="nc bnc" id="L186" title="All 2 branches missed.">        if (New != -1) {</span>
-<span class="nc" id="L187">            Switch newSwitch = (Switch) entities.get(New);</span>
-<span class="nc" id="L188">            newSwitch.update(obj);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        if (New != -1) {</span>
+<span class="fc" id="L187">            Switch newSwitch = (Switch) entities.get(New);</span>
+<span class="fc" id="L188">            newSwitch.update(obj);</span>
         }
-<span class="nc" id="L190">    }</span>
+<span class="fc" id="L190">    }</span>
 
     /**
      * method for checking if square(x,y) contains collidable item
@@ -197,35 +197,35 @@ public class Dungeon implements DungeonObserver{
      */
     public boolean willCollide(int x, int y) {
 
-<span class="nc" id="L200">        List&lt;Entity&gt; entitiesInOneSquare = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">        for (Entity entity : entities) {</span>
+<span class="fc" id="L200">        List&lt;Entity&gt; entitiesInOneSquare = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        for (Entity entity : entities) {</span>
             // Checks if player's coordinates are the same as entities
-<span class="nc bnc" id="L203" title="All 4 branches missed.">            if (entity.getX() == x &amp;&amp; entity.getY() == y) {</span>
-<span class="nc" id="L204">                entitiesInOneSquare.add(entity);</span>
+<span class="fc bfc" id="L203" title="All 4 branches covered.">            if (entity.getX() == x &amp;&amp; entity.getY() == y) {</span>
+<span class="fc" id="L204">                entitiesInOneSquare.add(entity);</span>
             }
-<span class="nc" id="L206">        }</span>
+<span class="fc" id="L206">        }</span>
 
         // the Square(x, y) contains only one entitiy
-<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (entitiesInOneSquare.size() == 1) {</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        if (entitiesInOneSquare.size() == 1) {</span>
             //If it is not collidable?
-<span class="nc" id="L211">            Entity entity = entitiesInOneSquare.get(0);</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">            if (!entity.isCollidable()) {</span>
-<span class="nc" id="L213">                return true;</span>
+<span class="fc" id="L211">            Entity entity = entitiesInOneSquare.get(0);</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">            if (!entity.isCollidable()) {</span>
+<span class="fc" id="L213">                return true;</span>
             }
-<span class="nc" id="L215">        }</span>
+<span class="fc" id="L215">        }</span>
 
         // the Square(x, y) contains more than one entities
-<span class="nc bnc" id="L218" title="All 2 branches missed.">        else if (entitiesInOneSquare.size() &gt; 1) {</span>
-<span class="nc bnc" id="L219" title="All 2 branches missed.">            for (Entity entity : entitiesInOneSquare) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        else if (entitiesInOneSquare.size() &gt; 1) {</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">            for (Entity entity : entitiesInOneSquare) {</span>
                 // If any of the entities are boulders return true
-<span class="nc bnc" id="L221" title="All 2 branches missed.">                if (entity instanceof Boulder) {</span>
-<span class="nc" id="L222">                    return true;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">                if (entity instanceof Boulder) {</span>
+<span class="fc" id="L222">                    return true;</span>
                 }
-<span class="nc" id="L224">            }</span>
+<span class="fc" id="L224">            }</span>
         }
 
         // the Square(x, y) does not contain any entity (is empty)
-<span class="nc" id="L228">        return false;</span>
+<span class="fc" id="L228">        return false;</span>
     }
 
     /**
@@ -235,14 +235,14 @@ public class Dungeon implements DungeonObserver{
      * @return index of switch else return null
      */
     public int findSwitch(int x, int y) {
-<span class="nc" id="L238">        List&lt;Integer&gt; index = entityIndex(x, y);</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">        for (Integer i : index) {</span>
-<span class="nc" id="L240">            Entity entity = entities.get(i);</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">            if (entity instanceof Switch) {</span>
-<span class="nc" id="L242">                return i;</span>
+<span class="fc" id="L238">        List&lt;Integer&gt; index = entityIndex(x, y);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        for (Integer i : index) {</span>
+<span class="fc" id="L240">            Entity entity = entities.get(i);</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">            if (entity instanceof Switch) {</span>
+<span class="fc" id="L242">                return i;</span>
             }
-<span class="nc" id="L244">        }</span>
-<span class="nc" id="L245">        return -1;</span>
+<span class="fc" id="L244">        }</span>
+<span class="fc" id="L245">        return -1;</span>
     }
 
     /**
@@ -252,15 +252,15 @@ public class Dungeon implements DungeonObserver{
      * @return list of entities' indexes in one square
      */
     public List&lt;Integer&gt; entityIndex(int x, int y) {
-<span class="nc" id="L255">        List&lt;Integer&gt; entitiesInOneSquare = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L255">        List&lt;Integer&gt; entitiesInOneSquare = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L257" title="All 2 branches missed.">        for (int i = 0; i &lt; entities.size(); i++) {</span>
-<span class="nc" id="L258">            Entity entity = entities.get(i);</span>
-<span class="nc bnc" id="L259" title="All 4 branches missed.">            if (entity.getX() == x &amp;&amp; entity.getY() == y) {</span>
-<span class="nc" id="L260">                entitiesInOneSquare.add(i);</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        for (int i = 0; i &lt; entities.size(); i++) {</span>
+<span class="fc" id="L258">            Entity entity = entities.get(i);</span>
+<span class="fc bfc" id="L259" title="All 4 branches covered.">            if (entity.getX() == x &amp;&amp; entity.getY() == y) {</span>
+<span class="fc" id="L260">                entitiesInOneSquare.add(i);</span>
             }
         }
-<span class="nc" id="L263">        return entitiesInOneSquare;</span>
+<span class="fc" id="L263">        return entitiesInOneSquare;</span>
     }
 
     /**
@@ -273,7 +273,7 @@ public class Dungeon implements DungeonObserver{
 <span class="fc bfc" id="L273" title="All 2 branches covered.">        for (Entity e : entities) {</span>
 <span class="pc bpc" id="L274" title="1 of 2 branches missed.">            if (e != null) {</span>
                 //if (e.getX() == x &amp;&amp; e.getY() == y &amp;&amp; !e.isCollidable()) {
-<span class="pc bpc" id="L276" title="1 of 6 branches missed.">                if (e.getX() == x &amp;&amp; e.getY() == y &amp;&amp; !(e instanceof Switch)) {</span>
+<span class="fc bfc" id="L276" title="All 6 branches covered.">                if (e.getX() == x &amp;&amp; e.getY() == y &amp;&amp; !(e instanceof Switch)) {</span>
 <span class="fc" id="L277">                    return e;</span>
                 }
             }
@@ -282,7 +282,7 @@ public class Dungeon implements DungeonObserver{
     }
 
     public List&lt;Entity&gt; getEntities() {
-<span class="nc" id="L285">        return entities;</span>
+<span class="fc" id="L285">        return entities;</span>
     }
 
 
@@ -341,8 +341,8 @@ public class Dungeon implements DungeonObserver{
 <span class="fc" id="L341">    }</span>
 
     public void assignPlayer(Player player) {
-<span class="fc" id="L344">        this.player = player;</span>
-<span class="fc" id="L345">    }</span>
+<span class="nc" id="L344">        this.player = player;</span>
+<span class="nc" id="L345">    }</span>
 
     public boolean hasEntity(Entity entity) {
 <span class="fc bfc" id="L348" title="All 2 branches covered.">        for (Entity e : entities) {</span>

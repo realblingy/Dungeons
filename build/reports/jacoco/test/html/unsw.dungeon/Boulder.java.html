@@ -9,21 +9,21 @@ public class Boulder extends Entity {
      * @param y
      */
     public Boulder(Dungeon dungeon, int x, int y) {
-<span class="nc" id="L12">        super(x, y, false);</span>
-<span class="nc" id="L13">        this.dungeon = dungeon;</span>
-<span class="nc" id="L14">    }</span>
+<span class="fc" id="L12">        super(x, y, false);</span>
+<span class="fc" id="L13">        this.dungeon = dungeon;</span>
+<span class="fc" id="L14">    }</span>
 
     public void notifyDungeon() {
-<span class="nc" id="L17">        dungeon.update(this);</span>
-<span class="nc" id="L18">    }</span>
+<span class="fc" id="L17">        dungeon.update(this);</span>
+<span class="fc" id="L18">    }</span>
 
     @Override
     public void update(Entity entity) {
-<span class="nc bnc" id="L22" title="All 2 branches missed.">        if (entity instanceof Player) {</span>
-<span class="nc" id="L23">            Player player = (Player) entity;</span>
-<span class="nc" id="L24">            pushBoulder(getX(), getY(), player);            </span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if (entity instanceof Player) {</span>
+<span class="fc" id="L23">            Player player = (Player) entity;</span>
+<span class="fc" id="L24">            pushBoulder(getX(), getY(), player);            </span>
         }
-<span class="nc" id="L26">    }</span>
+<span class="fc" id="L26">    }</span>
 
     /**
      * method to set x and y coordinates of the Boulder
@@ -31,9 +31,9 @@ public class Boulder extends Entity {
      * @param y
      */
     public void resetPosition(int x, int y) {
-<span class="nc" id="L34">        x().set(x);</span>
-<span class="nc" id="L35">        y().set(y);</span>
-<span class="nc" id="L36">    }</span>
+<span class="fc" id="L34">        x().set(x);</span>
+<span class="fc" id="L35">        y().set(y);</span>
+<span class="fc" id="L36">    }</span>
 
     /**
      * method to push boulder if the boulder will not collide with entity in adjacent square
@@ -42,23 +42,23 @@ public class Boulder extends Entity {
      * @param player
      */
     public void pushBoulder(int x, int y, Player player) {
-<span class="nc" id="L45">        String move = player.getRecentMovement();</span>
-<span class="nc bnc" id="L46" title="All 4 branches missed.">        if (move == &quot;left&quot; &amp;&amp; !dungeon.willCollide(x - 1, y)) {</span>
+<span class="fc" id="L45">        String move = player.getRecentMovement();</span>
+<span class="pc bpc" id="L46" title="3 of 4 branches missed.">        if (move == &quot;left&quot; &amp;&amp; !dungeon.willCollide(x - 1, y)) {</span>
 <span class="nc" id="L47">            resetPosition(x - 1, y);</span>
 <span class="nc" id="L48">            notifyDungeon();</span>
         }
-<span class="nc bnc" id="L50" title="All 4 branches missed.">        if (move == &quot;right&quot; &amp;&amp; !dungeon.willCollide(x + 1, y)) {</span>
-<span class="nc" id="L51">            resetPosition(x + 1, y);</span>
-<span class="nc" id="L52">            notifyDungeon();</span>
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">        if (move == &quot;right&quot; &amp;&amp; !dungeon.willCollide(x + 1, y)) {</span>
+<span class="fc" id="L51">            resetPosition(x + 1, y);</span>
+<span class="fc" id="L52">            notifyDungeon();</span>
         }
-<span class="nc bnc" id="L54" title="All 4 branches missed.">        if (move == &quot;up&quot; &amp;&amp; !dungeon.willCollide(x, y - 1)) {</span>
+<span class="pc bpc" id="L54" title="3 of 4 branches missed.">        if (move == &quot;up&quot; &amp;&amp; !dungeon.willCollide(x, y - 1)) {</span>
 <span class="nc" id="L55">            resetPosition(x, y - 1);</span>
 <span class="nc" id="L56">            notifyDungeon();</span>
         }
-<span class="nc bnc" id="L58" title="All 4 branches missed.">        if (move == &quot;down&quot; &amp;&amp; !dungeon.willCollide(x, y + 1)) {</span>
+<span class="pc bpc" id="L58" title="3 of 4 branches missed.">        if (move == &quot;down&quot; &amp;&amp; !dungeon.willCollide(x, y + 1)) {</span>
 <span class="nc" id="L59">            resetPosition(x, y + 1);</span>
 <span class="nc" id="L60">            notifyDungeon();</span>
         }
-<span class="nc" id="L62">    }</span>
+<span class="fc" id="L62">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

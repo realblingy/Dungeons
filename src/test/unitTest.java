@@ -228,4 +228,83 @@ public class unitTest {
         assertEquals(d.hasEntity(enemy), false);
     }
 
+    @Test
+    public void testKeyDoor() {
+        Dungeon d = make.makeDungeon("exit", "advanced.json", 5, 5);
+        Player player = new Player(d, 1, 1);
+        d.setPlayer(player);
+        d.addEntity(player);
+        d.addEntity(new Door(d, 1, 2, 0));
+        d.addEntity(new Door(d, 2, 2, 1));
+        DungeonKey key1 = new DungeonKey(d, 1, 3, 1);
+        DungeonKey key0 = new DungeonKey(d, 2, 1, 0);
+        d.addEntity(key1);
+        d.addEntity(key0);
+        player.moveDown();
+        // player does not hold any key
+        assertEquals(player.getX(), 1);
+        assertEquals(player.getY(), 1);
+        player.moveRight();
+        // player pick up key with id 0
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 1);
+        assertEquals(d.hasEntity(key0), false);
+        player.moveDown();
+        // player cannot open the door with id 1 by the key id 0
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 1);
+        player.moveLeft();
+        // player can open the door wit same id as the key
+        player.moveDown();
+        assertEquals(player.getX(), 1);
+        assertEquals(player.getY(), 2);      
+        player.moveDown();
+        assertEquals(d.hasEntity(key1), false);
+        player.moveRight();
+        player.moveUp();
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 2);   
+    }
+
+    @Test
+    public void testBoulderSwitch() {
+        Dungeon d = make.makeDungeon("boulder", "boulders.json", 5, 4);
+        Player player = new Player(d, 0, 2);
+        Switch s1 = new Switch(d, 2, 1);
+        Switch s2 = new Switch(d, 3, 2);
+        Switch s3 = new Switch(d, 2, 2);
+        Boulder b = new Boulder(d, 1, 1);
+        d.addEntity(s1);
+        d.setPlayer(player);
+        d.addEntity(player);
+        d.addEntity(s2);
+        d.addEntity(s3);
+        d.addEntity(new Wall(4, 0));
+        d.addEntity(new Wall(4, 1));
+        d.addEntity(new Wall(4, 2));
+        d.addEntity(new Wall(4, 3));
+        d.addEntity(b);
+        d.addEntity(new Boulder(d, 1, 2));
+        // add Boulder to the swtich at the beginning should also trigger the switch
+        d.addEntity(new Boulder(d, 2, 2));
+        assertEquals(s3.getTrigger(), 1);
+        player.moveRight();
+        // can only push one Boulder at a time
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 2);
+        player.moveUp();
+        // trigger the switch once the player push the boulder onto it
+        player.moveRight();
+        assertEquals(b.getX(), 2);
+        assertEquals(b.getY(), 1);
+        assertEquals(s1.getTrigger(), 1);
+        // shut off the switch once the player push off the boulder
+        player.moveRight();
+        assertEquals(s1.getTrigger(), 0);
+        // cannot push the boulder if there is a wall next to the boulder
+        player.moveRight();
+        assertEquals(b.getX(), 3);
+        assertEquals(b.getY(), 1);
+    }
+
 }

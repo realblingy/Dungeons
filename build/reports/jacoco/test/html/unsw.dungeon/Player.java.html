@@ -36,10 +36,10 @@ public class Player extends Entity {
 
     @Override
     public void update(Entity entity) {
-<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (entity instanceof Boulder) {</span>
-<span class="nc" id="L40">            updatePosition();         </span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (entity instanceof Boulder) {</span>
+<span class="fc" id="L40">            updatePosition();         </span>
         }    
-<span class="nc" id="L42">    }</span>
+<span class="fc" id="L42">    }</span>
 
     public void moveUp() {
 <span class="pc bpc" id="L45" title="2 of 4 branches missed.">        if (getY() &gt; 0 &amp;&amp; canMove) {</span>
@@ -92,8 +92,8 @@ public class Player extends Entity {
 <span class="fc" id="L92">    }</span>
 
     public void removeItem(Item item) {
-<span class="nc" id="L95">        inventory.remove(item);</span>
-<span class="nc" id="L96">    }</span>
+<span class="fc" id="L95">        inventory.remove(item);</span>
+<span class="fc" id="L96">    }</span>
 
     public void move(int x, int y) {
 <span class="fc" id="L99">        x().set(x);</span>
@@ -115,15 +115,15 @@ public class Player extends Entity {
      */
     public Item findKey(int id) {
         // there will be only one key in inventory at all time
-<span class="nc bnc" id="L118" title="All 2 branches missed.">        for (Item item : inventory) {</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">            if (item instanceof DungeonKey) {</span>
-<span class="nc" id="L120">                DungeonKey key = (DungeonKey) item;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">                if (key.getID() == id) {</span>
-<span class="nc" id="L122">                    return key;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (Item item : inventory) {</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">            if (item instanceof DungeonKey) {</span>
+<span class="fc" id="L120">                DungeonKey key = (DungeonKey) item;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                if (key.getID() == id) {</span>
+<span class="fc" id="L122">                    return key;</span>
                 }
             }
-<span class="nc" id="L125">        }</span>
-<span class="nc" id="L126">        return null;</span>
+<span class="fc" id="L125">        }</span>
+<span class="fc" id="L126">        return null;</span>
     }
 
     public boolean reduceSwordhits() {
