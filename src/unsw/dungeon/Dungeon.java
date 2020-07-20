@@ -142,17 +142,9 @@ public class Dungeon implements DungeonObserver{
         // TriggerAtBeginning(entity);
     }
 
-    public void setGoal(JSONObject goal) {
-        System.out.println(goal);
-    }
-
-    // public void removeEntity(Entity entity) {
-    //     entities.remove(entity);
+    // public void setGoal(JSONObject goal) {
+    //     System.out.println(goal);
     // }
-
-    public List<Entity> getEntities() {
-        return entities;
-    }
 
     /**
     //  * method for triggering switch at the start of the game when the boulder entity is added on the top of the switch
@@ -309,13 +301,6 @@ public class Dungeon implements DungeonObserver{
             return adjacentObj(x - 1, y);
         }
         return null;
-    }
-
-    public boolean entityAtLocation(int x, int y) {
-        for (Entity entity : entities) {
-            return (entity.getX() == x && entity.getY() == entity.getY());
-        }
-        return false;
     }
 
     public void movePlayer(int x, int y) {

@@ -9,10 +9,6 @@ public class Item extends Entity {
         this.dungeon = dungeon;
     }
 
-    public Dungeon getDungeon() {
-        return dungeon;
-    }
-
     public void notifyDungeon() {
         dungeon.update(this);
     }
