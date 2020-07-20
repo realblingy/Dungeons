@@ -23,6 +23,7 @@ public class Dungeon implements DungeonObserver{
     private int width, height;
     private List<Entity> entities;
     private Player player;
+    private Enemy enemy;
     private DungeonLoader dungeonLoader;
     private MainGoal goal;
 
@@ -31,14 +32,17 @@ public class Dungeon implements DungeonObserver{
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
+        this.enemy = null;
         this.dungeonLoader = dungeonLoader;
         this.goal = createMainGoal(goal);
-        System.out.println(this.goal);
     }
 
     public void removeEntity(Entity entity) {
-        dungeonLoader.removeEntity(entity);
-        // entities.remove(entity);
+        try {
+            dungeonLoader.removeEntity(entity);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     public MainGoal createMainGoal(JSONObject goal) {
@@ -69,14 +73,17 @@ public class Dungeon implements DungeonObserver{
         if (entity instanceof Exit) {
             update( (Exit) entity);
         }
-
-        // this will be for potion only
+        
         if (entity instanceof Item) {
-            update ( (Item) entity);
+            update( (Item) entity);
         }
 
         if (entity instanceof Door) {
             update ( (Door) entity);
+        }
+
+        if (entity instanceof Entity) {
+            update ( (Enemy) entity);
         }
     }
 
@@ -90,9 +97,18 @@ public class Dungeon implements DungeonObserver{
         Entity obj = getAdjacentObj(player);
         if (obj == null) {
             player.updatePosition();
+            if (enemy != null) {
+                enemy.updatePosition(player);
+            }
         }
         else {
-            obj.update(player);
+            if (!(obj instanceof Enemy) && enemy != null) {
+                obj.update(player);
+                enemy.updatePosition(player);  
+            }
+            else {
+                obj.update(player);
+            }
         }  
     }
 
@@ -109,16 +125,24 @@ public class Dungeon implements DungeonObserver{
     }
 
     public void update(Switch switchPlate) {
-        System.out.println("All the Floor Switches are triggered");
+        player.setMove(false);
+        setGoalComplete();
     }
 
     public void update(Item item) {
         removeEntity(item);
-        return;
+        removeDungeonEntity(item);
     }
 
     public void update(Door door) {
+        removeEntity(door);
         player.updatePosition();
+    }
+
+    public void update(Enemy enemy) {
+        removeEntity(enemy);
+        this.enemy = null;
+        removeDungeonEntity(enemy);
     }
 
     public int getWidth() {
@@ -137,14 +161,22 @@ public class Dungeon implements DungeonObserver{
         this.player = player;
     }
 
-    public void addEntity(Entity entity) {
-        entities.add(entity);
-        // TriggerAtBeginning(entity);
+    public void setEnemy(Enemy enemy) {
+        this.enemy = enemy;
     }
 
-    // public void setGoal(JSONObject goal) {
-    //     System.out.println(goal);
-    // }
+    public void addEntity(Entity entity) {
+        entities.add(entity);
+        TriggerAtBeginning(entity);
+    }
+
+    public void setGoal(JSONObject goal) {
+        System.out.println(goal);
+    }
+
+    public void removeDungeonEntity(Entity entity) {
+         entities.remove(entity);
+    }
 
     /**
     //  * method for triggering switch at the start of the game when the boulder entity is added on the top of the switch
@@ -199,8 +231,9 @@ public class Dungeon implements DungeonObserver{
 
         // the Square(x, y) contains only one entitiy
         if (entitiesInOneSquare.size() == 1) {
-            // If it is not collidable?
-            if (!entitiesInOneSquare.get(0).isCollidable()) {
+            //If it is not collidable?
+            Entity entity = entitiesInOneSquare.get(0);
+            if (!entity.isCollidable()) {
                 return true;
             }
         }
@@ -272,6 +305,11 @@ public class Dungeon implements DungeonObserver{
         return null;
     }
 
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
+
     /**
      * method to find adjacent entity of the entity(player or enemy) given (based on the movement)
      * @param entity
@@ -303,18 +341,6 @@ public class Dungeon implements DungeonObserver{
         return null;
     }
 
-    public void movePlayer(int x, int y) {
-        if (!entityAtLocation(x, y)) {
-            player.move(x, y);
-        }
-        if (!entityAtLocation(x, y + 1)) {
-            player.move(x, y + 1);
-        }
-        if (!entityAtLocation(x, y - 1)) {
-            player.move(x, y - 1);
-        }
-    }
-
     public Portal matchingPortal(Portal portal) {
         for (Entity entity : entities) {
             if (entity instanceof Portal) {
@@ -327,5 +353,25 @@ public class Dungeon implements DungeonObserver{
         return null;
     } 
 
+    public boolean entityAtLocation(int x, int y) {
+        for (Entity entity : entities) {
+            if (entity.getX() == x && entity.getY() == entity.getY()) { return true; }
+        }
+        return false;
+    }
 
+    public void movePlayer(int x, int y) {
+        player.move(x, y);
+    }
+
+    public void assignPlayer(Player player) {
+        this.player = player;
+    }
+
+    public boolean hasEntity(Entity entity) {
+        for (Entity e : entities) {
+            if (e.equals(entity)) return true;
+        }
+        return false;
+    }
 }

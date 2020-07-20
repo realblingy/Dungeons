@@ -2,7 +2,6 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -101,6 +100,10 @@ public class Player extends Entity {
         y().set(y);
     }
 
+    public boolean canMove() {
+        return canMove;
+    }
+
     public void setMove(boolean canMove) {
         this.canMove = canMove;
     }
@@ -121,6 +124,20 @@ public class Player extends Entity {
             }
         }
         return null;
+    }
+
+    public boolean reduceSwordhits() {
+        for (Item item : inventory) {
+            if (item instanceof Sword) {
+                Sword sword = (Sword) item;
+                sword.reduceHits();
+                if (sword.getHits() == 0) {
+                    inventory.remove(item);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isInvincible() {

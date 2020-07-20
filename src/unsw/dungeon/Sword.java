@@ -13,4 +13,8 @@ public class Sword extends Item {
         this.hits = hits - 1;
     }
     
+
+    public Integer getHits() {
+        return hits;
+    }
 }

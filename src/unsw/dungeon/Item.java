@@ -5,7 +5,7 @@ public class Item extends Entity {
     private Dungeon dungeon;
 
     public Item (Dungeon dungeon, int x, int y) {
-        super(x, y, false);
+        super(x, y, true);
         this.dungeon = dungeon;
     }
 
@@ -23,20 +23,25 @@ public class Item extends Entity {
                 // for potion
                 if (getClass() == Potion.class) {
                     Potion potion = ( Potion ) this;
-                   potion.updatePlayer(player);
+                    potion.updatePlayer(player);
                 }
                 // for key, sword and treasure
-                addToInventory(player);
-                dungeon.removeEntity(entity);
+                else {
+                    addToInventory(player);
+                }
+                notifyDungeon();
             }
             
         }
     }
 
+    public Dungeon getDungeon() {
+        return dungeon;
+    }
+
     public void addToInventory(Player player) {
-        Dungeon dungeon = getDungeon();
+        // Dungeon dungeon = getDungeon();
         player.addItem(this);
-        dungeon.removeEntity(this);
     }
 
 }

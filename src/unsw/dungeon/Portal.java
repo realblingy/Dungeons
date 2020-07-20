@@ -29,7 +29,7 @@ public class Portal extends Entity{
     public void teleport(Player player) {
         Portal matchPortal = findMatchingPortal();
         if (matchPortal == null) return;
-        dungeon.movePlayer(matchPortal.getX(), matchPortal.getY() + 1);
+        dungeon.movePlayer(matchPortal.getX(), matchPortal.getY());
     }
     
     public void update(Entity entity) {
