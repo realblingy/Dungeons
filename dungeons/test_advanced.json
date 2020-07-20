@@ -247,6 +247,11 @@
       "type": "wall"
     },
     {
+      "x" : 10,
+      "y": 10,
+      "type" : "treasure"
+    },
+    {
       "x": 17,
       "y": 5,
       "type": "wall"

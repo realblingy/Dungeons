@@ -40,7 +40,6 @@ public class Dungeon implements DungeonObserver{
 
     public void removeEntity(Entity entity) {
         dungeonLoader.removeEntity(entity);
-        // entities.remove(entity);
     }
 
     public MainGoal createMainGoal(JSONObject goal) {
@@ -123,6 +122,7 @@ public class Dungeon implements DungeonObserver{
     }
 
     public void update(Switch switchPlate) {
+        player.setMove(false);
         setGoalComplete();
     }
 
@@ -164,7 +164,7 @@ public class Dungeon implements DungeonObserver{
 
     public void addEntity(Entity entity) {
         entities.add(entity);
-        // TriggerAtBeginning(entity);
+        TriggerAtBeginning(entity);
     }
 
     public void setGoal(JSONObject goal) {

@@ -31,7 +31,8 @@ public class Enemy extends Entity {
                     notifyDungeon();
                 }
                 else {
-                    System.out.println("        Player death");
+                    System.out.println("Player dies: Player cannot move");
+                    player.setMove(false);
                 }
             }
         }
