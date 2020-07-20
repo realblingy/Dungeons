@@ -1,4 +1,4 @@
-package unsw.test;
+package test;
 
 import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
