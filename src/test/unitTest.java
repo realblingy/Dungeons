@@ -312,4 +312,43 @@ public class unitTest {
         assertEquals(s3.allTrigger(), false);
     }
 
+    @Test 
+    public void testEnemyMoveToward() {
+        Dungeon d = make.makeDungeon("boulder", "boulders.json", 5, 4);
+        Player player = new Player(d, 0, 0);
+        Enemy enemy = new Enemy(d, 3, 0);
+        d.setPlayer(player);
+        d.setEnemy(enemy);
+        d.addEntity(player);
+        d.addEntity(enemy);
+        player.moveRight();
+        player.moveRight();
+        // enemy moving toward player
+        // collide with enemey when player is not holding sword or player invincible
+        assertEquals(player.canMove(), false);        
+    }
+
+    @Test
+    public void testEnemyMoveAway() {
+        Dungeon d = make.makeDungeon("boulder", "boulders.json", 5, 4);
+        Player player = new Player(d, 0, 0);
+        Enemy enemy = new Enemy(d, 4, 0);
+        Potion p = new Potion(d, 2, 0);
+        d.setPlayer(player);
+        d.setEnemy(enemy);
+        d.addEntity(player);
+        d.addEntity(enemy);  
+        d.addEntity(p);
+        // Enemy move toward player
+        player.moveRight();
+        assertEquals(enemy.getX(), 3);
+        assertEquals(enemy.getY(), 0);
+        // Enemy move away from playr
+        player.moveRight();
+        assertEquals(d.hasEntity(p), false);
+
+        assertEquals(enemy.getX(), 4);
+        assertEquals(enemy.getY(), 0);
+    }
+
 }

@@ -1,17 +1,21 @@
 File not found!
 File not found!
-Player holds sword
 File not found!
+Player holds sword
 File not found!
 File not found!
 File not found!
-switch (2 , 2 )  is trigger
-switch (2 , 1 )  is trigger
-switch (2 , 1 )  is shut off
-switch (3 , 2 )  is trigger
 File not found!
+switch (2 , 2 )  is trigger
+switch (2 , 1 )  is trigger
+switch (2 , 1 )  is shut off
+switch (3 , 2 )  is trigger
 	File not found!
-	Player is invincible
-	false
+	 Player dies: Player cannot move
 
 File not found!
+File not found!
+Player is invincible
+false
+false
+File not found!

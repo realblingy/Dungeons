@@ -79,14 +79,14 @@ public class Dungeon implements DungeonObserver{
 <span class="fc" id="L79">        Entity obj = getAdjacentObj(player);</span>
 <span class="fc bfc" id="L80" title="All 2 branches covered.">        if (obj == null) {</span>
 <span class="fc" id="L81">            player.updatePosition();</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">            if (enemy != null) {</span>
-<span class="nc" id="L83">                enemy.updatePosition(player);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (enemy != null) {</span>
+<span class="fc" id="L83">                enemy.updatePosition(player);</span>
             }
         }
         else {
-<span class="pc bpc" id="L87" title="1 of 4 branches missed.">            if (!(obj instanceof Enemy) &amp;&amp; enemy != null) {</span>
-<span class="nc" id="L88">                obj.update(player);</span>
-<span class="nc" id="L89">                enemy.updatePosition(player);  </span>
+<span class="fc bfc" id="L87" title="All 4 branches covered.">            if (!(obj instanceof Enemy) &amp;&amp; enemy != null) {</span>
+<span class="fc" id="L88">                obj.update(player);</span>
+<span class="fc" id="L89">                enemy.updatePosition(player);  </span>
             }
             else {
 <span class="fc" id="L92">                obj.update(player);</span>
@@ -142,8 +142,8 @@ public class Dungeon implements DungeonObserver{
 <span class="fc" id="L142">    }</span>
 
     public void setEnemy(Enemy enemy) {
-<span class="nc" id="L145">        this.enemy = enemy;</span>
-<span class="nc" id="L146">    }</span>
+<span class="fc" id="L145">        this.enemy = enemy;</span>
+<span class="fc" id="L146">    }</span>
 
     public void addEntity(Entity entity) {
 <span class="fc" id="L149">        entities.add(entity);</span>

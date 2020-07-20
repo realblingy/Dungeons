@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.unitTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-07-20T15:48:59" hostname="vx3" time="11.21">
+<testsuite name="test.unitTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-07-20T21:39:09" hostname="vx7" time="11.144">
   <properties/>
-  <testcase name="testKeyDoor()" classname="test.unitTest" time="0.137"/>
-  <testcase name="testSword()" classname="test.unitTest" time="0.004"/>
-  <testcase name="testExit()" classname="test.unitTest" time="0.002"/>
-  <testcase name="testWall()" classname="test.unitTest" time="0.004"/>
-  <testcase name="testPlayerMovement()" classname="test.unitTest" time="0.002"/>
-  <testcase name="testBoulderSwitch()" classname="test.unitTest" time="0.033"/>
-  <testcase name="testPortal()" classname="test.unitTest" time="0.004"/>
-  <testcase name="testPotion()" classname="test.unitTest" time="11.007"/>
+  <testcase name="testEnemyMoveAway()" classname="test.unitTest" time="0.092"/>
+  <testcase name="testKeyDoor()" classname="test.unitTest" time="0.003"/>
+  <testcase name="testSword()" classname="test.unitTest" time="0.003"/>
+  <testcase name="testExit()" classname="test.unitTest" time="0.001"/>
+  <testcase name="testWall()" classname="test.unitTest" time="0.003"/>
+  <testcase name="testPlayerMovement()" classname="test.unitTest" time="0.001"/>
+  <testcase name="testBoulderSwitch()" classname="test.unitTest" time="0.02"/>
+  <testcase name="testEnemyMoveToward()" classname="test.unitTest" time="0.002"/>
+  <testcase name="testPortal()" classname="test.unitTest" time="0.002"/>
+  <testcase name="testPotion()" classname="test.unitTest" time="11.002"/>
   <testcase name="testTreasure()" classname="test.unitTest" time="0.002"/>
   <system-out><![CDATA[File not found!
+File not found!
 File not found!
 Player holds sword
 File not found!
@@ -22,8 +25,11 @@ switch (2 , 1 )  is trigger
 switch (2 , 1 )  is shut off
 switch (3 , 2 )  is trigger
 File not found!
+Player dies: Player cannot move
+File not found!
 File not found!
 Player is invincible
+false
 false
 File not found!
 ]]></system-out>

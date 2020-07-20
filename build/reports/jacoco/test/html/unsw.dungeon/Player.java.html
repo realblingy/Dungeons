@@ -127,7 +127,7 @@ public class Player extends Entity {
     }
 
     public boolean reduceSwordhits() {
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        for (Item item : inventory) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (Item item : inventory) {</span>
 <span class="pc bpc" id="L131" title="1 of 2 branches missed.">            if (item instanceof Sword) {</span>
 <span class="fc" id="L132">                Sword sword = (Sword) item;</span>
 <span class="fc" id="L133">                sword.reduceHits();</span>
@@ -137,7 +137,7 @@ public class Player extends Entity {
 <span class="fc" id="L137">                return true;</span>
             }
 <span class="nc" id="L139">        }</span>
-<span class="nc" id="L140">        return false;</span>
+<span class="fc" id="L140">        return false;</span>
     }
 
     public boolean isInvincible() {
