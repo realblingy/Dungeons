@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">T09B-groupProjectA</a> &gt; <a href="index.source.html" class="el_package">unsw.dungeon</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package unsw.dungeon;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * The player entity
+ * @author Robert Clifton-Everest
+ *
+ */
+public class Player extends Entity {
+
+    private Dungeon dungeon;
+    private String recentMovement;
+    private List&lt;Item&gt; inventory;
+    private boolean invincible;
+    private boolean canMove;
+
+    /**
+     * Create a player positioned in square (x,y)
+     * @param x
+     * @param y
+     */
+    public Player(Dungeon dungeon, int x, int y) {
+<span class="fc" id="L26">        super(x, y, false);</span>
+<span class="fc" id="L27">        recentMovement = &quot;&quot;;</span>
+<span class="fc" id="L28">        this.dungeon = dungeon;</span>
+<span class="fc" id="L29">        this.inventory = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L30">        canMove = true;</span>
+<span class="fc" id="L31">    }</span>
+
+    public void notifyDungeon() {
+<span class="fc" id="L34">        dungeon.update(this);</span>
+<span class="fc" id="L35">    }</span>
+
+    @Override
+    public void update(Entity entity) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (entity instanceof Boulder) {</span>
+<span class="nc" id="L40">            updatePosition();         </span>
+        }    
+<span class="nc" id="L42">    }</span>
+
+    public void moveUp() {
+<span class="pc bpc" id="L45" title="2 of 4 branches missed.">        if (getY() &gt; 0 &amp;&amp; canMove) {</span>
+<span class="fc" id="L46">            recentMovement = &quot;up&quot;;</span>
+<span class="fc" id="L47">            notifyDungeon();</span>
+        }   
+<span class="fc" id="L49">    }</span>
+
+    public void moveDown() {
+<span class="pc bpc" id="L52" title="1 of 4 branches missed.">        if (getY() &lt; dungeon.getHeight() - 1 &amp;&amp; canMove) {</span>
+<span class="fc" id="L53">            recentMovement = &quot;down&quot;;</span>
+<span class="fc" id="L54">            notifyDungeon();</span>
+        }   
+<span class="fc" id="L56">    }</span>
+
+    public void moveLeft() {
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">        if (getX() &gt; 0 &amp;&amp; canMove) {</span>
+<span class="fc" id="L60">            recentMovement = &quot;left&quot;;</span>
+<span class="fc" id="L61">            notifyDungeon();</span>
+        }          
+<span class="fc" id="L63">    }</span>
+    public void moveRight() {
+<span class="pc bpc" id="L65" title="1 of 4 branches missed.">        if (getX() &lt; dungeon.getWidth() - 1 &amp;&amp; canMove) {</span>
+<span class="fc" id="L66">            recentMovement = &quot;right&quot;;</span>
+<span class="fc" id="L67">            notifyDungeon();</span>
+        }
+<span class="fc" id="L69">    }</span>
+
+    public String getRecentMovement() {
+<span class="fc" id="L72">        return recentMovement;</span>
+    }
+
+    public void updatePosition() {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (recentMovement == &quot;up&quot;) {</span>
+<span class="fc" id="L77">            y().set(getY() - 1);</span>
+        }
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (recentMovement == &quot;down&quot;) {</span>
+<span class="fc" id="L80">            y().set(getY() + 1);</span>
+        }
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (recentMovement == &quot;left&quot;) {</span>
+<span class="fc" id="L83">            x().set(getX() - 1);</span>
+        }
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (recentMovement == &quot;right&quot;) {</span>
+<span class="fc" id="L86">            x().set(getX() + 1);</span>
+        }
+<span class="fc" id="L88">    }</span>
+
+    public void addItem(Item item) {
+<span class="fc" id="L91">        inventory.add(item);</span>
+<span class="fc" id="L92">    }</span>
+
+    public void removeItem(Item item) {
+<span class="nc" id="L95">        inventory.remove(item);</span>
+<span class="nc" id="L96">    }</span>
+
+    public void move(int x, int y) {
+<span class="fc" id="L99">        x().set(x);</span>
+<span class="fc" id="L100">        y().set(y);</span>
+<span class="fc" id="L101">    }</span>
+
+    public boolean canMove() {
+<span class="fc" id="L104">        return canMove;</span>
+    }
+
+    public void setMove(boolean canMove) {
+<span class="fc" id="L108">        this.canMove = canMove;</span>
+<span class="fc" id="L109">    }</span>
+
+    /**
+     * method to find the key of a specific door with id
+     * @param id
+     * @return  key if found else return null
+     */
+    public Item findKey(int id) {
+        // there will be only one key in inventory at all time
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        for (Item item : inventory) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            if (item instanceof DungeonKey) {</span>
+<span class="nc" id="L120">                DungeonKey key = (DungeonKey) item;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                if (key.getID() == id) {</span>
+<span class="nc" id="L122">                    return key;</span>
+                }
+            }
+<span class="nc" id="L125">        }</span>
+<span class="nc" id="L126">        return null;</span>
+    }
+
+    public boolean reduceSwordhits() {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        for (Item item : inventory) {</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">            if (item instanceof Sword) {</span>
+<span class="fc" id="L132">                Sword sword = (Sword) item;</span>
+<span class="fc" id="L133">                sword.reduceHits();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                if (sword.getHits() == 0) {</span>
+<span class="nc" id="L135">                    inventory.remove(item);</span>
+                }
+<span class="fc" id="L137">                return true;</span>
+            }
+<span class="nc" id="L139">        }</span>
+<span class="nc" id="L140">        return false;</span>
+    }
+
+    public boolean isInvincible() {
+<span class="fc" id="L144">        return invincible;</span>
+    }
+
+    public void activateInvincibility() {
+<span class="fc" id="L148">        invincible = true;</span>
+<span class="fc" id="L149">        Thread newThread = new Thread(() -&gt; {</span>
+            try {
+<span class="fc" id="L151">                TimeUnit.SECONDS.sleep(10);</span>
+<span class="fc" id="L152">                invincible = false;</span>
+<span class="fc" id="L153">                System.out.println(invincible);</span>
+            }
+<span class="nc" id="L155">            catch (InterruptedException e) {</span>
+<span class="nc" id="L156">                Thread.currentThread().interrupt();</span>
+<span class="fc" id="L157">            }</span>
+<span class="fc" id="L158">        });</span>
+<span class="fc" id="L159">        newThread.start();</span>
+<span class="fc" id="L160">    }</span>
+
+    /**
+     * method to determine if the player can pick up the item or not
+     * @param requiredPickUp    item that is required to be picked up
+     * @return  true if the item can be picked up else false
+     */
+    public boolean canPickUp(Item requiredPickUp) {
+<span class="fc" id="L168">        int n_key = 0;</span>
+<span class="fc" id="L169">        int n_sword = 0;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (requiredPickUp instanceof Potion) {</span>
+<span class="fc" id="L171">            return true;</span>
+        }
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        for (Item item : inventory) {</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">            if (item instanceof DungeonKey) {</span>
+<span class="nc" id="L175">                n_key++;</span>
+            }
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">            if (item instanceof Sword) {</span>
+<span class="nc" id="L178">                n_sword++;</span>
+            }
+<span class="fc" id="L180">        }</span>
+<span class="pc bpc" id="L181" title="6 of 8 branches missed.">        if ((n_key != 0 &amp;&amp; (requiredPickUp instanceof DungeonKey)) ||</span>
+            (n_sword != 0 &amp;&amp; (requiredPickUp instanceof Sword))) {
+<span class="nc" id="L183">            return false;</span>
+        }
+<span class="fc" id="L185">        return true;</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

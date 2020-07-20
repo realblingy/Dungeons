@@ -6,7 +6,6 @@ public class Exit extends Entity {
 
     public Exit(Dungeon dungeon, int x, int y) {
         super(x, y, true);
-        onExit = false;
         this.dungeon = dungeon;
     }
 

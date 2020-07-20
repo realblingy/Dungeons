@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Enemy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">T09B-groupProjectA</a> &gt; <a href="index.source.html" class="el_package">unsw.dungeon</a> &gt; <span class="el_source">Enemy.java</span></div><h1>Enemy.java</h1><pre class="source lang-java linenums">package unsw.dungeon;
+
+public class Enemy extends Entity {
+    private Dungeon dungeon;
+    private String move;
+
+    public Enemy (Dungeon dungeon, int x, int y) {
+<span class="fc" id="L8">        super(x, y, false);</span>
+<span class="fc" id="L9">        this.dungeon = dungeon;</span>
+<span class="fc" id="L10">        this.move = &quot;&quot;;</span>
+<span class="fc" id="L11">    }</span>
+
+    public void notifyDungeon() {
+<span class="fc" id="L14">        dungeon.update(this);</span>
+<span class="fc" id="L15">    }</span>
+    
+    // this update will be called only when enemy is on the square that the  player wants to move
+    @Override
+    public void update(Entity entity) {
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if (entity instanceof Player) {</span>
+<span class="fc" id="L21">            Player player = (Player) entity;</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">            if (player.isInvincible()) {</span>
+                // enemy dies (player invincible)
+<span class="fc" id="L24">                System.out.println(&quot;Player is invincible&quot;);</span>
+<span class="fc" id="L25">                notifyDungeon();</span>
+            }
+            else {
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">                if (player.reduceSwordhits()) {</span>
+                    // player is holding sword (enemy dies)
+<span class="fc" id="L30">                    System.out.println(&quot;Player holds sword&quot;);</span>
+<span class="fc" id="L31">                    notifyDungeon();</span>
+                }
+                else {
+<span class="nc" id="L34">                    System.out.println(&quot;Player dies: Player cannot move&quot;);</span>
+<span class="nc" id="L35">                    player.setMove(false);</span>
+                }
+            }
+        }
+<span class="fc" id="L39">    }</span>
+
+    // this function will be called only after player has made a move
+    public void updatePosition(Player player) {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (player.isInvincible()) {</span>
+<span class="nc" id="L44">            MoveAwayFromPlayer(player);</span>
+        }
+        else {
+<span class="nc" id="L47">            MoveTowardPlayer(player);</span>
+        }
+<span class="nc" id="L49">    }</span>
+
+    public void MoveTowardPlayer(Player player) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (collideWithPlayer(player)) {</span>
+<span class="nc" id="L53">            move = &quot;&quot;;</span>
+            //notifyDungeon();
+<span class="nc" id="L55">            update(player);</span>
+<span class="nc" id="L56">            return;</span>
+        }
+        // player on top
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (player.getY() &lt; getY()) {</span>
+            // move enemy up
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            if (!dungeon.willCollide(getX(), getY() - 1)) {</span>
+<span class="nc" id="L62">                move = &quot;up&quot;;</span>
+            }
+            else {
+<span class="nc" id="L65">                checkLeftRight(player);</span>
+            }
+<span class="nc" id="L67">            resetMove();</span>
+<span class="nc" id="L68">            return;</span>
+        }
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (player.getY() &gt; getY()) {</span>
+            // move enemy down
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (!dungeon.willCollide(getX(), getY() + 1)) {</span>
+<span class="nc" id="L73">                move = &quot;down&quot;;</span>
+            }
+            else {
+<span class="nc" id="L76">                checkLeftRight(player);</span>
+            }
+<span class="nc" id="L78">            resetMove();</span>
+<span class="nc" id="L79">            return;</span>
+        }
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (player.getX() &lt; getX()) {</span>
+            // move enemy left
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            if (!dungeon.willCollide(getX() - 1, getY())) {</span>
+<span class="nc" id="L84">                move = &quot;left&quot;;</span>
+            }
+            else {
+<span class="nc" id="L87">                checkUpDown(player);</span>
+            }
+<span class="nc" id="L89">            resetMove();</span>
+<span class="nc" id="L90">            return;</span>
+        }
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (player.getX() &gt; getX()) {</span>
+            // move enemy right
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (!dungeon.willCollide(getX() + 1, getY())) {</span>
+<span class="nc" id="L95">                move = &quot;right&quot;;</span>
+            }
+            else {
+<span class="nc" id="L98">                checkUpDown(player);</span>
+            }
+<span class="nc" id="L100">            resetMove();</span>
+<span class="nc" id="L101">            return;</span>
+        }
+<span class="nc" id="L103">    }</span>
+
+    public void resetMove() {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (move != &quot;&quot;) {</span>
+<span class="nc" id="L107">            resetPosition();</span>
+<span class="nc" id="L108">            move = &quot;&quot;;</span>
+        }
+<span class="nc" id="L110">    }</span>
+
+    public void MoveAwayFromPlayer(Player player) {
+        // player on left 
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (player.getX() &lt; getX()) {</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            if (!dungeon.willCollide(getX() + 1, getY())) {</span>
+                // check right
+<span class="nc" id="L117">                move = &quot;right&quot;;</span>
+            }
+            else {
+<span class="nc" id="L120">                checkUpDown(player);</span>
+            }
+        }
+        // player on right
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        else if (player.getX() &gt; getX()) {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if (!dungeon.willCollide(getX() - 1, getY())) {</span>
+                // check left
+<span class="nc" id="L127">                move = &quot;left&quot;;</span>
+            }
+            else {
+<span class="nc" id="L130">                checkUpDown(player);</span>
+            }
+        }
+        // same x coordinate 
+        else {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (player.getY() &lt; getY()) {</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">                if (!dungeon.willCollide(getX(), getY() + 1)) {</span>
+<span class="nc" id="L137">                    move = &quot;Down&quot;;</span>
+                }
+                else {
+<span class="nc" id="L140">                    decideLeftRight(player);</span>
+                }
+            }
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (player.getY() &gt; getY()) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                if (!dungeon.willCollide(getX(), getY() - 1)) {</span>
+<span class="nc" id="L145">                    move = &quot;up&quot;;</span>
+                }
+                else {
+<span class="nc" id="L148">                    decideLeftRight(player);</span>
+                }
+            }
+        }
+<span class="nc" id="L152">        resetMove();</span>
+<span class="nc" id="L153">    }</span>
+
+    public void decideLeftRight(Player player) {
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        if (!dungeon.willCollide(getX() + 1, getY())) {</span>
+<span class="nc" id="L157">            move = &quot;right&quot;;</span>
+        }
+        else {
+<span class="nc" id="L160">            move = &quot;left&quot;;</span>
+        }
+<span class="nc" id="L162">    }</span>
+
+    public void checkLeftRight(Player player) {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (player.getX() &lt; getX()) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">            if (!dungeon.willCollide(getX() - 1, getY())) {</span>
+<span class="nc" id="L167">                move = &quot;left&quot;;</span>
+            }
+            else {
+<span class="nc" id="L170">                move = &quot;right&quot;;</span>
+            }
+        }
+        else {
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (!dungeon.willCollide(getX() + 1, getY())) {</span>
+<span class="nc" id="L175">                move = &quot;right&quot;;</span>
+            }
+            else {
+<span class="nc" id="L178">                move = &quot;left&quot;;</span>
+            }
+        }
+<span class="nc" id="L181">    }</span>
+
+    public void checkUpDown(Player player) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        if (player.getY() &lt; getY()) {</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            if (!dungeon.willCollide(getX(), getY() + 1)) {</span>
+                // Move Down
+<span class="nc" id="L187">                move = &quot;down&quot;;</span>
+            }
+            else {
+                // Move Up
+<span class="nc" id="L191">                move = &quot;up&quot;;</span>
+            }
+        }
+        else {
+<span class="nc bnc" id="L195" title="All 2 branches missed.">            if (!dungeon.willCollide(getX(), getY() - 1)) {</span>
+                // Move up
+<span class="nc" id="L197">                move = &quot;up&quot;;</span>
+            }
+            else {
+                // Move Down
+<span class="nc" id="L201">                move = &quot;down&quot;;</span>
+            }
+        }
+<span class="nc" id="L204">    }</span>
+
+    public void resetPosition() {
+<span class="nc bnc" id="L207" title="All 2 branches missed.">        if (move == &quot;up&quot;) {</span>
+<span class="nc" id="L208">            y().set(getY() - 1);</span>
+        }
+<span class="nc bnc" id="L210" title="All 2 branches missed.">        if (move == &quot;down&quot;) {</span>
+<span class="nc" id="L211">            y().set(getY() + 1);</span>
+        }
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        if (move == &quot;left&quot;) {</span>
+<span class="nc" id="L214">            x().set(getX() - 1);</span>
+        }
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        if (move == &quot;right&quot;) {</span>
+<span class="nc" id="L217">            x().set(getX() + 1);</span>
+        }
+<span class="nc" id="L219">    }</span>
+
+    public boolean collideWithPlayer(Player player) {
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        if (getX() == player.getX()) {</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">            if (getY() - 1 == player.getY()) {</span>
+<span class="nc" id="L224">                return true;</span>
+            }
+<span class="nc bnc" id="L226" title="All 2 branches missed.">            if (getY() + 1 == player.getY()) {</span>
+<span class="nc" id="L227">                return true;</span>
+            }
+        }
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        if (getY() == player.getY()) {</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            if (getX() - 1 == player.getX()) {</span>
+<span class="nc" id="L232">                return true;</span>
+            }
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            if (getX() + 1 == player.getX()) {</span>
+<span class="nc" id="L235">                return true;</span>
+            }
+        }
+<span class="nc" id="L238">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

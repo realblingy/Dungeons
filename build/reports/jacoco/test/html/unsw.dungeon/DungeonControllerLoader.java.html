@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DungeonControllerLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">T09B-groupProjectA</a> &gt; <a href="index.source.html" class="el_package">unsw.dungeon</a> &gt; <span class="el_source">DungeonControllerLoader.java</span></div><h1>DungeonControllerLoader.java</h1><pre class="source lang-java linenums">package unsw.dungeon;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+
+import java.io.File;
+
+/**
+ * A DungeonLoader that also creates the necessary ImageViews for the UI,
+ * connects them via listeners to the model, and creates a controller.
+ * @author Robert Clifton-Everest
+ *
+ */
+public class DungeonControllerLoader extends DungeonLoader {
+
+    private List&lt;ImageView&gt; entities;
+
+    //Images
+    private Image playerImage;
+    private Image wallImage;
+    private Image exitImage;
+    private Image boulderImage;
+    private Image switchImage;
+    private Image closedDoorImage;
+    private Image openDoorImage;
+    private Image keyImage;
+    private Image swordImage;
+    private Image potionImage;
+    private Image portalImage;
+    private Image treasureImage;
+    private Image enemyImage;
+
+    public DungeonControllerLoader(String filename)
+            throws FileNotFoundException {
+<span class="nc" id="L43">        super(filename);</span>
+<span class="nc" id="L44">        entities = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L45">        playerImage = new Image((new File(&quot;images/human_new.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L46">        wallImage = new Image((new File(&quot;images/brick_brown_0.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L47">        exitImage = new Image((new File(&quot;images/exit.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L48">        boulderImage = new Image((new File(&quot;images/boulder.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L49">        switchImage = new Image((new File(&quot;images/pressure_plate.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L50">        closedDoorImage = new Image((new File(&quot;images/closed_door.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L51">        keyImage = new Image((new File(&quot;images/key.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L52">        openDoorImage = new Image((new File(&quot;images/open_door.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L53">        swordImage = new Image((new File(&quot;images/greatsword_1_new.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L54">        potionImage = new Image((new File(&quot;images/brilliant_blue_new.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L55">        portalImage = new Image((new File(&quot;images/portal.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L56">        treasureImage = new Image((new File(&quot;images/gold_pile.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L57">        enemyImage = new Image((new File(&quot;images/deep_elf_master_archer.png&quot;)).toURI().toString());</span>
+<span class="nc" id="L58">    }</span>
+
+    @Override
+    public void onLoad(Entity player) {
+<span class="nc" id="L62">        ImageView view = new ImageView(playerImage);</span>
+<span class="nc" id="L63">        addEntity(player, view);</span>
+<span class="nc" id="L64">    }</span>
+
+    @Override
+    public void onLoad(Wall wall) {
+<span class="nc" id="L68">        ImageView view = new ImageView(wallImage);</span>
+<span class="nc" id="L69">        addEntity(wall, view);</span>
+<span class="nc" id="L70">    }</span>
+
+    @Override
+    public void onLoad(Exit exit) {
+<span class="nc" id="L74">        ImageView view = new ImageView(exitImage);</span>
+<span class="nc" id="L75">        addEntity(exit, view);</span>
+<span class="nc" id="L76">    }</span>
+
+    @Override
+    public void onLoad(Boulder boulder) {
+<span class="nc" id="L80">        ImageView view = new ImageView(boulderImage);</span>
+<span class="nc" id="L81">        addEntity(boulder, view);</span>
+<span class="nc" id="L82">    }</span>
+
+    @Override
+    public void onLoad(Door closedDoor) {
+<span class="nc" id="L86">        ImageView view = new ImageView(closedDoorImage);</span>
+<span class="nc" id="L87">        addEntity(closedDoor, view);</span>
+<span class="nc" id="L88">    }</span>
+
+    @Override
+    public void onLoad(DungeonKey key) {
+<span class="nc" id="L92">        ImageView view = new ImageView(keyImage);</span>
+<span class="nc" id="L93">        addEntity(key, view);</span>
+<span class="nc" id="L94">    }</span>
+
+    @Override
+    public void onLoad(Switch switchPlate) {
+<span class="nc" id="L98">        ImageView view = new ImageView(switchImage);</span>
+<span class="nc" id="L99">        addEntity(switchPlate, view);</span>
+<span class="nc" id="L100">    }</span>
+
+    @Override
+    public void onLoad(Sword sword) {
+<span class="nc" id="L104">        ImageView view = new ImageView(swordImage);</span>
+<span class="nc" id="L105">        addEntity(sword, view);</span>
+<span class="nc" id="L106">    }    </span>
+
+    @Override
+    public void onLoad(Potion potion) {
+<span class="nc" id="L110">        ImageView view = new ImageView(potionImage);</span>
+<span class="nc" id="L111">        addEntity(potion, view);</span>
+<span class="nc" id="L112">    }    </span>
+
+    @Override
+    public void onLoad(Portal portal) {
+<span class="nc" id="L116">        ImageView view = new ImageView(portalImage);</span>
+<span class="nc" id="L117">        addEntity(portal, view);</span>
+<span class="nc" id="L118">    }    </span>
+
+    @Override
+    public void onLoad(Treasure treasure) {
+<span class="nc" id="L122">        ImageView view = new ImageView(treasureImage);</span>
+<span class="nc" id="L123">        addEntity(treasure, view);</span>
+<span class="nc" id="L124">    }</span>
+
+    @Override
+    public void onLoad(Enemy enemy) {
+<span class="nc" id="L128">        ImageView view = new ImageView(enemyImage);</span>
+<span class="nc" id="L129">        addEntity(enemy, view);</span>
+<span class="nc" id="L130">    }</span>
+
+
+    private void addEntity(Entity entity, ImageView view) {
+<span class="nc" id="L134">        trackPosition(entity, view);</span>
+<span class="nc" id="L135">        entities.add(view);</span>
+<span class="nc" id="L136">    }</span>
+
+    public Image getImage(Entity entity) {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (entity instanceof Potion) {</span>
+<span class="nc" id="L140">            return potionImage;</span>
+        }
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        else if (entity instanceof Treasure) {</span>
+<span class="nc" id="L143">            return treasureImage;</span>
+        }
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        else if (entity instanceof Sword) {</span>
+<span class="nc" id="L146">            return swordImage;</span>
+        }
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        else if (entity instanceof DungeonKey) {</span>
+<span class="nc" id="L149">            return keyImage;</span>
+        }
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        else if (entity instanceof Door) {</span>
+<span class="nc" id="L152">            return closedDoorImage;</span>
+        }
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        else if (entity instanceof Enemy) {</span>
+<span class="nc" id="L155">            return enemyImage;</span>
+        }
+<span class="nc" id="L157">        return null;</span>
+    }
+
+    public void removeEntity(Entity entity) {
+<span class="nc" id="L161">        Image entityImageView = getImage(entity);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (entityImageView == null) { return; }</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        for (ImageView image : entities) {</span>
+            try {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">                if (image.getImage().equals(entityImageView)) {</span>
+<span class="nc" id="L166">                    image.setImage(null);</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">                    if (entity instanceof Door) {</span>
+                        //ImageView view = new ImageView(openDoorImage);
+                        //addEntity(entity, view);
+<span class="nc" id="L171">                        image.setImage(openDoorImage);</span>
+                    }
+                }
+<span class="nc" id="L174">            } catch (NullPointerException e) {}</span>
+<span class="nc" id="L175">        }</span>
+<span class="nc" id="L176">    }</span>
+
+    /**
+     * Set a node in a GridPane to have its position track the position of an
+     * entity in the dungeon.
+     *
+     * By connecting the model with the view in this way, the model requires no
+     * knowledge of the view and changes to the position of entities in the
+     * model will automatically be reflected in the view.
+     * @param entity
+     * @param node
+     */
+    private void trackPosition(Entity entity, Node node) {
+<span class="nc" id="L189">        GridPane.setColumnIndex(node, entity.getX());</span>
+<span class="nc" id="L190">        GridPane.setRowIndex(node, entity.getY());</span>
+<span class="nc" id="L191">        entity.x().addListener(new ChangeListener&lt;Number&gt;() {</span>
+            @Override
+            public void changed(ObservableValue&lt;? extends Number&gt; observable,
+                    Number oldValue, Number newValue) {
+<span class="nc" id="L195">                GridPane.setColumnIndex(node, newValue.intValue());</span>
+<span class="nc" id="L196">            }</span>
+        });
+<span class="nc" id="L198">        entity.y().addListener(new ChangeListener&lt;Number&gt;() {</span>
+            @Override
+            public void changed(ObservableValue&lt;? extends Number&gt; observable,
+                    Number oldValue, Number newValue) {
+<span class="nc" id="L202">                GridPane.setRowIndex(node, newValue.intValue());</span>
+<span class="nc" id="L203">            }</span>
+        });
+<span class="nc" id="L205">    }</span>
+
+    /**
+     * Create a controller that can be attached to the DungeonView with all the
+     * loaded entities.
+     * @return
+     * @throws FileNotFoundException
+     */
+    public DungeonController loadController() throws FileNotFoundException {
+<span class="nc" id="L214">        return new DungeonController(load(), entities);</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -87,7 +87,7 @@ public class unitTest {
     }
 
     @Test
-    public void testPotion() {
+    public void testPotion() throws InterruptedException{
         Dungeon d = make.makeDungeon("exit", "advanced.json", 20, 20);
         Player player = new Player(d, 0, 0);
         d.assignPlayer(player);
@@ -131,6 +131,13 @@ public class unitTest {
         for (int x = 0; x < 3; x++) {
             player.moveLeft();
         }
+
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 3);
+
+        d.addEntity(new Portal(d, 0, 2, 2));
+
+        player.moveUp();
 
         assertEquals(player.getX(), 0);
         assertEquals(player.getY(), 3);
