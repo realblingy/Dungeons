@@ -107,20 +107,16 @@ public class unitTest {
         // Player should still move and enemy should be dead
         assertEquals(player.canMove(), true);
         assertEquals(d.hasEntity(enemy), false);
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        }
-        catch (InterruptedException e) {
-            System.out.println("Interrupted");
-        }
+        TimeUnit.SECONDS.sleep(10);
         assertEquals(player.isInvincible(), false);
+        
     }
 
     @Test
     public void testPortal() {
         Dungeon d = make.makeDungeon("exit", "advanced.json", 20, 20);
         Player player = new Player(d, 0, 0);
-        d.assignPlayer(player);
+        d.setPlayer(player);
         d.addEntity(player);
         d.addEntity(new Portal(d, 0, 1, 0));
         d.addEntity(new Portal(d, 17, 17, 0));
@@ -144,7 +140,7 @@ public class unitTest {
     public void testTreasure() {
         Dungeon d = make.makeDungeon("exit", "advanced.json", 20, 20);
         Player player = new Player(d, 0, 0);
-        d.assignPlayer(player);
+        d.setPlayer(player);
         d.addEntity(player);
         Treasure t1 = new Treasure(d, 0, 1);
         Treasure t2 = new Treasure(d, 17, 17);
@@ -177,7 +173,7 @@ public class unitTest {
         Player player = new Player(d, 0, 0);
         Enemy enemy = new Enemy(d, 5, 0);
         Sword sword =new Sword(d, 1, 0);
-        d.assignPlayer(player);
+        d.setPlayer(player);
         d.addEntity(enemy);
         d.addEntity(sword);
 
