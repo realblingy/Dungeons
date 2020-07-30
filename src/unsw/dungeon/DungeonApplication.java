@@ -21,13 +21,13 @@ public class DungeonApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
         stage.setTitle("Dungeon");
-        ArrayList<String> scenes = new ArrayList<String>();
-        scenes.addAll(Arrays.asList("MainMenu", "MapsMenu", "Dungeon"));
-        loaders = new HashMap<String, FXMLLoader>();
-        for (String scene : scenes) {
-            FXMLLoader loader =  new FXMLLoader(getClass().getResource(scene + "View.fxml"));
-            loaders.put(scene, loader);
-        }
+        // ArrayList<String> scenes = new ArrayList<String>();
+        // scenes.addAll(Arrays.asList("MainMenu", "MapsMenu", "Dungeon"));
+        // loaders = new HashMap<String, FXMLLoader>();
+        // for (String scene : scenes) {
+            
+        //     loaders.put(scene, loader);
+        // }
         changeScene("MainMenu");
     }
 
@@ -38,12 +38,14 @@ public class DungeonApplication extends Application {
         else if (sceneName == "MapsMenu") {
             return new MapsMenuController(this);
         }
+        else if (sceneName == "Dungeon") {
+            return null;
+        }
         return null;
     }
 
     public void changeScene(String sceneName) throws IOException {
-        FXMLLoader loader = loaders.get(sceneName);
-        if (loader == null) { return;}
+        FXMLLoader loader =  new FXMLLoader(getClass().getResource(sceneName + "View.fxml"));
         loader.setController(getController(sceneName));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -54,12 +56,18 @@ public class DungeonApplication extends Application {
     public void update(Controller controller) throws IOException {
         if (controller instanceof MainMenuController) {
             MainMenuController c = (MainMenuController) controller;
-            if (c.getAction() == "play") {
-                changeScene("Dungeon");
+            switch(c.getAction()) {
+                case "play":
+                    changeScene("Dungeon");
+                case "maps":
+                    changeScene("MapsMenu");
             }
-            else if (c.getAction() == "maps") {
-                changeScene("MapsMenu");
-            }
+        }
+        else if (controller instanceof MapsMenuController) {
+            MapsMenuController c = (MapsMenuController) controller;
+            changeScene("MainMenu");
+            dungeonMap = c.getDungeon();
+            System.out.println(dungeonMap);
         }
     }
 

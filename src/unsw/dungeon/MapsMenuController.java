@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import javafx.scene.Node;
+import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -19,6 +21,14 @@ public class MapsMenuController extends Controller {
     @FXML
     private ImageView advanced;
 
+    @FXML
+    private ImageView boulders;
+
+    @FXML
+    private ImageView maze;
+
+    private String dungeon;
+
     public MapsMenuController(DungeonApplication application) {
         super(application);
     }
@@ -26,18 +36,31 @@ public class MapsMenuController extends Controller {
     @Override
     public void notifyApplication() throws IOException {
         // TODO Auto-generated method stub
-        return;
+        super.getDungeonApplication().update(this);
+    }
+
+    public String getDungeon() {
+        return dungeon;
     }
 
     @FXML
     public void initialize() {
         // ImageView iv = new ImageView();
         advanced.setImage( new Image((new File("examples/advanced.png")).toURI().toString()) );
+        boulders.setImage( new Image((new File("examples/boulders.png")).toURI().toString()) );
+        maze.setImage( new Image((new File("examples/maze.png")).toURI().toString()) );
     }
 
     @FXML
     public void handleAdvancedImage(MouseEvent event) {
-        System.out.println("ADVANCED");
+        dungeon = ((ImageView) event.getSource()).getId();
+        try {
+            notifyApplication();
+        }
+        catch (IOException e) {
+            System.out.println("MapsMenuController could not notify application.");
+        }
+        
     }
     
 }
