@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="413.0" layoutX="-6.0" layoutY="-7.0" stroke="BLACK" strokeType="INSIDE" width="612.0" />
+      <ImageView fitHeight="178.0" fitWidth="200.0" layoutX="386.0" layoutY="111.0" onMouseClicked="#handleAdvancedImage">
+         <image>
+            <Image url="@../../../examples/advanced.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="434.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADVANCED" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>

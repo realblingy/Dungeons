@@ -3,13 +3,23 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * A JavaFX controller for the dungeon.
@@ -21,11 +31,16 @@ public class DungeonController {
     @FXML
     private GridPane squares;
 
+    @FXML
+    private Pane pane;
+
     private List<ImageView> initialEntities;
 
     private Player player;
 
     private Dungeon dungeon;
+
+    public Parent root;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
@@ -50,6 +65,17 @@ public class DungeonController {
     }
 
     @FXML
+    public void playGame(ActionEvent event) throws IOException {
+        Parent gameViewParent = FXMLLoader.load(getClass().getResource("DungeonView.fxml"));
+        Scene gameViewScene = new Scene(gameViewParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(gameViewScene);
+        window.show();
+    }
+
+    @FXML
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
         case UP:
@@ -64,6 +90,17 @@ public class DungeonController {
         case RIGHT:
             player.moveRight();
             break;
+        case ESCAPE:
+            if (player.canMove()) {
+                Button pauseButton = new Button("PAUSE");
+                pane.getChildren().add(pauseButton);
+                pauseButton.setLayoutX(200);
+                pauseButton.setLayoutY(200);
+                player.setMove(false);
+            }
+            else {
+                player.setMove(true);
+            }
         default:
             break;
         }

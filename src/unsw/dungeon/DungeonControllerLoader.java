@@ -129,6 +129,11 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(enemy, view);
     }
 
+    public void update(Entity entity) {
+        if (entity instanceof Player) {
+
+        }
+    }
 
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
