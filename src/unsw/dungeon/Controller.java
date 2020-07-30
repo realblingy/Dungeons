@@ -1,8 +1,10 @@
 package unsw.dungeon;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 
-public class Controller {
+public abstract class Controller {
 
     private DungeonApplication application;
 
@@ -10,7 +12,9 @@ public class Controller {
         this.application = application;
     }
 
-    public DungeonApplication getApplication() {
+    public DungeonApplication getDungeonApplication() {
         return application;
     }
+
+    public abstract void notifyApplication() throws IOException;
 }

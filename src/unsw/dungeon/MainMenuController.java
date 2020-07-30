@@ -7,21 +7,34 @@ import javax.swing.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+
 public class MainMenuController extends Controller {
+
+    private String action;
 
     public MainMenuController(DungeonApplication application) {
         super(application);
     }
 
+    @Override
+    public void notifyApplication() throws IOException {
+        super.getDungeonApplication().update(this);
+    }
+
+    public String getAction() {
+        return action;
+    }
+
     @FXML
     public void handlePlayBtn(ActionEvent event) throws IOException {
-        System.out.println("Play!");
-        // super.getApplication().changeScene("MainMenu");
+        action = "play";
+        notifyApplication();
     }
 
     @FXML
     public void handleMapsBtn(ActionEvent event) throws IOException {
-        super.getApplication().changeScene("MapsMenu");
+        action = "maps";
+        notifyApplication();
     }
     
 }

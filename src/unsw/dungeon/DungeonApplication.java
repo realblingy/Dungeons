@@ -51,6 +51,18 @@ public class DungeonApplication extends Application {
         stage.show();
     }
 
+    public void update(Controller controller) throws IOException {
+        if (controller instanceof MainMenuController) {
+            MainMenuController c = (MainMenuController) controller;
+            if (c.getAction() == "play") {
+                changeScene("Dungeon");
+            }
+            else if (c.getAction() == "maps") {
+                changeScene("MapsMenu");
+            }
+        }
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
