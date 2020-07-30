@@ -26,7 +26,7 @@ import java.io.IOException;
  * @author Robert Clifton-Everest
  *
  */
-public class DungeonController {
+public class DungeonController extends Controller {
 
     @FXML
     private GridPane squares;
@@ -42,10 +42,17 @@ public class DungeonController {
 
     public Parent root;
 
-    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
+    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, DungeonApplication application) {
+        super(application);
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
+    }
+
+    @Override
+    public void notifyApplication() throws IOException {
+        // TODO Auto-generated method stub
+        return;
     }
 
     @FXML

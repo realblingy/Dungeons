@@ -140,6 +140,10 @@ public class DungeonControllerLoader extends DungeonLoader {
         entities.add(view);
     }
 
+    public List<ImageView> getEntities() {
+        return entities;
+    }
+
     public Image getImage(Entity entity) {
         if (entity instanceof Potion) {
             return potionImage;
@@ -209,12 +213,12 @@ public class DungeonControllerLoader extends DungeonLoader {
         });
     }
 
-    /**
-     * Create a controller that can be attached to the DungeonView with all the
-     * loaded entities.
-     * @return
-     * @throws FileNotFoundException
-     */
+    // /**
+    //  * Create a controller that can be attached to the DungeonView with all the
+    //  * loaded entities.
+    //  * @return
+    //  * @throws FileNotFoundException
+    //  */
     // public DungeonController loadController() throws FileNotFoundException {
     //     return new DungeonController(load(), entities);
     // }

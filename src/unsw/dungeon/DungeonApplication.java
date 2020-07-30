@@ -20,14 +20,9 @@ public class DungeonApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
+        // stage.setResizable(false);
         stage.setTitle("Dungeon");
-        // ArrayList<String> scenes = new ArrayList<String>();
-        // scenes.addAll(Arrays.asList("MainMenu", "MapsMenu", "Dungeon"));
-        // loaders = new HashMap<String, FXMLLoader>();
-        // for (String scene : scenes) {
-            
-        //     loaders.put(scene, loader);
-        // }
+        dungeonMap = "maze";
         changeScene("MainMenu");
     }
 
@@ -39,7 +34,13 @@ public class DungeonApplication extends Application {
             return new MapsMenuController(this);
         }
         else if (sceneName == "Dungeon") {
-            return null;
+            try {
+                DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(dungeonMap + ".json");
+                return new DungeonController(dungeonLoader.load(), dungeonLoader.getEntities(), this);
+            }
+            catch (IOException e) {
+                System.out.println("Cannot load Dungeon.");
+            }
         }
         return null;
     }
@@ -49,6 +50,7 @@ public class DungeonApplication extends Application {
         loader.setController(getController(sceneName));
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        root.requestFocus();
         stage.setScene(scene);
         stage.show();
     }
@@ -59,8 +61,10 @@ public class DungeonApplication extends Application {
             switch(c.getAction()) {
                 case "play":
                     changeScene("Dungeon");
+                    break;
                 case "maps":
                     changeScene("MapsMenu");
+                    break;
             }
         }
         else if (controller instanceof MapsMenuController) {
