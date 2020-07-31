@@ -340,6 +340,10 @@ public class Dungeon implements DungeonObserver{
         player.move(x, y);
     }
 
+    public void moveEnemy(int x, int y) {
+        enemy.move(x, y);
+    }
+
     public void assignPlayer(Player player) {
         this.player = player;
     }

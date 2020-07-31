@@ -31,11 +31,21 @@ public class Portal extends Entity{
         if (matchPortal == null) return;
         dungeon.movePlayer(matchPortal.getX(), matchPortal.getY());
     }
+
+    public void teleport(Enemy enemy) {
+        Portal matchPortal = findMatchingPortal();
+        if (matchPortal == null) return;
+        dungeon.moveEnemy(matchPortal.getX(), matchPortal.getY());
+    }
     
     public void update(Entity entity) {
         if (entity instanceof Player) {
             Player player = (Player) entity;
             teleport(player);
+        }
+        if (entity instanceof Enemy) {
+            Enemy enemy = (Enemy) entity;
+            teleport(enemy);
         }
         return;
     }

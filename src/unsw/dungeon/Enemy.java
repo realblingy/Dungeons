@@ -13,6 +13,11 @@ public class Enemy extends Entity {
     public void notifyDungeon() {
         dungeon.update(this);
     }
+
+    public void move(int x, int y) {
+        x().set(x);
+        y().set(y);
+    }
     
     // this update will be called only when enemy is on the square that the  player wants to move
     @Override
@@ -215,6 +220,11 @@ public class Enemy extends Entity {
         }
         if (move == "right") {
             x().set(getX() + 1);
+        }
+        Entity entity = dungeon.adjacentObj(getX(), getY());
+        if (entity != null && entity instanceof Portal) {
+            Portal portal = (Portal) entity;
+            portal.update(this);
         }
     }
 
