@@ -72,17 +72,6 @@ public class DungeonController extends Controller {
     }
 
     @FXML
-    public void playGame(ActionEvent event) throws IOException {
-        Parent gameViewParent = FXMLLoader.load(getClass().getResource("DungeonView.fxml"));
-        Scene gameViewScene = new Scene(gameViewParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(gameViewScene);
-        window.show();
-    }
-
-    @FXML
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
         case UP:

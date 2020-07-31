@@ -15,12 +15,10 @@ public class DungeonApplication extends Application {
 
     private String dungeonMap;
     private Stage stage;
-    private HashMap<String, FXMLLoader> loaders; 
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
-        // stage.setResizable(false);
         stage.setTitle("Dungeon");
         dungeonMap = "maze";
         changeScene("MainMenu");
