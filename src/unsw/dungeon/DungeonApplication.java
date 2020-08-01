@@ -1,10 +1,6 @@
 package unsw.dungeon;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +16,7 @@ public class DungeonApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
         stage.setTitle("Dungeon");
+        stage.setResizable(false);
         dungeonMap = "maze";
         changeScene("MainMenu");
     }
@@ -49,7 +46,6 @@ public class DungeonApplication extends Application {
 
     public void changeScene(String sceneName) throws IOException {
         FXMLLoader loader =  new FXMLLoader(getClass().getResource(sceneName + "View.fxml"));
-        System.out.println("next game load is "+dungeonMap);
         loader.setController(getController(sceneName));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -77,9 +73,18 @@ public class DungeonApplication extends Application {
             System.out.println(dungeonMap);
         }
         else if (controller instanceof DungeonController) {
+            DungeonController c = (DungeonController) controller;
+            if (c.getPauseMenu().isReturnToMenu()) {
+                changeScene("MainMenu");
+                return;
+            }
             changeScene("Dungeon");
         }
     }
+
+    // public void exitGame() {
+
+    // }
 
     public static void main(String[] args) {
         launch(args);

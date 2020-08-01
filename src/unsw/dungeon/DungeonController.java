@@ -3,25 +3,15 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,8 +29,8 @@ public class DungeonController extends Controller {
     @FXML 
     private StackPane stackpane;
 
-    // @FXML
-    // private Pane pane;
+    @FXML
+    private VBox pauseMenu;
 
     private List<ImageView> initialEntities;
 
@@ -48,7 +38,7 @@ public class DungeonController extends Controller {
 
     private Dungeon dungeon;
 
-    public Parent root;
+    private PauseMenu menu;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, DungeonApplication application) {
         super(application);
@@ -56,6 +46,7 @@ public class DungeonController extends Controller {
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
         dungeon.setController(this);
+        menu = new PauseMenu();
     }
 
     @Override
@@ -68,9 +59,24 @@ public class DungeonController extends Controller {
         dungeonApp.resetDungeonMap(string);
     }
 
+    public void returnToMenu() {
+        menu.setReturnToMenu(true);
+        try {
+            notifyApplication();
+        }
+        catch (IOException e) {
+            System.out.println("Could not return to main menu.");
+        }
+        
+    }
+
+    public PauseMenu getPauseMenu() {
+        return menu;
+    }
+
     public void displayMenu() {
         //creating a text field 
-        stackpane.getChildren().add(new Text("PAUSED!"));
+        pauseMenu.setVisible(!pauseMenu.isVisible());
     }
 
     @FXML
@@ -85,6 +91,19 @@ public class DungeonController extends Controller {
         }
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
+
+        pauseMenu.setVisible(false);
+    }
+
+    @FXML
+    public void handleReturnToMenu(ActionEvent event) {
+        displayMenu();
+        player.setMove(true);
+    }
+    
+    @FXML 
+    public void handleResume(ActionEvent event) {
+        pauseMenu.setVisible(false);
     }
 
     @FXML
@@ -103,13 +122,9 @@ public class DungeonController extends Controller {
             player.moveRight();
             break;
         case ESCAPE:
-            if (player.canMove()) {
-                player.setMove(false);
-                displayMenu();
-            }
-            else {
-                player.setMove(true);
-            }
+            player.setMove(!player.canMove());
+            displayMenu();
+            break;
         default:
             break;
         }
