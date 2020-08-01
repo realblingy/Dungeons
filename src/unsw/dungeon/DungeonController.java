@@ -3,18 +3,23 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -31,8 +36,11 @@ public class DungeonController extends Controller {
     @FXML
     private GridPane squares;
 
-    @FXML
-    private Pane pane;
+    @FXML 
+    private StackPane stackpane;
+
+    // @FXML
+    // private Pane pane;
 
     private List<ImageView> initialEntities;
 
@@ -60,6 +68,11 @@ public class DungeonController extends Controller {
         dungeonApp.resetDungeonMap(string);
     }
 
+    public void displayMenu() {
+        //creating a text field 
+        stackpane.getChildren().add(new Text("PAUSED!"));
+    }
+
     @FXML
     public void initialize() {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
@@ -70,10 +83,8 @@ public class DungeonController extends Controller {
                 squares.add(new ImageView(ground), x, y);
             }
         }
-
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
-
     }
 
     @FXML
@@ -93,11 +104,8 @@ public class DungeonController extends Controller {
             break;
         case ESCAPE:
             if (player.canMove()) {
-                Button pauseButton = new Button("PAUSE");
-                pane.getChildren().add(pauseButton);
-                pauseButton.setLayoutX(200);
-                pauseButton.setLayoutY(200);
                 player.setMove(false);
+                displayMenu();
             }
             else {
                 player.setMove(true);
