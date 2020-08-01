@@ -24,6 +24,10 @@ public class DungeonApplication extends Application {
         changeScene("MainMenu");
     }
 
+    public void resetDungeonMap(String string) {
+        dungeonMap = string;
+    }
+
     public Controller getController(String sceneName) {
         if (sceneName == "MainMenu") {
             return new MainMenuController(this);
@@ -45,6 +49,7 @@ public class DungeonApplication extends Application {
 
     public void changeScene(String sceneName) throws IOException {
         FXMLLoader loader =  new FXMLLoader(getClass().getResource(sceneName + "View.fxml"));
+        System.out.println("next game load is "+dungeonMap);
         loader.setController(getController(sceneName));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -70,6 +75,9 @@ public class DungeonApplication extends Application {
             changeScene("MainMenu");
             dungeonMap = c.getDungeon();
             System.out.println(dungeonMap);
+        }
+        else if (controller instanceof DungeonController) {
+            changeScene("Dungeon");
         }
     }
 

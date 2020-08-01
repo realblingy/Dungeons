@@ -47,12 +47,17 @@ public class DungeonController extends Controller {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
+        dungeon.setController(this);
     }
 
     @Override
     public void notifyApplication() throws IOException {
-        // TODO Auto-generated method stub
-        return;
+        super.getDungeonApplication().update(this);
+    }
+
+    public void resetDungeonMap(String string) {
+        DungeonApplication dungeonApp = getDungeonApplication();
+        dungeonApp.resetDungeonMap(string);
     }
 
     @FXML

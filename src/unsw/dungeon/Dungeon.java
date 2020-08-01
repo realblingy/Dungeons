@@ -3,6 +3,7 @@
  */
 package unsw.dungeon;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +18,14 @@ import org.json.JSONObject;
  * @author Robert Clifton-Everest
  *
  */
-public class Dungeon implements DungeonObserver{
+public class Dungeon implements DungeonObserver {
 
     private int width, height;
     private List<Entity> entities;
     private Player player;
     private Enemy enemy;
     private DungeonLoader dungeonLoader;
+    private DungeonController dungeonController;
 
     public Dungeon(DungeonLoader dungeonLoader, int width, int height, JSONObject goal) {
         this.width = width;
@@ -32,6 +34,11 @@ public class Dungeon implements DungeonObserver{
         this.player = null;
         this.enemy = null;
         this.dungeonLoader = dungeonLoader;
+        this.dungeonController = null;
+    }
+
+    public void setController(DungeonController controller) {
+        this.dungeonController = controller;
     }
 
     public void removeEntity(Entity entity) {
@@ -41,35 +48,35 @@ public class Dungeon implements DungeonObserver{
 
         }
     }
-    
+
     @Override
     public void update(Entity entity) {
         if (entity instanceof Player) {
-            update( (Player) entity);
+            update((Player) entity);
         }
-        
+
         if (entity instanceof Boulder) {
-            update( (Boulder) entity);
+            update((Boulder) entity);
         }
 
         if (entity instanceof Switch) {
-            update( (Switch) entity);
+            update((Switch) entity);
         }
 
         if (entity instanceof Exit) {
-            update( (Exit) entity);
+            update((Exit) entity);
         }
-        
+
         if (entity instanceof Item) {
-            update( (Item) entity);
+            update((Item) entity);
         }
 
         if (entity instanceof Door) {
-            update ( (Door) entity);
+            update((Door) entity);
         }
 
         if (entity instanceof Entity) {
-            update ( (Enemy) entity);
+            update((Enemy) entity);
         }
     }
 
@@ -81,16 +88,14 @@ public class Dungeon implements DungeonObserver{
             if (enemy != null) {
                 enemy.updatePosition(player);
             }
-        }
-        else {
+        } else {
             if (!(obj instanceof Enemy) && enemy != null) {
                 obj.update(player);
-                enemy.updatePosition(player);  
-            }
-            else {
+                enemy.updatePosition(player);
+            } else {
                 obj.update(player);
             }
-        }  
+        }
     }
 
     public void update(Boulder boulder) {
@@ -102,6 +107,15 @@ public class Dungeon implements DungeonObserver{
     public void update(Exit exit) {
         player.move(exit.getX(), exit.getY());
         player.setMove(false);
+        if (dungeonController != null) {
+            try {
+                dungeonController.resetDungeonMap("boulders");
+                dungeonController.notifyApplication();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
     public void update(Switch switchPlate) {
