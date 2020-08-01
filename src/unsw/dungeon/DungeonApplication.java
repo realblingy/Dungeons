@@ -11,6 +11,7 @@ public class DungeonApplication extends Application {
 
     private String dungeonMap;
     private Stage stage;
+    private Parent root;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -47,11 +48,15 @@ public class DungeonApplication extends Application {
     public void changeScene(String sceneName) throws IOException {
         FXMLLoader loader =  new FXMLLoader(getClass().getResource(sceneName + "View.fxml"));
         loader.setController(getController(sceneName));
-        Parent root = loader.load();
+        root = loader.load();
         Scene scene = new Scene(root);
-        root.requestFocus();
+        focusRoot();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void focusRoot() {
+        root.requestFocus();
     }
 
     public void update(Controller controller) throws IOException {

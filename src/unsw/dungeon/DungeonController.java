@@ -76,7 +76,15 @@ public class DungeonController extends Controller {
 
     public void displayMenu() {
         //creating a text field 
+        player.setMove(!player.canMove());
         pauseMenu.setVisible(!pauseMenu.isVisible());
+        if (pauseMenu.isVisible()) {
+            squares.setEffect(new GaussianBlur());
+        }
+        else {
+            squares.setEffect(null);
+        }
+        
     }
 
     @FXML
@@ -97,13 +105,13 @@ public class DungeonController extends Controller {
 
     @FXML
     public void handleReturnToMenu(ActionEvent event) {
-        displayMenu();
-        player.setMove(true);
+        returnToMenu();
     }
     
     @FXML 
     public void handleResume(ActionEvent event) {
-        pauseMenu.setVisible(false);
+        displayMenu();
+        getDungeonApplication().focusRoot();
     }
 
     @FXML
@@ -122,8 +130,10 @@ public class DungeonController extends Controller {
             player.moveRight();
             break;
         case ESCAPE:
-            player.setMove(!player.canMove());
             displayMenu();
+            break;
+        case E:
+            System.out.println("Inventory!");
             break;
         default:
             break;
