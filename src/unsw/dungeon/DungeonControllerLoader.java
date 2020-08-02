@@ -37,6 +37,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image portalImage;
     private Image treasureImage;
     private Image enemyImage;
+    private Image invincibleImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -55,6 +56,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         portalImage = new Image((new File("images/portal.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
         enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
+        invincibleImage = new Image((new File("images/human_invincible.png")).toURI().toString());
     }
 
     @Override
@@ -163,6 +165,10 @@ public class DungeonControllerLoader extends DungeonLoader {
         else if (entity instanceof Enemy) {
             return enemyImage;
         }
+        if (entity instanceof Player) {
+            Player p = (Player) entity;
+            return (p.isInvincible() ?  playerImage : invincibleImage);
+        }
         return null;
     }
 
@@ -180,9 +186,34 @@ public class DungeonControllerLoader extends DungeonLoader {
                         image.setImage(openDoorImage);
                     }
                 }
-            } catch (NullPointerException e) {}
+            }  catch (NullPointerException e) {}
         }
     }
+
+    public void changeEntityImage(Entity entity) {
+        Image entityImageView = getImage(entity);
+        
+        for (ImageView e : entities) {
+            try {
+                if (e.getImage().equals(entityImageView)) {
+                    if (entity instanceof Player) {
+                        Player p = (Player) entity;
+                        boolean playerIsInvis = p.isInvincible();
+                        if (playerIsInvis) {
+                            e.setImage(invincibleImage);
+                        }
+                        else {
+                            e.setImage(playerImage);
+                        } 
+                        return;
+                    }
+                    
+                }
+            } catch (NullPointerException exception) {}
+
+        }
+    }
+    
 
     /**
      * Set a node in a GridPane to have its position track the position of an
@@ -212,16 +243,6 @@ public class DungeonControllerLoader extends DungeonLoader {
             }
         });
     }
-
-    // /**
-    //  * Create a controller that can be attached to the DungeonView with all the
-    //  * loaded entities.
-    //  * @return
-    //  * @throws FileNotFoundException
-    //  */
-    // public DungeonController loadController() throws FileNotFoundException {
-    //     return new DungeonController(load(), entities);
-    // }
 
 
 }

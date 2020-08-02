@@ -1,8 +1,11 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javafx.scene.image.Image;
 
 /**
  * The player entity
@@ -148,13 +151,19 @@ public class Player extends Entity {
         return invincible;
     }
 
+    public void changePlayerImage() {
+        dungeon.changeEntityImage(this);
+    }
+
     public void activateInvincibility() {
         invincible = true;
+        changePlayerImage();
         Thread newThread = new Thread(() -> {
             try {
                 TimeUnit.SECONDS.sleep(10);
                 invincible = false;
                 System.out.println(invincible);
+                changePlayerImage();
             }
             catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
