@@ -44,6 +44,8 @@ public class DungeonController extends Controller {
 
     private PauseMenu menu;
 
+    private ImageLoader dungeonImageLoader;
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, DungeonApplication application) {
         super(application);
         this.dungeon = dungeon;
@@ -51,6 +53,7 @@ public class DungeonController extends Controller {
         this.initialEntities = new ArrayList<>(initialEntities);
         dungeon.setController(this);
         menu = new PauseMenu();
+        dungeonImageLoader = new ImageLoader();
     }
 
     @Override
@@ -80,20 +83,41 @@ public class DungeonController extends Controller {
 
     public void displayMenu() {
         //creating a text field 
-        player.setMove(!player.canMove());
+        if (!inventory.isVisible()) {
+            player.setMove(!player.canMove());
+        }
         pauseMenu.setVisible(!pauseMenu.isVisible());
         if (pauseMenu.isVisible()) {
             squares.setEffect(new GaussianBlur());
+            inventory.setEffect(new GaussianBlur());
         }
         else {
             squares.setEffect(null);
+            inventory.setEffect(null);
         }
         
     }
 
+    public ImageView loadImage() {
+        return new ImageView();
+    }
+
     public void displayInventory() {
-        inventory.setVisible(!inventory.isVisible());
+        inventory.setGridLinesVisible(true);
+        List<Item> playerInventory = player.getInventory();
+        inventory.getChildren().clear();
+        int horizontal = 0;
+        int vertical = 0;
+
+        for (Item i : playerInventory) {
+            dungeonImageLoader.setItem(i);
+            inventory.add(dungeonImageLoader.generateImageView(), horizontal % 4, vertical);
+            horizontal++;
+            if (horizontal % 4 == 0 && horizontal > 0) { vertical = vertical % 4;  }
+        }
+
         player.setMove(!player.canMove());
+        inventory.setVisible(!inventory.isVisible());
     }
 
     @FXML
@@ -141,6 +165,9 @@ public class DungeonController extends Controller {
             displayMenu();
             break;
         case E:
+            if (pauseMenu.isVisible()) {
+                break;
+            }
             displayInventory();
             break;
         default:

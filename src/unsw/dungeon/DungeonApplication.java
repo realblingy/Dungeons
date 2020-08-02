@@ -88,11 +88,6 @@ public class DungeonApplication extends Application {
         }
     }
 
-    // public void exitGame() {
-
-    // }
-    // Hi
-
     public static void main(String[] args) {
         launch(args);
     }
