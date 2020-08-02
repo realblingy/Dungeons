@@ -50,6 +50,7 @@ public class DungeonApplication extends Application {
         loader.setController(getController(sceneName));
         root = loader.load();
         Scene scene = new Scene(root);
+        // scene.getStylesheets().add("src/unsw/dungeon/dungeons.css");
         focusRoot();
         stage.setScene(scene);
         stage.show();

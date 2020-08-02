@@ -140,6 +140,10 @@ public class Player extends Entity {
         return false;
     }
 
+    public List<Item> getInventory() {
+        return inventory;
+    }
+
     public boolean isInvincible() {
         return invincible;
     }

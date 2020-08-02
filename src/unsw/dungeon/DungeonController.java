@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -32,6 +33,9 @@ public class DungeonController extends Controller {
     private StackPane stackpane;
 
     @FXML
+    private GridPane inventory;
+
+    @FXML
     private VBox pauseMenu;
 
     @FXML
@@ -48,6 +52,8 @@ public class DungeonController extends Controller {
 
     private PauseMenu menu;
 
+    private ImageLoader dungeonImageLoader;
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, DungeonApplication application) {
         super(application);
         this.dungeon = dungeon;
@@ -55,6 +61,7 @@ public class DungeonController extends Controller {
         this.initialEntities = new ArrayList<>(initialEntities);
         dungeon.setController(this);
         menu = new PauseMenu();
+        dungeonImageLoader = new ImageLoader();
     }
 
     @Override
@@ -84,13 +91,17 @@ public class DungeonController extends Controller {
 
     public void displayMenu() {
         //creating a text field 
-        player.setMove(!player.canMove());
+        if (!inventory.isVisible()) {
+            player.setMove(!player.canMove());
+        }
         pauseMenu.setVisible(!pauseMenu.isVisible());
         if (pauseMenu.isVisible()) {
             squares.setEffect(new GaussianBlur());
+            inventory.setEffect(new GaussianBlur());
         }
         else {
             squares.setEffect(null);
+            inventory.setEffect(null);
         }
         
     }
@@ -100,11 +111,32 @@ public class DungeonController extends Controller {
         returnToMain.setVisible(string);
     }
 
+    public ImageView loadImage() {
+        return new ImageView();
+    }
+
+    public void displayInventory() {
+        inventory.setGridLinesVisible(true);
+        List<Item> playerInventory = player.getInventory();
+        inventory.getChildren().clear();
+        int horizontal = 0;
+        int vertical = 0;
+
+        for (Item i : playerInventory) {
+            dungeonImageLoader.setItem(i);
+            inventory.add(dungeonImageLoader.generateImageView(), horizontal % 4, vertical);
+            horizontal++;
+            if (horizontal % 4 == 0 && horizontal > 0) { vertical = vertical % 4;  }
+        }
+
+        player.setMove(!player.canMove());
+        inventory.setVisible(!inventory.isVisible());
+    }
+
     @FXML
     public void initialize() {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
-
-        // Add the ground first so it is below all other entities
+        inventory.setVisible(false);
         for (int x = 0; x < dungeon.getWidth(); x++) {
             for (int y = 0; y < dungeon.getHeight(); y++) {
                 squares.add(new ImageView(ground), x, y);
@@ -128,6 +160,11 @@ public class DungeonController extends Controller {
         getDungeonApplication().focusRoot();
     }
 
+    @FXML 
+    public void handleRestart(ActionEvent event) throws IOException {
+        notifyApplication();
+    }   
+
     @FXML
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
@@ -147,7 +184,10 @@ public class DungeonController extends Controller {
             displayMenu();
             break;
         case E:
-            System.out.println("Inventory!");
+            if (pauseMenu.isVisible()) {
+                break;
+            }
+            displayInventory();
             break;
         default:
             break;
