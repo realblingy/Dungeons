@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import javafx.scene.image.Image;
+
 /**
  * Loads a dungeon from a .json file.
  *
@@ -143,5 +145,7 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Treasure treasure);
 
     public abstract void onLoad(Enemy enemy);
+
+    public abstract void changeEntityImage(Entity entity);
 
 }

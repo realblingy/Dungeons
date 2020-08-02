@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import javafx.scene.image.Image;
+
 /**
  * A dungeon in the interactive dungeon player.
  *
@@ -102,6 +104,10 @@ public class Dungeon implements DungeonObserver {
         player.update(boulder);
         UpdateOldAndNewSwitch(boulder, player);
 
+    }
+
+    public void changeEntityImage(Entity entity) {
+        dungeonLoader.changeEntityImage(entity);
     }
 
     public void update(Exit exit) {

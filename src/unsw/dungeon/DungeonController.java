@@ -103,7 +103,6 @@ public class DungeonController extends Controller {
     }
 
     public void displayInventory() {
-        inventory.setGridLinesVisible(true);
         List<Item> playerInventory = player.getInventory();
         inventory.getChildren().clear();
         int horizontal = 0;
@@ -114,6 +113,7 @@ public class DungeonController extends Controller {
             inventory.add(dungeonImageLoader.generateImageView(), horizontal % 4, vertical);
             horizontal++;
             if (horizontal % 4 == 0 && horizontal > 0) { vertical = vertical % 4;  }
+            if (vertical == 16) { break; }
         }
 
         player.setMove(!player.canMove());
