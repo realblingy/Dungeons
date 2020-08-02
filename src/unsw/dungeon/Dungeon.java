@@ -107,15 +107,9 @@ public class Dungeon implements DungeonObserver {
     public void update(Exit exit) {
         player.move(exit.getX(), exit.getY());
         player.setMove(false);
-        if (dungeonController != null) {
-            try {
-                dungeonController.resetDungeonMap("boulders");
-                dungeonController.notifyApplication();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+        // use loadNextGame(string) to load next json file (string = filename)
+        dungeonController.gameComplete(true);
+
     }
 
     public void update(Switch switchPlate) {
@@ -165,6 +159,17 @@ public class Dungeon implements DungeonObserver {
     
     public void removeDungeonEntity(Entity entity) {
          entities.remove(entity);
+    }
+
+    public void loadNextGame(String string) {
+        if (dungeonController != null) {
+            try {
+                dungeonController.resetDungeonMap(string);
+                dungeonController.notifyApplication();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

@@ -12,6 +12,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.control.Button;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,12 @@ public class DungeonController extends Controller {
 
     @FXML
     private VBox pauseMenu;
+
+    @FXML
+    private Text gameCompleteText;
+
+    @FXML 
+    private Button returnToMain;
 
     private List<ImageView> initialEntities;
 
@@ -87,6 +95,11 @@ public class DungeonController extends Controller {
         
     }
 
+    public void gameComplete(boolean string) {
+        gameCompleteText.setVisible(string);
+        returnToMain.setVisible(string);
+    }
+
     @FXML
     public void initialize() {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
@@ -101,6 +114,7 @@ public class DungeonController extends Controller {
             squares.getChildren().add(entity);
 
         pauseMenu.setVisible(false);
+        gameComplete(false);
     }
 
     @FXML

@@ -17,7 +17,7 @@ public class DungeonApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
         stage.setTitle("Dungeon");
-        stage.setResizable(false);
+        stage.setResizable(true);
         dungeonMap = "maze";
         changeScene("MainMenu");
     }
@@ -86,10 +86,6 @@ public class DungeonApplication extends Application {
             changeScene("Dungeon");
         }
     }
-
-    // public void exitGame() {
-
-    // }
 
     public static void main(String[] args) {
         launch(args);
