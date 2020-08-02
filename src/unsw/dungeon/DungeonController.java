@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -28,6 +29,9 @@ public class DungeonController extends Controller {
 
     @FXML 
     private StackPane stackpane;
+
+    @FXML
+    private GridPane inventory;
 
     @FXML
     private VBox pauseMenu;
@@ -87,11 +91,15 @@ public class DungeonController extends Controller {
         
     }
 
+    public void displayInventory() {
+        inventory.setVisible(!inventory.isVisible());
+        player.setMove(!player.canMove());
+    }
+
     @FXML
     public void initialize() {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
-
-        // Add the ground first so it is below all other entities
+        inventory.setVisible(false);
         for (int x = 0; x < dungeon.getWidth(); x++) {
             for (int y = 0; y < dungeon.getHeight(); y++) {
                 squares.add(new ImageView(ground), x, y);
@@ -133,7 +141,7 @@ public class DungeonController extends Controller {
             displayMenu();
             break;
         case E:
-            System.out.println("Inventory!");
+            displayInventory();
             break;
         default:
             break;

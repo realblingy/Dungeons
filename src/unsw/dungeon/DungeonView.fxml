@@ -12,18 +12,29 @@
 
 <StackPane fx:id="stackpane" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-    <GridPane fx:id="squares">
-      <columnConstraints>
-          <ColumnConstraints />
+      <GridPane fx:id="squares">
+         <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />
-      </columnConstraints>
-      <rowConstraints>
-          <RowConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
             <RowConstraints />
             <RowConstraints />
-      </rowConstraints>
-    </GridPane>
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray; -fx-border-image-width: 5; -fx-border-radius: 5; -fx-border-color: white;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
       <VBox fx:id="pauseMenu" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="267.0" prefWidth="200.0" style="-fx-background-color: grey; -fx-opacity: 0.8;">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE">
