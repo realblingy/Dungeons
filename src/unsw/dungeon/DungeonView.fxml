@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="stackpane" onKeyPressed="#handleKeyPress" prefHeight="234.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackpane" onKeyPressed="#handleKeyPress" prefHeight="252.0" prefWidth="162.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="squares" prefWidth="220.0">
+      <GridPane fx:id="squares" prefHeight="252.0" prefWidth="202.0">
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />
@@ -72,11 +72,33 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </GridPane>
-      <VBox fx:id="pauseMenu" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="198.0" style="-fx-background-color: grey; -fx-opacity: 1.0;">
+      <VBox fx:id="FailGame" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="228.0" prefWidth="179.0">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="FAIL!">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Text>
+            <Button alignment="CENTER" layoutX="40.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleRestart" prefHeight="26.0" prefWidth="140.0" style="-fx-background-radius: 0; -fx-background-color: white;" text="Restart">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button layoutX="40.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleReturnToMenu" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: white; -fx-background-radius: 0;" text="Return to Main Menu">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="pauseMenu" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="304.0" prefWidth="198.0" style="-fx-background-color: grey; -fx-opacity: 1.0;">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="15.0" />
                </VBox.margin>
                <font>
                   <Font size="33.0" />
@@ -98,28 +120,6 @@
                </VBox.margin>
             </Button>
             <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" style="-fx-background-radius: 0; -fx-background-color: white;" text="Exit to Desktop">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-      <VBox fx:id="FailGame" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="228.0" prefWidth="179.0">
-         <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="FAIL!">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Text>
-            <Button alignment="CENTER" layoutX="40.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleRestart" prefHeight="26.0" prefWidth="140.0" style="-fx-background-radius: 0; -fx-background-color: white;" text="Restart">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
-            <Button layoutX="40.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleReturnToMenu" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: white; -fx-background-radius: 0;" text="Return to Main Menu">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
