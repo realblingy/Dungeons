@@ -23,6 +23,11 @@
       "type": "wall"
     },
     {
+      "x": 3,
+      "y": 16,
+      "type": "pickaxe"
+    },
+    {
       "x": 4,
       "y": 0,
       "type": "wall"

@@ -27,6 +27,9 @@ public class ImageLoader {
         else if (item instanceof Sword) {
             image = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
         }
+        else if (item instanceof Pickaxe) {
+            image = new Image((new File("images/pickaxe.png")).toURI().toString());   
+        }
 
         return new ImageView(image);
     }

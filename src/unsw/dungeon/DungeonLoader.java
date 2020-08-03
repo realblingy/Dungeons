@@ -109,6 +109,11 @@ public abstract class DungeonLoader {
             onLoad(treasure);
             entity = treasure;
             break;
+        case "pickaxe":
+            Pickaxe pickaxe = new Pickaxe(dungeon, x, y);
+            onLoad(pickaxe);
+            entity = pickaxe;
+            break;
         case "enemy":
             Enemy enemy = new Enemy(dungeon, x, y);
             dungeon.setEnemy(enemy);
@@ -143,6 +148,8 @@ public abstract class DungeonLoader {
     public abstract void removeEntity(Entity entity);
 
     public abstract void onLoad(Treasure treasure);
+
+    public abstract void onLoad(Pickaxe pickaxe);
 
     public abstract void onLoad(Enemy enemy);
 

@@ -153,6 +153,28 @@ public class Player extends Entity {
         return false;
     }
 
+    public void reducePickaxehits() {
+        for (int i = 0; i < inventory.size(); i++) {
+            Item item = inventory.get(i);
+            if (item instanceof Pickaxe) {
+                Pickaxe pickaxe = (Pickaxe) item;
+                pickaxe.reduceHits();
+                if (pickaxe.getHits() == 0) {
+                    inventory.remove(item);
+                }
+            }
+        }
+    }
+
+    public boolean hasPickaxe() {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i) instanceof Pickaxe) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Item> getInventory() {
         return inventory;
     }

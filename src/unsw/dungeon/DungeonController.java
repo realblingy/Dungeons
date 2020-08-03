@@ -3,6 +3,8 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Action;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.effect.GaussianBlur;
@@ -56,6 +58,9 @@ public class DungeonController extends Controller {
     @FXML
     private Text advanceGoal;
 
+    @FXML
+    private VBox DestroyWallMenu;
+
     private List<ImageView> initialEntities;
 
     private Player player;
@@ -95,6 +100,10 @@ public class DungeonController extends Controller {
             System.out.println("Could not return to main menu.");
         }
         
+    }
+
+    public void destroyWallMenu(boolean string) {
+        DestroyWallMenu.setVisible(string);
     }
 
     public PauseMenu getPauseMenu() {
@@ -185,6 +194,7 @@ public class DungeonController extends Controller {
         gameComplete(false);
         FailMenu(false);
         dungeonMapGoal(true);
+        destroyWallMenu(false);
     }
 
     public void FailMenu(boolean string) {
@@ -206,6 +216,21 @@ public class DungeonController extends Controller {
     public void handleRestart(ActionEvent event) throws IOException {
         notifyApplication();
     }   
+
+    @FXML
+    public void handleNo(ActionEvent event) {
+        destroyWallMenu(false);
+        getDungeonApplication().focusRoot();
+
+    }
+
+    @FXML
+    public void handleYes(ActionEvent event) {
+        destroyWallMenu(false);
+        dungeon.destroyWall();
+        getDungeonApplication().focusRoot();
+
+    }    
 
     @FXML
     public void handleKeyPress(KeyEvent event) {

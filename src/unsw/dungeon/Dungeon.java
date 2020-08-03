@@ -28,6 +28,7 @@ public class Dungeon implements DungeonObserver {
     private Enemy enemy;
     private DungeonLoader dungeonLoader;
     private DungeonController dungeonController;
+    private Wall wallToDestroy;
 
     public Dungeon(DungeonLoader dungeonLoader, int width, int height, JSONObject goal) {
         this.width = width;
@@ -37,6 +38,7 @@ public class Dungeon implements DungeonObserver {
         this.enemy = null;
         this.dungeonLoader = dungeonLoader;
         this.dungeonController = null;
+        this.wallToDestroy = null;
     }
 
     public void setController(DungeonController controller) {
@@ -94,10 +96,27 @@ public class Dungeon implements DungeonObserver {
             if (!(obj instanceof Enemy) && enemy != null) {
                 obj.update(player);
                 enemy.updatePosition(player);
-            } else {
-                obj.update(player);
+            } 
+            else {
+                if (obj instanceof Wall && player.hasPickaxe() == true) {
+                    if ((obj.getX() != 0 && obj.getX() != width-1)
+                        && (obj.getY() != 0 && obj.getY() != height-1)) {
+                        wallToDestroy = (Wall) obj;
+                        dungeonController.destroyWallMenu(true);
+                    }
+                }
+                else {
+                    obj.update(player);
+                }
             }
         }
+    }
+
+    public void destroyWall() {
+        removeEntity(wallToDestroy);
+        player.reducePickaxehits();
+        removeDungeonEntity(wallToDestroy); 
+        wallToDestroy = null;
     }
 
     public void update(Boulder boulder) {
