@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fill="WHITE" layoutX="142.0" layoutY="152.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DUNGEONS" textAlignment="CENTER" wrappingWidth="316.4140625">
+         <font>
+            <Font size="56.0" />
+         </font>
+      </Text>
+      <Button layoutX="221.0" layoutY="249.0" mnemonicParsing="false" onAction="#handlePlayBtn" onMouseDragEntered="#handlePlayBtnHover" prefHeight="36.0" prefWidth="155.0" style="-fx-background-radius: 1; -fx-border-width: 2; -fx-border-color: white; -fx-background-color: black;" text="PLAY" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button layoutX="223.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleMapsBtn" prefHeight="36.0" prefWidth="155.0" style="-fx-background-radius: 0; -fx-background-color: black; -fx-border-width: 2; -fx-border-color: white;" text="MAPS" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Text fill="#7c6e6e" layoutX="441.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Made by Khaing and James" />
+   </children>
+</Pane>

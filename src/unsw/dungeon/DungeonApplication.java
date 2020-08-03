@@ -1,7 +1,6 @@
 package unsw.dungeon;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,22 +9,87 @@ import javafx.stage.Stage;
 
 public class DungeonApplication extends Application {
 
+    private String dungeonMap;
+    private Stage stage;
+    private Parent root;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setTitle("Dungeon");
+        this.stage = primaryStage;
+        stage.setTitle("Dungeon");
+        stage.setResizable(true);
+        dungeonMap = "maze";
+        changeScene("MainMenu");
+    }
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("advanced.json");
+    public String getDungeonMap() {
+        return dungeonMap;
+    }
 
-        DungeonController controller = dungeonLoader.loadController();
+    public void resetDungeonMap(String string) {
+        dungeonMap = string;
+    }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
-        loader.setController(controller);
-        Parent root = loader.load();
+    public Controller getController(String sceneName) {
+        if (sceneName == "MainMenu") {
+            return new MainMenuController(this);
+        }
+        else if (sceneName == "MapsMenu") {
+            return new MapsMenuController(this);
+        }
+        else if (sceneName == "Dungeon") {
+            try {
+                DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(dungeonMap + ".json");
+                return new DungeonController(dungeonLoader.load(), dungeonLoader.getEntities(), this);
+            }
+            catch (IOException e) {
+                System.out.println("Cannot load Dungeon.");
+            }
+        }
+        return null;
+    }
+
+    public void changeScene(String sceneName) throws IOException {
+        FXMLLoader loader =  new FXMLLoader(getClass().getResource(sceneName + "View.fxml"));
+        loader.setController(getController(sceneName));
+        root = loader.load();
         Scene scene = new Scene(root);
-        root.requestFocus();
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        // scene.getStylesheets().add("src/unsw/dungeon/dungeons.css");
+        focusRoot();
+        stage.setScene(scene);
+        stage.show();
+    }
 
+    public void focusRoot() {
+        root.requestFocus();
+    }
+
+    public void update(Controller controller) throws IOException {
+        if (controller instanceof MainMenuController) {
+            MainMenuController c = (MainMenuController) controller;
+            switch(c.getAction()) {
+                case "play":
+                    changeScene("Dungeon");
+                    break;
+                case "maps":
+                    changeScene("MapsMenu");
+                    break;
+            }
+        }
+        else if (controller instanceof MapsMenuController) {
+            MapsMenuController c = (MapsMenuController) controller;
+            changeScene("MainMenu");
+            dungeonMap = c.getDungeon();
+            System.out.println(dungeonMap);
+        }
+        else if (controller instanceof DungeonController) {
+            DungeonController c = (DungeonController) controller;
+            if (c.getPauseMenu().isReturnToMenu()) {
+                changeScene("MainMenu");
+                return;
+            }
+            changeScene("Dungeon");
+        }
     }
 
     public static void main(String[] args) {

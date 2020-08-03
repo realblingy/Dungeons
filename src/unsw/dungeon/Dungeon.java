@@ -3,11 +3,13 @@
  */
 package unsw.dungeon;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
+
+import javafx.scene.image.Image;
 
 /**
  * A dungeon in the interactive dungeon player.
@@ -18,13 +20,15 @@ import org.json.JSONObject;
  * @author Robert Clifton-Everest
  *
  */
-public class Dungeon implements DungeonObserver{
+public class Dungeon implements DungeonObserver {
 
     private int width, height;
     private List<Entity> entities;
     private Player player;
     private Enemy enemy;
     private DungeonLoader dungeonLoader;
+    private DungeonController dungeonController;
+    private Wall wallToDestroy;
 
     public Dungeon(DungeonLoader dungeonLoader, int width, int height, JSONObject goal) {
         this.width = width;
@@ -33,6 +37,12 @@ public class Dungeon implements DungeonObserver{
         this.player = null;
         this.enemy = null;
         this.dungeonLoader = dungeonLoader;
+        this.dungeonController = null;
+        this.wallToDestroy = null;
+    }
+
+    public void setController(DungeonController controller) {
+        this.dungeonController = controller;
     }
 
     public void removeEntity(Entity entity) {
@@ -42,35 +52,35 @@ public class Dungeon implements DungeonObserver{
 
         }
     }
-    
+
     @Override
     public void update(Entity entity) {
         if (entity instanceof Player) {
-            update( (Player) entity);
+            update((Player) entity);
         }
-        
+
         if (entity instanceof Boulder) {
-            update( (Boulder) entity);
+            update((Boulder) entity);
         }
 
         if (entity instanceof Switch) {
-            update( (Switch) entity);
+            update((Switch) entity);
         }
 
         if (entity instanceof Exit) {
-            update( (Exit) entity);
+            update((Exit) entity);
         }
-        
+
         if (entity instanceof Item) {
-            update( (Item) entity);
+            update((Item) entity);
         }
 
         if (entity instanceof Door) {
-            update ( (Door) entity);
+            update((Door) entity);
         }
 
         if (entity instanceof Entity) {
-            update ( (Enemy) entity);
+            update((Enemy) entity);
         }
     }
 
@@ -82,16 +92,31 @@ public class Dungeon implements DungeonObserver{
             if (enemy != null) {
                 enemy.updatePosition(player);
             }
-        }
-        else {
+        } else {
             if (!(obj instanceof Enemy) && enemy != null) {
                 obj.update(player);
-                enemy.updatePosition(player);  
-            }
+                enemy.updatePosition(player);
+            } 
             else {
-                obj.update(player);
+                if (obj instanceof Wall && player.hasPickaxe() == true) {
+                    if ((obj.getX() != 0 && obj.getX() != width-1)
+                        && (obj.getY() != 0 && obj.getY() != height-1)) {
+                        wallToDestroy = (Wall) obj;
+                        dungeonController.destroyWallMenu(true);
+                    }
+                }
+                else {
+                    obj.update(player);
+                }
             }
-        }  
+        }
+    }
+
+    public void destroyWall() {
+        removeEntity(wallToDestroy);
+        player.reducePickaxehits();
+        removeDungeonEntity(wallToDestroy); 
+        wallToDestroy = null;
     }
 
     public void update(Boulder boulder) {
@@ -100,18 +125,33 @@ public class Dungeon implements DungeonObserver{
 
     }
 
+    public void changeEntityImage(Entity entity) {
+        dungeonLoader.changeEntityImage(entity);
+    }
+
     public void update(Exit exit) {
         player.move(exit.getX(), exit.getY());
         player.setMove(false);
+        // use loadNextGame(string) to load next json file (string = filename)
+        dungeonController.gameComplete(true);
+
     }
 
     public void update(Switch switchPlate) {
         player.setMove(false);
+        dungeonController.gameComplete(true);
+
     }
 
     public void update(Item item) {
         removeEntity(item);
         removeDungeonEntity(item);
+        if (item instanceof Treasure) {
+            if (enemy == null && treasureInDungeon() == false) {
+                player.setMove(false);
+                dungeonController.gameComplete(true);        
+            }
+        }
     }
 
     public void update(Door door) {
@@ -120,9 +160,18 @@ public class Dungeon implements DungeonObserver{
     }
 
     public void update(Enemy enemy) {
-        removeEntity(enemy);
-        this.enemy = null;
-        removeDungeonEntity(enemy);
+        if (player.canMove() == false) {
+            dungeonController.FailMenu(true);
+        }
+        else {
+            removeEntity(enemy);
+            this.enemy = null;
+            removeDungeonEntity(enemy);
+            if (treasureInDungeon() == false) {
+                player.setMove(false);
+                dungeonController.gameComplete(true);             
+            }
+        }
     }
 
     public int getWidth() {
@@ -152,6 +201,21 @@ public class Dungeon implements DungeonObserver{
     
     public void removeDungeonEntity(Entity entity) {
          entities.remove(entity);
+    }
+
+    public void stopGoalConditionDisplay() {
+        dungeonController.dungeonMapGoal(false);
+    }
+
+    public void loadNextGame(String string) {
+        if (dungeonController != null) {
+            try {
+                dungeonController.resetDungeonMap(string);
+                dungeonController.notifyApplication();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -351,6 +415,16 @@ public class Dungeon implements DungeonObserver{
     public boolean hasEntity(Entity entity) {
         for (Entity e : entities) {
             if (e.equals(entity)) return true;
+        }
+        return false;
+    }
+
+    public boolean treasureInDungeon() {
+        for (int i = 0; i < entities.size(); i++) {
+            Entity e = entities.get(i);
+            if (e instanceof Treasure) {
+                return true;
+            }
         }
         return false;
     }

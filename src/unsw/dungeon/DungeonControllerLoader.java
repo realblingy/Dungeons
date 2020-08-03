@@ -37,6 +37,8 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image portalImage;
     private Image treasureImage;
     private Image enemyImage;
+    private Image invincibleImage;
+    private Image pickaxeImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -55,6 +57,8 @@ public class DungeonControllerLoader extends DungeonLoader {
         portalImage = new Image((new File("images/portal.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
         enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
+        invincibleImage = new Image((new File("images/human_invincible.png")).toURI().toString());
+        pickaxeImage = new Image((new File("images/pickaxe.png")).toURI().toString());
     }
 
     @Override
@@ -129,15 +133,38 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(enemy, view);
     }
 
+    @Override
+    public void onLoad(Pickaxe pickaxe) {
+        ImageView view = new ImageView(pickaxeImage);
+        addEntity(pickaxe, view);
+    }
+
+    public void update(Entity entity) {
+        if (entity instanceof Player) {
+
+        }
+    }
 
     private void addEntity(Entity entity, ImageView view) {
+        view.setX(entity.getX());
+        view.setY(entity.getY());
         trackPosition(entity, view);
         entities.add(view);
+    }
+
+    public List<ImageView> getEntities() {
+        return entities;
     }
 
     public Image getImage(Entity entity) {
         if (entity instanceof Potion) {
             return potionImage;
+        }
+        else if (entity instanceof Wall) {
+            return wallImage;
+        }
+        else if (entity instanceof Pickaxe) {
+            return pickaxeImage;
         }
         else if (entity instanceof Treasure) {
             return treasureImage;
@@ -154,6 +181,10 @@ public class DungeonControllerLoader extends DungeonLoader {
         else if (entity instanceof Enemy) {
             return enemyImage;
         }
+        if (entity instanceof Player) {
+            Player p = (Player) entity;
+            return (p.isInvincible() ?  playerImage : invincibleImage);
+        }
         return null;
     }
 
@@ -161,19 +192,44 @@ public class DungeonControllerLoader extends DungeonLoader {
         Image entityImageView = getImage(entity);
         if (entityImageView == null) { return; }
         for (ImageView image : entities) {
-            try {
-                if (image.getImage().equals(entityImageView)) {
-                    image.setImage(null);
+            if (image.getX() == entity.getX() && image.getY() == entity.getY()) {
+                try {
+                    if (image.getImage().equals(entityImageView)) {
+                        image.setImage(null);
 
-                    if (entity instanceof Door) {
-                        //ImageView view = new ImageView(openDoorImage);
-                        //addEntity(entity, view);
-                        image.setImage(openDoorImage);
+                        if (entity instanceof Door) {
+                            image.setImage(openDoorImage);
+                        }
                     }
-                }
-            } catch (NullPointerException e) {}
+                }  catch (NullPointerException e) {}
+            }
         }
     }
+
+    public void changeEntityImage(Entity entity) {
+        Image entityImageView = getImage(entity);
+        
+        for (ImageView e : entities) {
+            try {
+                if (e.getImage().equals(entityImageView)) {
+                    if (entity instanceof Player) {
+                        Player p = (Player) entity;
+                        boolean playerIsInvis = p.isInvincible();
+                        if (playerIsInvis) {
+                            e.setImage(invincibleImage);
+                        }
+                        else {
+                            e.setImage(playerImage);
+                        } 
+                        return;
+                    }
+                    
+                }
+            } catch (NullPointerException exception) {}
+
+        }
+    }
+    
 
     /**
      * Set a node in a GridPane to have its position track the position of an
@@ -202,16 +258,6 @@ public class DungeonControllerLoader extends DungeonLoader {
                 GridPane.setRowIndex(node, newValue.intValue());
             }
         });
-    }
-
-    /**
-     * Create a controller that can be attached to the DungeonView with all the
-     * loaded entities.
-     * @return
-     * @throws FileNotFoundException
-     */
-    public DungeonController loadController() throws FileNotFoundException {
-        return new DungeonController(load(), entities);
     }
 
 

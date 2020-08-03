@@ -1,8 +1,11 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javafx.scene.image.Image;
 
 /**
  * The player entity
@@ -16,6 +19,7 @@ public class Player extends Entity {
     private List<Item> inventory;
     private boolean invincible;
     private boolean canMove;
+    private boolean hasMove;
 
     /**
      * Create a player positioned in square (x,y)
@@ -28,6 +32,7 @@ public class Player extends Entity {
         this.dungeon = dungeon;
         this.inventory = new ArrayList<>();
         canMove = true;
+        hasMove = false;
     }
 
     public void notifyDungeon() {
@@ -71,6 +76,10 @@ public class Player extends Entity {
     public String getRecentMovement() {
         return recentMovement;
     }
+    
+    public boolean checkMove() {
+        return hasMove;
+    }
 
     public void updatePosition() {
         if (recentMovement == "up") {
@@ -84,6 +93,10 @@ public class Player extends Entity {
         }
         if (recentMovement == "right") {
             x().set(getX() + 1);
+        }
+        if (hasMove == false) {
+            hasMove = true;
+            dungeon.stopGoalConditionDisplay();
         }
     }
 
@@ -140,17 +153,49 @@ public class Player extends Entity {
         return false;
     }
 
+    public void reducePickaxehits() {
+        for (int i = 0; i < inventory.size(); i++) {
+            Item item = inventory.get(i);
+            if (item instanceof Pickaxe) {
+                Pickaxe pickaxe = (Pickaxe) item;
+                pickaxe.reduceHits();
+                if (pickaxe.getHits() == 0) {
+                    inventory.remove(item);
+                }
+            }
+        }
+    }
+
+    public boolean hasPickaxe() {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i) instanceof Pickaxe) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Item> getInventory() {
+        return inventory;
+    }
+
     public boolean isInvincible() {
         return invincible;
     }
 
+    public void changePlayerImage() {
+        dungeon.changeEntityImage(this);
+    }
+
     public void activateInvincibility() {
         invincible = true;
+        changePlayerImage();
         Thread newThread = new Thread(() -> {
             try {
                 TimeUnit.SECONDS.sleep(10);
                 invincible = false;
                 System.out.println(invincible);
+                changePlayerImage();
             }
             catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
