@@ -129,6 +129,7 @@ public class Dungeon implements DungeonObserver {
         removeDungeonEntity(item);
         if (item instanceof Treasure) {
             if (enemy == null && treasureInDungeon() == false) {
+                player.setMove(false);
                 dungeonController.gameComplete(true);        
             }
         }
@@ -148,6 +149,7 @@ public class Dungeon implements DungeonObserver {
             this.enemy = null;
             removeDungeonEntity(enemy);
             if (treasureInDungeon() == false) {
+                player.setMove(false);
                 dungeonController.gameComplete(true);             
             }
         }
