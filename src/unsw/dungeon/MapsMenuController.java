@@ -32,7 +32,6 @@ public class MapsMenuController extends Controller {
 
     @Override
     public void notifyApplication() throws IOException {
-        // TODO Auto-generated method stub
         super.getDungeonApplication().update(this);
     }
 

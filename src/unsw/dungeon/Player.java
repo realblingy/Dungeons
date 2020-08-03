@@ -1,11 +1,8 @@
 package unsw.dungeon;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import javafx.scene.image.Image;
 
 /**
  * The player entity

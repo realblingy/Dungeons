@@ -3,8 +3,6 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Action;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.effect.GaussianBlur;
@@ -12,11 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.File;

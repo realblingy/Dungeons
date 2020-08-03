@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import javafx.scene.image.Image;
-
 /**
  * A dungeon in the interactive dungeon player.
  *
