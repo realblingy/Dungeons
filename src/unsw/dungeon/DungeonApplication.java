@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 public class DungeonApplication extends Application {
 
     private String dungeonMap;
+    private String difficulty;
     private Stage stage;
     private Parent root;
 
@@ -19,6 +20,7 @@ public class DungeonApplication extends Application {
         stage.setTitle("Dungeon");
         stage.setResizable(true);
         dungeonMap = "maze";
+        difficulty = "easy";
         changeScene("MainMenu");
     }
 
@@ -39,12 +41,15 @@ public class DungeonApplication extends Application {
         }
         else if (sceneName == "Dungeon") {
             try {
-                DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(dungeonMap + ".json");
+                DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(dungeonMap + "_" + difficulty + ".json");
                 return new DungeonController(dungeonLoader.load(), dungeonLoader.getEntities(), this);
             }
             catch (IOException e) {
                 System.out.println("Cannot load Dungeon.");
             }
+        }
+        else if (sceneName == "DifficultyMenu") {
+            return new DifficultyMenuController(this);
         }
         return null;
     }
@@ -74,6 +79,9 @@ public class DungeonApplication extends Application {
                 case "maps":
                     changeScene("MapsMenu");
                     break;
+                case "difficulty":
+                    changeScene("DifficultyMenu");
+                    break;
             }
         }
         else if (controller instanceof MapsMenuController) {
@@ -89,6 +97,12 @@ public class DungeonApplication extends Application {
                 return;
             }
             changeScene("Dungeon");
+        }
+        else if (controller instanceof DifficultyMenuController) {
+            DifficultyMenuController c = (DifficultyMenuController) controller;
+            changeScene("MainMenu");
+            difficulty = c.getDifficulty();
+            System.out.println(difficulty);
         }
     }
 
