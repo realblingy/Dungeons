@@ -20,6 +20,7 @@ public class DungeonApplication extends Application {
         stage.setTitle("Dungeon");
         stage.setResizable(true);
         dungeonMap = "maze";
+        difficulty = "easy";
         changeScene("MainMenu");
     }
 
@@ -36,7 +37,7 @@ public class DungeonApplication extends Application {
         }
         else if (sceneName == "Dungeon") {
             try {
-                DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(dungeonMap + ".json");
+                DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(dungeonMap + "_" + difficulty + ".json");
                 return new DungeonController(dungeonLoader.load(), dungeonLoader.getEntities(), this);
             }
             catch (IOException e) {

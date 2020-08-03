@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.File;
@@ -114,6 +115,15 @@ public class DungeonController extends Controller {
         returnToMain.setVisible(string);
     }
 
+    public void removeDungeonEntity(int x, int y) {
+        for (Node node : squares.getChildren()) {
+            if (GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) == y) {
+                squares.getChildren().remove(node);
+                return;
+            } 
+        }
+    }
+
     public ImageView loadImage() {
         return new ImageView();
     }
@@ -172,6 +182,7 @@ public class DungeonController extends Controller {
     public void handleRestart(ActionEvent event) throws IOException {
         notifyApplication();
     }   
+
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
