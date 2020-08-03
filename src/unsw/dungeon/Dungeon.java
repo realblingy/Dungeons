@@ -161,6 +161,10 @@ public class Dungeon implements DungeonObserver {
 
     public void update(Enemy enemy) {
         if (player.canMove() == false) {
+            System.out.println("should remove player");
+            removeEntity(player);
+            removeDungeonEntity(player);
+            player = null;
             dungeonController.FailMenu(true);
         }
         else {
