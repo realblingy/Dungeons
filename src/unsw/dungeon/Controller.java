@@ -2,8 +2,6 @@ package unsw.dungeon;
 
 import java.io.IOException;
 
-import javafx.application.Application;
-
 public abstract class Controller {
 
     private DungeonApplication application;

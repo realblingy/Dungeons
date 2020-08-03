@@ -139,12 +139,6 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(pickaxe, view);
     }
 
-    public void update(Entity entity) {
-        if (entity instanceof Player) {
-
-        }
-    }
-
     private void addEntity(Entity entity, ImageView view) {
         view.setX(entity.getX());
         view.setY(entity.getY());

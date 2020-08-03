@@ -133,19 +133,6 @@ public class DungeonController extends Controller {
         returnToMain.setVisible(string);
     }
 
-    // public void removeDungeonEntity(int x, int y) {
-    //     for (Node node : squares.getChildren()) {
-    //         if (GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) == y) {
-    //             squares.getChildren().remove(node);
-    //             return;
-    //         } 
-    //     }
-    // }
-
-    public ImageView loadImage() {
-        return new ImageView();
-    }
-
     public void displayInventory() {
         List<Item> playerInventory = player.getInventory();
         inventory.getChildren().clear();
