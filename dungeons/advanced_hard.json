@@ -381,7 +381,7 @@
     {
       "x": 8,
       "y": 8,
-      "type": "treasure"
+      "type": "potion"
     },
     {
       "x": 24,
@@ -658,7 +658,7 @@
       "x": 24,
       "y": 13,
       "type": "wall"
-    },
+    }
   ],
   "goal-condition": {
     "goal": "exit"
