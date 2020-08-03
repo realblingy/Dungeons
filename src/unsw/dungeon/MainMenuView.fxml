@@ -12,14 +12,19 @@
             <Font size="56.0" />
          </font>
       </Text>
-      <Button layoutX="221.0" layoutY="249.0" mnemonicParsing="false" onAction="#handlePlayBtn" onMouseDragEntered="#handlePlayBtnHover" prefHeight="36.0" prefWidth="155.0" style="-fx-background-radius: 1; -fx-border-width: 2; -fx-border-color: white; -fx-background-color: black;" text="PLAY" textFill="WHITE">
+      <Button id="play" layoutX="223.0" layoutY="241.0" mnemonicParsing="false" onAction="#handleBtn" prefHeight="17.0" prefWidth="155.0" style="-fx-background-radius: 1; -fx-border-width: 2; -fx-border-color: white; -fx-background-color: black;" text="PLAY" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Button layoutX="223.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleMapsBtn" prefHeight="36.0" prefWidth="155.0" style="-fx-background-radius: 0; -fx-background-color: black; -fx-border-width: 2; -fx-border-color: white;" text="MAPS" textFill="WHITE">
+      <Button id="maps" layoutX="223.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleBtn" prefHeight="17.0" prefWidth="155.0" style="-fx-background-radius: 0; -fx-background-color: black; -fx-border-width: 2; -fx-border-color: white;" text="MAPS" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
       <Text fill="#7c6e6e" layoutX="441.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Made by Khaing and James" />
+      <Button id="difficulty" layoutX="223.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleBtn" prefHeight="17.0" prefWidth="155.0" style="-fx-background-radius: 1; -fx-border-width: 2; -fx-border-color: white; -fx-background-color: black;" text="DIFFICULTY" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
