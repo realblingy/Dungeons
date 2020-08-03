@@ -139,12 +139,6 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(pickaxe, view);
     }
 
-    public void update(Entity entity) {
-        if (entity instanceof Player) {
-
-        }
-    }
-
     private void addEntity(Entity entity, ImageView view) {
         view.setX(entity.getX());
         view.setY(entity.getY());
@@ -183,7 +177,13 @@ public class DungeonControllerLoader extends DungeonLoader {
         }
         if (entity instanceof Player) {
             Player p = (Player) entity;
-            return (p.isInvincible() ?  playerImage : invincibleImage);
+            //return (p.isInvincible() ?  playerImage : invincibleImage);
+            if (p.isInvincible() == true) {
+                return invincibleImage;
+            }
+            else {
+                return playerImage;
+            }
         }
         return null;
     }
@@ -191,6 +191,17 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void removeEntity(Entity entity) {
         Image entityImageView = getImage(entity);
         if (entityImageView == null) { return; }
+        if (entity instanceof Player || entity instanceof Enemy) {
+            for (ImageView image : entities) {
+                try {
+                    if (image.getImage().equals(entityImageView)) {
+                        image.setImage(null);
+                    }
+                }  catch (NullPointerException e) {}
+            }   
+            return; 
+        }
+
         for (ImageView image : entities) {
             if (image.getX() == entity.getX() && image.getY() == entity.getY()) {
                 try {
