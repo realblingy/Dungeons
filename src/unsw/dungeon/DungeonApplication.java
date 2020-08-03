@@ -22,6 +22,10 @@ public class DungeonApplication extends Application {
         changeScene("MainMenu");
     }
 
+    public String getDungeonMap() {
+        return dungeonMap;
+    }
+
     public void resetDungeonMap(String string) {
         dungeonMap = string;
     }

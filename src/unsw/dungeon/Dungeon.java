@@ -184,6 +184,10 @@ public class Dungeon implements DungeonObserver {
          entities.remove(entity);
     }
 
+    public void stopGoalConditionDisplay() {
+        dungeonController.dungeonMapGoal(false);
+    }
+
     public void loadNextGame(String string) {
         if (dungeonController != null) {
             try {

@@ -47,6 +47,15 @@ public class DungeonController extends Controller {
     @FXML
     private VBox FailGame;
 
+    @FXML
+    private Text mazeGoal;
+
+    @FXML
+    private Text boulderGoal;
+    
+    @FXML
+    private Text advanceGoal;
+
     private List<ImageView> initialEntities;
 
     private Player player;
@@ -136,6 +145,30 @@ public class DungeonController extends Controller {
         inventory.setVisible(!inventory.isVisible());
     }
 
+    public void displayGoalCondition(boolean maze, boolean boulder, boolean advance) {
+        mazeGoal.setVisible(maze);
+        boulderGoal.setVisible(boulder);
+        advanceGoal.setVisible(advance);
+    }
+
+    public void dungeonMapGoal(boolean string) {
+        DungeonApplication dungeonApplication = getDungeonApplication();
+        String dungeon = dungeonApplication.getDungeonMap();
+        boolean maze = false;
+        boolean boulder = false;
+        boolean advance = false;
+        if (dungeon.equals("maze")) {
+            maze = string;
+        }
+        else if (dungeon.equals("boulders")) {
+            boulder = string;
+        }
+        else if (dungeon.equals("advanced")) {
+            advance = string;
+        }
+        displayGoalCondition(maze, boulder, advance);
+    }
+
     @FXML
     public void initialize() {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
@@ -151,6 +184,7 @@ public class DungeonController extends Controller {
         pauseMenu.setVisible(false);
         gameComplete(false);
         FailMenu(false);
+        dungeonMapGoal(true);
     }
 
     public void FailMenu(boolean string) {
