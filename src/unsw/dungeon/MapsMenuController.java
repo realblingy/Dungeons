@@ -1,8 +1,5 @@
 package unsw.dungeon;
 
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -10,11 +7,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 public class MapsMenuController extends Controller {
 

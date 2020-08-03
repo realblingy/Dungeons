@@ -6,13 +6,8 @@ import javax.swing.Action;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
-
+import javafx.scene.Node;
 
 public class MainMenuController extends Controller {
 
@@ -34,22 +29,11 @@ public class MainMenuController extends Controller {
         return action;
     }
 
-    @FXML 
-    public void handlePlayBtnHover() {
-        System.out.println("Hi!");
-        playBtn.setStyle("-fx-background-color:gray");
-    }
 
     @FXML
-    public void handlePlayBtn(ActionEvent event) throws IOException {
-        action = "play";
+    public void handleBtn(ActionEvent event) throws IOException {
+        action = ((Node) event.getSource()).getId();
         notifyApplication();
-    }
-
-    @FXML
-    public void handleMapsBtn(ActionEvent event) throws IOException {
-        action = "maps";
-        notifyApplication();
-    }
+    } 
     
 }
