@@ -120,11 +120,18 @@ public class Dungeon implements DungeonObserver {
 
     public void update(Switch switchPlate) {
         player.setMove(false);
+        dungeonController.gameComplete(true);
+
     }
 
     public void update(Item item) {
         removeEntity(item);
         removeDungeonEntity(item);
+        if (item instanceof Treasure) {
+            if (enemy == null && treasureInDungeon() == false) {
+                dungeonController.gameComplete(true);        
+            }
+        }
     }
 
     public void update(Door door) {
@@ -133,9 +140,17 @@ public class Dungeon implements DungeonObserver {
     }
 
     public void update(Enemy enemy) {
-        removeEntity(enemy);
-        this.enemy = null;
-        removeDungeonEntity(enemy);
+        if (player.canMove() == false) {
+            dungeonController.FailMenu(true);
+        }
+        else {
+            removeEntity(enemy);
+            this.enemy = null;
+            removeDungeonEntity(enemy);
+            if (treasureInDungeon() == false) {
+                dungeonController.gameComplete(true);             
+            }
+        }
     }
 
     public int getWidth() {
@@ -371,6 +386,16 @@ public class Dungeon implements DungeonObserver {
     public boolean hasEntity(Entity entity) {
         for (Entity e : entities) {
             if (e.equals(entity)) return true;
+        }
+        return false;
+    }
+
+    public boolean treasureInDungeon() {
+        for (int i = 0; i < entities.size(); i++) {
+            Entity e = entities.get(i);
+            if (e instanceof Treasure) {
+                return true;
+            }
         }
         return false;
     }

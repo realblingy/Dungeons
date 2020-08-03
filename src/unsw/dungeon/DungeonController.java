@@ -44,6 +44,9 @@ public class DungeonController extends Controller {
     @FXML 
     private Button returnToMain;
 
+    @FXML
+    private VBox FailGame;
+
     private List<ImageView> initialEntities;
 
     private Player player;
@@ -147,6 +150,11 @@ public class DungeonController extends Controller {
 
         pauseMenu.setVisible(false);
         gameComplete(false);
+        FailMenu(false);
+    }
+
+    public void FailMenu(boolean string) {
+        FailGame.setVisible(string);
     }
 
     @FXML
