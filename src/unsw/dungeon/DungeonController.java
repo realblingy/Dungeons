@@ -130,10 +130,6 @@ public class DungeonController extends Controller {
         returnToMain.setVisible(string);
     }
 
-    public ImageView loadImage() {
-        return new ImageView();
-    }
-
     public void displayInventory() {
         List<Item> playerInventory = player.getInventory();
         inventory.getChildren().clear();
@@ -213,22 +209,6 @@ public class DungeonController extends Controller {
     public void handleRestart(ActionEvent event) throws IOException {
         notifyApplication();
     }   
-
-    /*
-    @FXML
-    public void handleNo(ActionEvent event) {
-        destroyWallMenu(false);
-        getDungeonApplication().focusRoot();
-
-    }
-
-    @FXML
-    public void handleYes(ActionEvent event) {
-        destroyWallMenu(false);
-        dungeon.destroyWall();
-        getDungeonApplication().focusRoot();
-
-    }    */
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
