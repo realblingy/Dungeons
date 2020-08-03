@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="stackpane" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackpane" onKeyPressed="#handleKeyPress" prefHeight="234.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="squares">
+      <GridPane fx:id="squares" prefWidth="220.0">
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />
@@ -27,7 +27,7 @@
             <Insets />
          </opaqueInsets>
       </GridPane>
-      <Text fx:id="gameCompleteText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Complete!">
+      <Text fx:id="gameCompleteText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Victory!">
          <font>
             <Font size="33.0" />
          </font>
@@ -42,17 +42,17 @@
       </Button>
       <Text fx:id="mazeGoal" fill="WHITE" layoutX="28.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Find the exit!">
          <font>
-            <Font size="33.0" />
+            <Font size="24.0" />
          </font>
       </Text>
       <Text fx:id="boulderGoal" fill="WHITE" layoutX="58.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Push Boulders &#10;onto &#10;Floor Switches!">
          <font>
-            <Font size="33.0" />
+            <Font size="24.0" />
          </font>
       </Text>
-      <Text fx:id="advanceGoal" fill="WHITE" layoutX="58.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Collect Treasures and&#10;Destroy Enemies!" textAlignment="CENTER">
+      <Text fx:id="advanceGoal" fill="WHITE" layoutX="58.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Collect Treasures and&#10;Destroy Enemies!" textAlignment="CENTER" wrappingWidth="208.41015625">
          <font>
-            <Font size="33.0" />
+            <Font size="24.0" />
          </font>
       </Text>
       <GridPane fx:id="inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-border-image-width: 5; -fx-border-radius: 5; -fx-vgap: 1; -fx-hgap: 1;">
@@ -72,7 +72,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </GridPane>
-      <VBox fx:id="pauseMenu" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="267.0" prefWidth="200.0" style="-fx-background-color: grey; -fx-opacity: 1.0;">
+      <VBox fx:id="pauseMenu" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="198.0" style="-fx-background-color: grey; -fx-opacity: 1.0;">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE">
                <VBox.margin>
@@ -104,11 +104,11 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="FailGame" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="267.0" prefWidth="200.0">
+      <VBox fx:id="FailGame" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="228.0" prefWidth="179.0">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="You Fail the Game!">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="FAIL!">
                <font>
-                  <Font size="33.0" />
+                  <Font size="24.0" />
                </font>
                <VBox.margin>
                   <Insets top="20.0" />
@@ -120,28 +120,6 @@
                </VBox.margin>
             </Button>
             <Button layoutX="40.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleReturnToMenu" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: white; -fx-background-radius: 0;" text="Return to Main Menu">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-      <VBox fx:id="DestroyWallMenu" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <Text fx:id="BoulderGoal" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Would you like to destory the wall?">
-               <font>
-                  <Font size="33.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Text>
-            <Button mnemonicParsing="false" onAction="#handleYes" prefHeight="26.0" prefWidth="140.0" text="Yes">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
-            <Button layoutX="280.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleNo" prefHeight="26.0" prefWidth="140.0" text="No">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>

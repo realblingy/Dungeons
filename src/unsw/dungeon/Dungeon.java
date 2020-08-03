@@ -102,7 +102,7 @@ public class Dungeon implements DungeonObserver {
                     if ((obj.getX() != 0 && obj.getX() != width-1)
                         && (obj.getY() != 0 && obj.getY() != height-1)) {
                         wallToDestroy = (Wall) obj;
-                        dungeonController.destroyWallMenu(true);
+                        destroyWall();
                     }
                 }
                 else {

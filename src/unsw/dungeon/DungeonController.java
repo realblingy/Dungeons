@@ -59,9 +59,6 @@ public class DungeonController extends Controller {
     @FXML
     private Text advanceGoal;
 
-    @FXML
-    private VBox DestroyWallMenu;
-
     private List<ImageView> initialEntities;
 
     private Player player;
@@ -103,9 +100,9 @@ public class DungeonController extends Controller {
         
     }
 
-    public void destroyWallMenu(boolean string) {
+    /*public void destroyWallMenu(boolean string) {
         DestroyWallMenu.setVisible(string);
-    }
+    }*/
 
     public PauseMenu getPauseMenu() {
         return menu;
@@ -132,15 +129,6 @@ public class DungeonController extends Controller {
         gameCompleteText.setVisible(string);
         returnToMain.setVisible(string);
     }
-
-    // public void removeDungeonEntity(int x, int y) {
-    //     for (Node node : squares.getChildren()) {
-    //         if (GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) == y) {
-    //             squares.getChildren().remove(node);
-    //             return;
-    //         } 
-    //     }
-    // }
 
     public ImageView loadImage() {
         return new ImageView();
@@ -204,7 +192,6 @@ public class DungeonController extends Controller {
         gameComplete(false);
         FailMenu(false);
         dungeonMapGoal(true);
-        destroyWallMenu(false);
     }
 
     public void FailMenu(boolean string) {
@@ -227,7 +214,7 @@ public class DungeonController extends Controller {
         notifyApplication();
     }   
 
-
+    /*
     @FXML
     public void handleNo(ActionEvent event) {
         destroyWallMenu(false);
@@ -241,7 +228,7 @@ public class DungeonController extends Controller {
         dungeon.destroyWall();
         getDungeonApplication().focusRoot();
 
-    }    
+    }    */
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
