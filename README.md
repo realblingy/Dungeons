@@ -10,20 +10,6 @@
 
 * Learn the application of design patterns.
 
-## Due Dates
-
-Milestone 1: 9AM Tuesday Week 7 (Demonstration: Week 7 Lab)
-
-Milestone 2: 9AM Tuesday Week 8 (Demonstration: Week 8 Lab)
-
-Final milestone: 9AM Monday Week 10 (Demonstration: Week 10 Lab)
-
-**NOTE:** There is **NO** provision for late submissions with a late penalty. Not submitting by the deadline is considered non-submission.
-
-## Value: 35 marks
-
----
-
 ## Overview
 
 You have received a request from a client for an application for the playing of dungeon-style puzzles. With a partner from your lab class, you will follow an agile development process to design and implement a desktop Java application that satisfies the requirements of the client (see below). The final piece of software you deliver is expected to be of professional quality, user-friendly, and demonstrate the knowledge and skills you have acquired in this course.
